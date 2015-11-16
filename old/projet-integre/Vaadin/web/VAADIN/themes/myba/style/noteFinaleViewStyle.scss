@@ -1,0 +1,37 @@
+@mixin noteFinaleViewStyle {
+  #notefinal-panel {
+    width: 50%;
+    margin: auto;
+  }
+
+  #notefinal-note-div {
+    margin: 20px auto auto;
+    width: auto;
+    display: block;
+  }
+
+  .notefinal-note {
+    display: inline-block;
+  }
+
+  .notefinal-notetotal {
+    margin-left: 8px;
+    display: inline-block;
+  }
+
+  #notefinal-buttons {
+    margin: 20px auto auto;
+    width: auto;
+    display: block;
+  }
+
+  .notefinal-resetbutton {
+    display: inline-block;
+  }
+
+  .notefinal-okbutton {
+    margin-left: 8px;
+    display: inline-block;
+  }
+
+}

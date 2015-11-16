@@ -1,0 +1,49 @@
+@mixin commentViewStyle {
+  #header {
+    margin: auto;
+  }
+
+  #Panel {
+    width: 30%;
+    height: 25%;
+    margin: auto;
+  }
+
+  #textArea {
+    margin: 37.5% auto auto;
+    width: auto;
+  }
+
+  #buttons {
+    margin: 20px auto auto;
+    width: auto;
+    display: table;
+  }
+
+  #backLink {
+    margin-top: 10px;
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  #addButton {
+    margin-top: 10px;
+    margin-left: 8px;
+    display: inline-block;
+  }
+
+  .t1 {
+    display: block;
+    margin-top: 50px;
+    font-size: 2em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+  }
+
+  .t2 {
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+}
