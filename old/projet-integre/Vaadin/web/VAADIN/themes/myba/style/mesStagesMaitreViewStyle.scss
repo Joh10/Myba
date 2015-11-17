@@ -1,0 +1,30 @@
+@mixin mesStagesMaitreViewStyle {
+  #mesStagesMaitre-panel {
+    width: 50%;
+    height: 25%;
+
+    margin: auto;
+    margin-top: 25%;
+  }
+
+  #buttons {
+    width: auto;
+    display: table;
+    margin: 20px auto 35px;
+  }
+
+  #backButton {
+    display: inline-block;
+  }
+
+  #noteButton {
+    margin-left: 8px;
+    display: inline-block;
+  }
+
+  h1 {
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+  }
+}

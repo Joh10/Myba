@@ -1,0 +1,57 @@
+@mixin addStageViewStyle {
+
+  #addstage-Panel {
+    width: 35%;
+    height: auto;
+    margin: auto auto 30px;
+  }
+
+  fieldset {
+    width: 75%;
+    margin-left: 10%;
+    margin-top: 25px;
+  }
+
+  #margintop {
+    margin-bottom: 20px;
+  }
+
+  .textField {
+    margin-bottom: 8px;
+    margin-left: 6%;
+  }
+
+  .spacing-title {
+    padding-bottom: 10px;
+  }
+
+  #buttons {
+    width: auto;
+    display: table;
+    margin: 20px auto 35px;
+  }
+
+  #backButton {
+    display: inline-block;
+  }
+
+  #addButton {
+    margin-left: 8px;
+    display: inline-block;
+  }
+
+  #resetButton {
+    margin-left: 8px;
+    display: inline-block;
+  }
+
+  h1 {
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+  }
+
+  h3 {
+    margin: 25px auto auto;
+  }
+}

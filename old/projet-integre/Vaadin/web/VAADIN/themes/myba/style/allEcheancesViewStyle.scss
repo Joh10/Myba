@@ -1,0 +1,63 @@
+@mixin allEcheancesViewStyle {
+  #allEcheancesContent {
+    top: 80px;
+    bottom: 0px;
+    position: absolute;
+    width: 100%;
+    border-top: 1px solid #CACACA;
+  }
+
+  #adminLeft {
+    padding: 25px;
+    float: left;
+    width: 200px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+  }
+
+  #adminRight {
+    float: right;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 250px;
+    border-left: 1px solid #CACACA;
+    overflow: auto;
+  }
+
+  #tableEcheances {
+    width: auto;
+    position: relative;
+    top: -1px;
+    left: -1px;
+  }
+
+  #buttons {
+    margin: 20px auto auto;
+    width: auto;
+    display: table;
+  }
+
+  #backButton {
+    margin-top: 10px;
+    display: inline-block;
+  }
+
+  #chooseButton {
+    margin-top: 10px;
+    margin-left: 8px;
+    display: inline-block;
+  }
+
+  h1 {
+    margin: auto;
+    display: block;
+    margin-top: 50px;
+    font-size: 2em;
+    font-weight: bold;
+  }
+
+}

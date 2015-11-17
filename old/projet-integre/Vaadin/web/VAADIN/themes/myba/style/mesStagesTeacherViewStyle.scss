@@ -1,0 +1,55 @@
+@mixin mesStagesTeacherViewStyle {
+  #mesStagesTeacher-panel {
+    width: 50%;
+    height: 25%;
+
+    margin: auto;
+    margin-top: 25%;
+  }
+
+  .buttons {
+    width: 100%;
+    display: block;
+    margin: 20px auto 35px;
+  }
+
+  #backButton {
+    display: inline-block;
+  }
+
+  #consultButton {
+    margin-left: 8px;
+    display: inline-block;
+  }
+
+  #addButton {
+    margin-left: 8px;
+    display: inline-block;
+  }
+
+  #updateButton {
+    margin-left: 8px;
+    display: inline-block;
+  }
+
+  #deleteButton {
+    margin-left: 8px;
+    display: inline-block;
+  }
+
+  .tableProposals {
+    margin: auto;
+    max-width: 80%;
+  }
+
+  .tableFollows {
+    margin: auto;
+    max-width: 80%;
+  }
+
+  h1 {
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+  }
+}
