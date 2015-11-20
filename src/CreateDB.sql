@@ -12,7 +12,7 @@ CREATE TABLE RoleTable (
 
 CREATE TABLE Utilisateur (
    id_Uti NUMBER(10) NOT NULL,
-   -- TODO enable c'est quoi?
+   enable NUMBER(1) NOT NULL, -- TODO enable c'est quoi? utilisateur est activé ou pas
    email VARCHAR2(254 char) NOT NULL,
    password VARCHAR2(254 char) NOT NULL,
    nom VARCHAR2(35 char) NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE Utilisateur (
 CREATE TABLE SuiviEcheance (
    id_Sui NUMBER(10) NOT NULL,
    dateRemis DATE NOT NULL,
-   -- TODO correctionProf c'est quoi?
+   commantaire VARCHAR2(512 char) NOT NULL , -- TODO correctionProf c'est quoi?
    -- TODO documentProf c'est quoi?
    valide NUMBER(1) NOT NULL
 );
