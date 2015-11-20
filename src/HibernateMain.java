@@ -1,27 +1,32 @@
 import org.hibernate.HibernateException;
-import org.hibernate.SessionFactory;
-import org.hibernate.Session;
 import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.metadata.ClassMetadata;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import java.util.Map;
 
 /**
- * Created by Benjamin on 17-11-15 at 16:10
+ * Created by Benjamin on 17-11-15 at 16:35
  */
 
-public class Main
+public class HibernateMain
 {
     private static final SessionFactory ourSessionFactory;
+    private static final ServiceRegistry serviceRegistry;
 
     static
     {
         try
         {
-            ourSessionFactory = new Configuration().
-                    configure("hibernate.cfg.xml").
-                    buildSessionFactory();
+            Configuration configuration = new Configuration();
+            configuration.configure();
+
+            serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+            ourSessionFactory = configuration.buildSessionFactory(serviceRegistry);
         } catch (Throwable ex)
         {
             throw new ExceptionInInitializerError(ex);
