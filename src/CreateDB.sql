@@ -16,7 +16,10 @@ CREATE TABLE Utilisateur (
    email VARCHAR2(254 char) NOT NULL,
    password VARCHAR2(254 char) NOT NULL,
    nom VARCHAR2(35) NOT NULL,
-   prenom VARCHAR2(35) NOT NULL
+   prenom VARCHAR2(35) NOT NULL,
+   telephone VARCHAR2(10),
+   annee NUMBER(1) NOT NULL,
+   doublant
 
 );
 
