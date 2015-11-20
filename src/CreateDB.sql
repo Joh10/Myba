@@ -2,7 +2,7 @@
 
 CREATE TABLE PermissionTable(
    id_Per NUMBER(10) NOT NULL,
-   nom VARCHAR2(35) NOT NULL
+   nom VARCHAR2(35 char) NOT NULL
 );
 
 CREATE TABLE RoleTable (
@@ -15,32 +15,46 @@ CREATE TABLE Utilisateur (
    -- TODO enable c'est quoi?
    email VARCHAR2(254 char) NOT NULL,
    password VARCHAR2(254 char) NOT NULL,
-   nom VARCHAR2(35) NOT NULL,
-   prenom VARCHAR2(35) NOT NULL,
-   telephone VARCHAR2(10),
+   nom VARCHAR2(35 char) NOT NULL,
+   prenom VARCHAR2(35 char) NOT NULL,
+   telephone VARCHAR2(10 char) NOT NULL,
    annee NUMBER(1) NOT NULL,
-   doublant
-
+   doublant NUMBER(1) NOT NULL
 );
 
 CREATE TABLE SuiviEcheance (
-   id_Sui NUMBER(10) NOT NULL
+   id_Sui NUMBER(10) NOT NULL,
+   dateRemis DATE NOT NULL,
+   -- TODO correctionProf c'est quoi?
+   -- TODO documentProf c'est quoi?
+   valide NUMBER(1) NOT NULL
 );
 
 CREATE TABLE Defense (
-   id_Def NUMBER(10) NOT NULL
+   id_Def NUMBER(10) NOT NULL,
+   date DATE NOT NULL,
+   local VARCHAR2(5 char) NOT NULL
 );
 
 CREATE TABLE Technologie (
-   id_Tec NUMBER(10) NOT NULL
+   id_Tec NUMBER(10) NOT NULL,
+   nom VARCHAR2(35 char) NOT NULL,
+   version VARCHAR2(35 char) NOT NULL
 );
 
 CREATE TABLE Stage (
-   id_Sta NUMBER(10) NOT NULL
+   id_Sta NUMBER(10) NOT NULL,
+   dateDebut DATE NOT NULL,
+   dateFin DATE NOT NULL,
+   pointsTotaux NUMBER(3,2) NOT NULL,
+   commantaires VARCHAR2(512 char) NOT NULL
 );
 
 CREATE TABLE PropositionStage (
-   id_Pro NUMBER(10) NOT NULL
+   id_Pro NUMBER(10) NOT NULL,
+   valide NUMBER(1) NOT NULL,
+   sujet VARCHAR2(1024 char) NOT NULL
+   -- TODO annexe quel type
 );
 
 CREATE TABLE Evaluation (
