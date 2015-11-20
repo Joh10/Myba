@@ -44,23 +44,42 @@ CREATE TABLE PropositionStage (
 );
 
 CREATE TABLE Evaluation (
-   id_Eva NUMBER(10) NOT NULL
+   id_Eva NUMBER(10) NOT NULL,
+   date DATE NOT NULL,
+   note NUMBER(3) NOT NULL,
+   commentaire VARCHAR2 (512 char) NOT NULL
 );
 
 CREATE TABLE Critere (
-   id_Cri NUMBER(10) NOT NULL
+   id_Cri NUMBER(10) NOT NULL,
+   type VARCHAR2 (35 char) NOT NULL,
+   nom VARCHAR2 (35 char) NOT NULL,
+   noteMax NUMBER(3) NOT NULL
 );
 
 CREATE TABLE LieuStage (
-   id_Lie NUMBER(10) NOT NULL
+  id_Lie NUMBER(10) NOT NULL,
+  entreprise VARCHAR2 (35 char) NOT NULL,
+  adresse VARCHAR2 (256 char) NOT NULL,
+  personneContact VARCHAR2 (70 char) NOT NULL,
+  telephone VARCHAR2 (10 char) NOT NULL,
+  email VARCHAR2 (254 char) NOT NULL
 );
 
 CREATE TABLE TFE(
-   id_Tfe NUMBER(10) NOT NULL
+   id_Tfe NUMBER(10) NOT NULL,
+   titre VARCHAR2 (35 char) NOT NULL,
+   pointsTotaux NUMBER(3,2) NOT NULL,
+   anneeAcadDebut DATE NOT NULL,
+   anneeAcadFin DATE NOT NULL
 );
 
 CREATE TABLE Echeance (
-   id_Ech NUMBER(10) NOT NULL
+   id_Ech NUMBER(10) NOT NULL,
+   dateCreation DATE NOT NULL,
+   dateEcheance DATE NOT NULL,
+   description VARCHAR2 (1024 char) NOT NULL,
+   --TODO annexe ?
 );
 
 -- CREATE SEQUENCE
