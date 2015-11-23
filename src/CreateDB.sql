@@ -25,7 +25,7 @@ CREATE TABLE Utilisateur (
 CREATE TABLE SuiviEcheance (
    id_Sui NUMBER(10) NOT NULL,
    dateRemis DATE NOT NULL,
-   commantaire VARCHAR2(512 char) NOT NULL , -- TODO correctionProf c'est quoi?
+   commentaire VARCHAR2(512 char) NOT NULL , -- TODO correctionProf c'est quoi?
    -- TODO documentProf c'est quoi?
    valide NUMBER(1) NOT NULL
 );
@@ -47,7 +47,7 @@ CREATE TABLE Stage (
    dateDebut DATE NOT NULL,
    dateFin DATE NOT NULL,
    pointsTotaux NUMBER(3,2) NOT NULL,
-   commantaires VARCHAR2(512 char) NOT NULL
+   commentaire VARCHAR2(512 char) NOT NULL
 );
 
 CREATE TABLE PropositionStage (
@@ -212,6 +212,6 @@ alter table SuiviEcheance add constraint CHK_Valide check (valide = 0 or valide 
 alter table PropositionStage add constraint CHK_Valide check (valide = 0 or valide = 1); -- check boolean
 
 
-
+--CREATE TRIGGER
 
 
