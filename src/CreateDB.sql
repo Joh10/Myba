@@ -6,7 +6,7 @@ CREATE TABLE PermissionTable(
    CONSTRAINT id_Per PRIMARY KEY (Id_Per)
 );
 
-create table PermissionTableXRoleTable (
+CREATE TABLE PermissionTableXRoleTable (
    id_Per NUMBER(10) NOT NULL,
    id_Rol NUMBER(10) NOT NULL,
    CONSTRAINT ID_PerXRol PRIMARY KEY (id_Per, id_Rol));
