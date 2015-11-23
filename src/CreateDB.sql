@@ -17,6 +17,11 @@ CREATE TABLE RoleTable (
    CONSTRAINT id_Rol PRIMARY KEY (Id_Rol)
 );
 
+create table UtilisateurXRoleTable (
+   id_Uti NUMBER(10) NOT NULL,
+   id_Rol NUMBER(10) NOT NULL,
+   CONSTRAINT ID_UtiXRol PRIMARY KEY (id_Uti, id_Rol));
+
 CREATE TABLE Utilisateur (
    id_Uti NUMBER(10) NOT NULL,
    enable NUMBER(1) NOT NULL, -- TODO enable c'est quoi? utilisateur est activ� ou pas
@@ -29,6 +34,26 @@ CREATE TABLE Utilisateur (
    doublant NUMBER(1) NOT NULL,
    CONSTRAINT id_Uti PRIMARY KEY (Id_Uti)
 );
+
+create table UtilisateurXDefense (
+   id_Uti NUMBER(10) NOT NULL,
+   id_Def NUMBER(10) NOT NULL,
+   CONSTRAINT ID_UtiXDef PRIMARY KEY (id_Uti, id_Def));
+
+create table UtilisateurXEcheance (
+   id_Uti NUMBER(10) NOT NULL,
+   id_Ech NUMBER(10) NOT NULL,
+   CONSTRAINT ID_UtiXEch PRIMARY KEY (id_Uti, id_Ech));
+
+create table UtilisateurXTFE (
+   id_Uti NUMBER(10) NOT NULL,
+   id_TFE NUMBER(10) NOT NULL,
+   CONSTRAINT ID_UtiXTFE PRIMARY KEY (id_Uti, id_TFE));
+
+create table UtilisateurXStage (
+   id_Uti NUMBER(10) NOT NULL,
+   id_Sta NUMBER(10) NOT NULL,
+   CONSTRAINT ID_UtiXSta PRIMARY KEY (id_Uti, id_Sta));
 
 CREATE TABLE SuiviEcheance (
    id_Sui NUMBER(10) NOT NULL,
@@ -53,6 +78,16 @@ CREATE TABLE Technologie (
    CONSTRAINT id_Tec PRIMARY KEY (Id_Tec)
 );
 
+create table TechnologieXTFE (
+   id_Tec NUMBER(10) NOT NULL,
+   id_TFE NUMBER(10) NOT NULL,
+   CONSTRAINT ID_TecXTFE PRIMARY KEY (id_Tec, id_TFE));
+
+create table TechnologieXSta (
+   id_Tec NUMBER(10) NOT NULL,
+   id_Sta NUMBER(10) NOT NULL,
+   CONSTRAINT ID_TecXSta PRIMARY KEY (id_Tec, id_Sta));
+
 CREATE TABLE Stage (
    id_Sta NUMBER(10) NOT NULL,
    dateDebut DATE NOT NULL,
@@ -61,6 +96,11 @@ CREATE TABLE Stage (
    commentaire VARCHAR2(512 char) NOT NULL,
    CONSTRAINT id_Sta PRIMARY KEY (Id_Sta)
 );
+
+create table StageXEcheance (
+   id_Sta NUMBER(10) NOT NULL,
+   id_Ech NUMBER(10) NOT NULL,
+   CONSTRAINT ID_StaXEch PRIMARY KEY (id_Sta, id_Ech));
 
 CREATE TABLE PropositionStage (
    id_Pro NUMBER(10) NOT NULL,
@@ -105,6 +145,11 @@ CREATE TABLE TFE(
    anneeAcadFin DATE NOT NULL,
    CONSTRAINT id_TFE PRIMARY KEY (Id_TFE)
 );
+
+create table TFEXEcheance (
+   id_TFE NUMBER(10) NOT NULL,
+   id_Ech NUMBER(10) NOT NULL,
+   CONSTRAINT ID_TFEXEch PRIMARY KEY (id_TFE, id_Ech));
 
 CREATE TABLE Echeance (
    id_Ech NUMBER(10) NOT NULL,
