@@ -118,93 +118,94 @@ CREATE OR REPLACE TRIGGER  id_gen_Permission
 BEFORE INSERT ON PermissionTable
 FOR EACH ROW
    BEGIN
-      SELECT seq_Permission.NEXTVAL INTO :new./*ID COL*/ FROM dual;
+      SELECT seq_Permission.NEXTVAL INTO :new.id_Per FROM dual;
    END;
 
 CREATE OR REPLACE TRIGGER  id_gen_Role
 BEFORE INSERT ON RoleTable
 FOR EACH ROW
    BEGIN
-      SELECT seq_Role.NEXTVAL INTO :new./*ID COL*/ FROM dual;
+      SELECT seq_Role.NEXTVAL INTO :new.id_Rol FROM dual;
    END;
 
 CREATE OR REPLACE TRIGGER  id_gen_Utilisateur
 BEFORE INSERT ON Utilisateur
 FOR EACH ROW
    BEGIN
-      SELECT seq_Utilisateur.NEXTVAL INTO :new./*ID COL*/ FROM dual;
+      SELECT seq_Utilisateur.NEXTVAL INTO :new.id_Uti FROM dual;
    END;
 
 CREATE OR REPLACE TRIGGER  id_gen_SuiviEcheance
 BEFORE INSERT ON SuiviEcheance
 FOR EACH ROW
    BEGIN
-      SELECT seq_SuiviEcheance.NEXTVAL INTO :new./*ID COL*/ FROM dual;
+      SELECT seq_SuiviEcheance.NEXTVAL INTO :new.id_Sui FROM dual;
    END;
 
 CREATE OR REPLACE TRIGGER  id_gen_Defense
-BEFORE INSERT ON SuiviDefense
+BEFORE INSERT ON Defense
 FOR EACH ROW
    BEGIN
-      SELECT seq_Defense.NEXTVAL INTO :new./*ID COL*/ FROM dual;
+      SELECT seq_Defense.NEXTVAL INTO :new.id_Def FROM dual;
    END;
 
 CREATE OR REPLACE TRIGGER  id_gen_Technologie
 BEFORE INSERT ON Technologie
 FOR EACH ROW
    BEGIN
-      SELECT seq_Technologie.NEXTVAL INTO :new./*ID COL*/ FROM dual;
+      SELECT seq_Technologie.NEXTVAL INTO :new.id_Tec FROM dual;
    END;
 
 CREATE OR REPLACE TRIGGER  id_gen_Stage
 BEFORE INSERT ON Stage
 FOR EACH ROW
    BEGIN
-      SELECT seq_Stage.NEXTVAL INTO :new./*ID COL*/ FROM dual;
+      SELECT seq_Stage.NEXTVAL INTO :new.id_Sta FROM dual;
    END;
 
 CREATE OR REPLACE TRIGGER  id_gen_PropositionStage
 BEFORE INSERT ON PropositionStage
 FOR EACH ROW
    BEGIN
-      SELECT seq_PropositionStage.NEXTVAL INTO :new./*ID COL*/ FROM dual;
+      SELECT seq_PropositionStage.NEXTVAL INTO :new.id_Pro FROM dual;
    END;
 
 CREATE OR REPLACE TRIGGER  id_gen_Evaluation
 BEFORE INSERT ON Evaluation
 FOR EACH ROW
    BEGIN
-      SELECT seq_Evaluation.NEXTVAL INTO :new./*ID COL*/ FROM dual;
+      SELECT seq_Evaluation.NEXTVAL INTO :new.id_Eva FROM dual;
    END;
 
 CREATE OR REPLACE TRIGGER  id_gen_Critere
 BEFORE INSERT ON Critere
 FOR EACH ROW
    BEGIN
-      SELECT seq_Critere.NEXTVAL INTO :new./*ID COL*/ FROM dual;
+      SELECT seq_Critere.NEXTVAL INTO :new.id_Cri FROM dual;
    END;
 
 CREATE OR REPLACE TRIGGER  id_gen_LieuStage
 BEFORE INSERT ON LieuStage
 FOR EACH ROW
    BEGIN
-      SELECT seq_LieuStage.NEXTVAL INTO :new./*ID COL*/ FROM dual;
+      SELECT seq_LieuStage.NEXTVAL INTO :new.id_Lie FROM dual;
    END;
 
 CREATE OR REPLACE TRIGGER  id_gen_TFE
 BEFORE INSERT ON TFE
 FOR EACH ROW
    BEGIN
-      SELECT seq_TFE.NEXTVAL INTO :new./*ID COL*/ FROM dual;
+      SELECT seq_TFE.NEXTVAL INTO :new.id_Tfe FROM dual;
    END;
 
 CREATE OR REPLACE TRIGGER  id_gen_Echeance
 BEFORE INSERT ON Echeance
 FOR EACH ROW
    BEGIN
-      SELECT seq_Echeance.NEXTVAL INTO :new./*ID COL*/ FROM dual;
+      SELECT seq_Echeance.NEXTVAL INTO :new.id_Ech FROM dual;
    END;
 
+--CREATE TRIGGER BOOLEAN CHECK
 
 
 
