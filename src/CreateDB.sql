@@ -244,4 +244,6 @@ ALTER TABLE LieuStage ADD CONSTRAINT CHK_telephoneLie CHECK (regexp_like(telepho
 
 --CREATE ALTER TABLE FK
 
+Alter table Utilisateur Add constraint FK_PropositionStage FOREIGN KEY (ref_Utilisateur) References Utilisateur(id_Uti);
 
+Alter table SuiviEcheance Add constraint FK_Utilisateur FOREIGN KEY (ref_SuiviEcheance)
