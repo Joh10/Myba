@@ -233,11 +233,15 @@ ALTER TABLE PropositionStage ADD CONSTRAINT CHK_Valide CHECK (valide = 0 OR vali
 
 --CREATE TRIGGER MAIL
 
+ALTER TABLE Utilisateur ADD CONSTRAINT CHK_UtilisateurMail check (regexp_like(mail,'^.+@.+\..+$'));
+ALTER TABLE LieuStage ADD CONSTRAINT CHK_LieuStageMail check (regexp_like(mail,'^.+@.+\..+$'));
+
 --CREATE TRIGGER TELEPHONE
 
 ALTER TABLE Utilisateur ADD CONSTRAINT CHK_UtilisateurTel CHECK (regexp_like(telephone,'^(([+]32|0032)\\s\\(0\\)([0-9]{9})|([+]32|0032)\\s0([0-9]{9})|0([0-9]{9}))$'));
-ALTER TABLE lieuDeStage ADD CONSTRAINT CHK_telephoneLie CHECK (regexp_like(per_telephone,'^(([+]32|0032)\\s\\(0\\)([0-9]{9})|([+]32|0032)\\s0([0-9]{9})|0([0-9]{9}))$'));
+ALTER TABLE LieuStage ADD CONSTRAINT CHK_telephoneLie CHECK (regexp_like(telephone,'^(([+]32|0032)\\s\\(0\\)([0-9]{9})|([+]32|0032)\\s0([0-9]{9})|0([0-9]{9}))$'));
 
 
+--CREATE ALTER TABLE FK
 
 
