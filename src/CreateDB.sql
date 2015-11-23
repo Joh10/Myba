@@ -8,19 +8,21 @@ CREATE TABLE PermissionTable(
 
 CREATE TABLE RoleTable (
    id_Rol NUMBER(10) NOT NULL,
-   nom VARCHAR2(35 char) NOT NULL
+   nom VARCHAR2(35 char) NOT NULL,
+   constraint id_Rol primary key (Id_Rol)
 );
 
 CREATE TABLE Utilisateur (
    id_Uti NUMBER(10) NOT NULL,
-   enable NUMBER(1) NOT NULL, -- TODO enable c'est quoi? utilisateur est activé ou pas
+   enable NUMBER(1) NOT NULL, -- TODO enable c'est quoi? utilisateur est activï¿½ ou pas
    email VARCHAR2(254 char) NOT NULL,
    password VARCHAR2(254 char) NOT NULL,
    nom VARCHAR2(35 char) NOT NULL,
    prenom VARCHAR2(35 char) NOT NULL,
    telephone VARCHAR2(10 char) NOT NULL,
    annee NUMBER(1) NOT NULL,
-   doublant NUMBER(1) NOT NULL
+   doublant NUMBER(1) NOT NULL,
+   constraint id_Uti primary key (Id_Uti)
 );
 
 CREATE TABLE SuiviEcheance (
@@ -28,19 +30,22 @@ CREATE TABLE SuiviEcheance (
    dateRemis DATE NOT NULL,
    commentaire VARCHAR2(512 char) NOT NULL , -- TODO correctionProf c'est quoi?
    -- TODO documentProf c'est quoi?
-   valide NUMBER(1) NOT NULL
+   valide NUMBER(1) NOT NULL,
+   constraint id_Sui primary key (Id_Sui)
 );
 
 CREATE TABLE Defense (
    id_Def NUMBER(10) NOT NULL,
    date DATE NOT NULL,
-   local VARCHAR2(5 char) NOT NULL
+   local VARCHAR2(5 char) NOT NULL,
+   constraint id_Def primary key (Id_Def)
 );
 
 CREATE TABLE Technologie (
    id_Tec NUMBER(10) NOT NULL,
    nom VARCHAR2(35 char) NOT NULL,
-   version VARCHAR2(35 char) NOT NULL
+   version VARCHAR2(35 char) NOT NULL,
+   constraint id_Tec primary key (Id_Tec)
 );
 
 CREATE TABLE Stage (
@@ -48,28 +53,33 @@ CREATE TABLE Stage (
    dateDebut DATE NOT NULL,
    dateFin DATE NOT NULL,
    pointsTotaux NUMBER(3,2) NOT NULL,
-   commentaire VARCHAR2(512 char) NOT NULL
+   commentaire VARCHAR2(512 char) NOT NULL,
+   constraint id_Sta primary key (Id_Sta)
 );
 
 CREATE TABLE PropositionStage (
    id_Pro NUMBER(10) NOT NULL,
    valide NUMBER(1) NOT NULL,
-   sujet VARCHAR2(1024 char) NOT NULL
+   sujet VARCHAR2(1024 char) NOT NULL,
    -- TODO annexe quel type
+   constraint id_Pro primary key (Id_Pro)
 );
 
 CREATE TABLE Evaluation (
    id_Eva NUMBER(10) NOT NULL,
    date DATE NOT NULL,
    note NUMBER(3) NOT NULL,
-   commentaire VARCHAR2 (512 char) NOT NULL
+   commentaire VARCHAR2 (512 char) NOT NULL,
+   constraint id_Eva primary key (Id_Eva)
+
 );
 
 CREATE TABLE Critere (
    id_Cri NUMBER(10) NOT NULL,
    type VARCHAR2 (35 char) NOT NULL,
    nom VARCHAR2 (35 char) NOT NULL,
-   noteMax NUMBER(3) NOT NULL
+   noteMax NUMBER(3) NOT NULL,
+   constraint id_Cri primary key (Id_Cri)
 );
 
 CREATE TABLE LieuStage (
@@ -78,7 +88,8 @@ CREATE TABLE LieuStage (
   adresse VARCHAR2 (256 char) NOT NULL,
   personneContact VARCHAR2 (70 char) NOT NULL,
   telephone VARCHAR2 (10 char) NOT NULL,
-  email VARCHAR2 (254 char) NOT NULL
+  email VARCHAR2 (254 char) NOT NULL,
+  constraint id_Lie primary key (Id_Lie)
 );
 
 CREATE TABLE TFE(
@@ -86,7 +97,8 @@ CREATE TABLE TFE(
    titre VARCHAR2 (35 char) NOT NULL,
    pointsTotaux NUMBER(3,2) NOT NULL,
    anneeAcadDebut DATE NOT NULL,
-   anneeAcadFin DATE NOT NULL
+   anneeAcadFin DATE NOT NULL,
+   constraint id_TFE primary key (Id_TFE)
 );
 
 CREATE TABLE Echeance (
@@ -95,6 +107,7 @@ CREATE TABLE Echeance (
    dateEcheance DATE NOT NULL,
    description VARCHAR2 (1024 char) NOT NULL,
    --TODO annexe ?
+   constraint id_Ech primary key (Id_Ech)
 );
 
 -- CREATE SEQUENCE
@@ -212,6 +225,7 @@ alter table Utilisateur add constraint CHK_Doublant check (doublant = 0 or doubl
 alter table SuiviEcheance add constraint CHK_Valide check (valide = 0 or valide = 1); -- check boolean
 alter table PropositionStage add constraint CHK_Valide check (valide = 0 or valide = 1); -- check boolean
 
+--CREATE TRIGGER PRIMARY KEY
 
 --CREATE TRIGGER
 
