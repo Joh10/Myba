@@ -2,7 +2,8 @@
 
 CREATE TABLE PermissionTable(
    id_Per NUMBER(10) NOT NULL,
-   nom VARCHAR2(35 char) NOT NULL
+   nom VARCHAR2(35 char) NOT NULL,
+   constraint id_Per primary key (Id_Per)
 );
 
 CREATE TABLE RoleTable (
