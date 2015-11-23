@@ -3,7 +3,7 @@
 CREATE TABLE PermissionTable(
    id_Per NUMBER(10) NOT NULL,
    nom VARCHAR2(35 char) NOT NULL,
-   constraint id_Per primary key (Id_Per)
+   CONSTRAINT id_Per PRIMARY KEY (Id_Per)
 );
 
 create table PermissionTableXRoleTable (
@@ -14,7 +14,7 @@ create table PermissionTableXRoleTable (
 CREATE TABLE RoleTable (
    id_Rol NUMBER(10) NOT NULL,
    nom VARCHAR2(35 char) NOT NULL,
-   constraint id_Rol primary key (Id_Rol)
+   CONSTRAINT id_Rol PRIMARY KEY (Id_Rol)
 );
 
 CREATE TABLE Utilisateur (
@@ -27,7 +27,7 @@ CREATE TABLE Utilisateur (
    telephone VARCHAR2(10 char) NOT NULL,
    annee NUMBER(1) NOT NULL,
    doublant NUMBER(1) NOT NULL,
-   constraint id_Uti primary key (Id_Uti)
+   CONSTRAINT id_Uti PRIMARY KEY (Id_Uti)
 );
 
 CREATE TABLE SuiviEcheance (
@@ -36,21 +36,21 @@ CREATE TABLE SuiviEcheance (
    commentaire VARCHAR2(512 char) NOT NULL , -- TODO correctionProf c'est quoi?
    -- TODO documentProf c'est quoi?
    valide NUMBER(1) NOT NULL,
-   constraint id_Sui primary key (Id_Sui)
+   CONSTRAINT id_Sui PRIMARY KEY (Id_Sui)
 );
 
 CREATE TABLE Defense (
    id_Def NUMBER(10) NOT NULL,
    date DATE NOT NULL,
    local VARCHAR2(5 char) NOT NULL,
-   constraint id_Def primary key (Id_Def)
+   CONSTRAINT id_Def PRIMARY KEY (Id_Def)
 );
 
 CREATE TABLE Technologie (
    id_Tec NUMBER(10) NOT NULL,
    nom VARCHAR2(35 char) NOT NULL,
    version VARCHAR2(35 char) NOT NULL,
-   constraint id_Tec primary key (Id_Tec)
+   CONSTRAINT id_Tec PRIMARY KEY (Id_Tec)
 );
 
 CREATE TABLE Stage (
@@ -59,7 +59,7 @@ CREATE TABLE Stage (
    dateFin DATE NOT NULL,
    pointsTotaux NUMBER(3,2) NOT NULL,
    commentaire VARCHAR2(512 char) NOT NULL,
-   constraint id_Sta primary key (Id_Sta)
+   CONSTRAINT id_Sta PRIMARY KEY (Id_Sta)
 );
 
 CREATE TABLE PropositionStage (
@@ -67,7 +67,7 @@ CREATE TABLE PropositionStage (
    valide NUMBER(1) NOT NULL,
    sujet VARCHAR2(1024 char) NOT NULL,
    -- TODO annexe quel type
-   constraint id_Pro primary key (Id_Pro)
+   CONSTRAINT id_Pro PRIMARY KEY (Id_Pro)
 );
 
 CREATE TABLE Evaluation (
@@ -75,7 +75,7 @@ CREATE TABLE Evaluation (
    date DATE NOT NULL,
    note NUMBER(3) NOT NULL,
    commentaire VARCHAR2 (512 char) NOT NULL,
-   constraint id_Eva primary key (Id_Eva)
+   CONSTRAINT id_Eva PRIMARY KEY (Id_Eva)
 
 );
 
@@ -84,7 +84,7 @@ CREATE TABLE Critere (
    type VARCHAR2 (35 char) NOT NULL,
    nom VARCHAR2 (35 char) NOT NULL,
    noteMax NUMBER(3) NOT NULL,
-   constraint id_Cri primary key (Id_Cri)
+   CONSTRAINT id_Cri PRIMARY KEY (Id_Cri)
 );
 
 CREATE TABLE LieuStage (
@@ -94,7 +94,7 @@ CREATE TABLE LieuStage (
   personneContact VARCHAR2 (70 char) NOT NULL,
   telephone VARCHAR2 (10 char) NOT NULL,
   email VARCHAR2 (254 char) NOT NULL,
-  constraint id_Lie primary key (Id_Lie)
+  CONSTRAINT id_Lie PRIMARY KEY (Id_Lie)
 );
 
 CREATE TABLE TFE(
@@ -103,7 +103,7 @@ CREATE TABLE TFE(
    pointsTotaux NUMBER(3,2) NOT NULL,
    anneeAcadDebut DATE NOT NULL,
    anneeAcadFin DATE NOT NULL,
-   constraint id_TFE primary key (Id_TFE)
+   CONSTRAINT id_TFE PRIMARY KEY (Id_TFE)
 );
 
 CREATE TABLE Echeance (
@@ -112,7 +112,7 @@ CREATE TABLE Echeance (
    dateEcheance DATE NOT NULL,
    description VARCHAR2 (1024 char) NOT NULL,
    --TODO annexe ?
-   constraint id_Ech primary key (Id_Ech)
+   CONSTRAINT id_Ech PRIMARY KEY (Id_Ech)
 );
 
 -- CREATE SEQUENCE
@@ -226,18 +226,18 @@ FOR EACH ROW
 
 --CREATE TRIGGER BOOLEAN CHECK
 
-alter table Utilisateur add constraint CHK_Enable check (enable = 0 or enable = 1);
-alter table Utilisateur add constraint CHK_Doublant check (doublant = 0 or doublant = 1);
-alter table SuiviEcheance add constraint CHK_Valide check (valide = 0 or valide = 1);
-alter table PropositionStage add constraint CHK_Valide check (valide = 0 or valide = 1);
+ALTER TABLE Utilisateur ADD CONSTRAINT CHK_Enable CHECK (enable = 0 OR enable = 1);
+ALTER TABLE Utilisateur ADD CONSTRAINT CHK_Doublant CHECK (doublant = 0 OR doublant = 1);
+ALTER TABLE SuiviEcheance ADD CONSTRAINT CHK_Valide CHECK (valide = 0 OR valide = 1);
+ALTER TABLE PropositionStage ADD CONSTRAINT CHK_Valide CHECK (valide = 0 OR valide = 1);
 
 --CREATE TRIGGER MAIL
 
 --CREATE TRIGGER TELEPHONE
-alter table Utilisateur add constraint CHK_UtilisateurTel check (regexp_like(telephone,'^(([+]32|0032)\\s\\(0\\)([0-9]{9})|([+]32|0032)\\s0([0-9]{9})|0([0-9]{9}))$'));
-alter table lieuDeStage add constraint CHK_telephoneLie check (regexp_like(per_telephone,'^(([+]32|0032)\\s\\(0\\)([0-9]{9})|([+]32|0032)\\s0([0-9]{9})|0([0-9]{9}))$'));
 
---CREATE TRIGGER PRIMARY KEY
+ALTER TABLE Utilisateur ADD CONSTRAINT CHK_UtilisateurTel CHECK (regexp_like(telephone,'^(([+]32|0032)\\s\\(0\\)([0-9]{9})|([+]32|0032)\\s0([0-9]{9})|0([0-9]{9}))$'));
+ALTER TABLE lieuDeStage ADD CONSTRAINT CHK_telephoneLie CHECK (regexp_like(per_telephone,'^(([+]32|0032)\\s\\(0\\)([0-9]{9})|([+]32|0032)\\s0([0-9]{9})|0([0-9]{9}))$'));
+
 
 
 
