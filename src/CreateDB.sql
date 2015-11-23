@@ -206,7 +206,10 @@ FOR EACH ROW
    END;
 
 --CREATE TRIGGER BOOLEAN CHECK
-
+alter table Utilisateur add constraint CHK_Enable check (enable = 0 or enable = 1); -- check boolean
+alter table Utilisateur add constraint CHK_Doublant check (doublant = 0 or doublant = 1); -- check boolean
+alter table SuiviEcheance add constraint CHK_Valide check (valide = 0 or valide = 1); -- check boolean
+alter table PropositionStage add constraint CHK_Valide check (valide = 0 or valide = 1); -- check boolean
 
 
 
