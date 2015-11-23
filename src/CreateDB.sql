@@ -17,7 +17,7 @@ CREATE TABLE RoleTable (
    CONSTRAINT id_Rol PRIMARY KEY (Id_Rol)
 );
 
-create table UtilisateurXRoleTable (
+CREATE TABLE UtilisateurXRoleTable (
    id_Uti NUMBER(10) NOT NULL,
    id_Rol NUMBER(10) NOT NULL,
    CONSTRAINT ID_UtiXRol PRIMARY KEY (id_Uti, id_Rol));
@@ -35,22 +35,22 @@ CREATE TABLE Utilisateur (
    CONSTRAINT id_Uti PRIMARY KEY (Id_Uti)
 );
 
-create table UtilisateurXDefense (
+CREATE TABLE UtilisateurXDefense (
    id_Uti NUMBER(10) NOT NULL,
    id_Def NUMBER(10) NOT NULL,
    CONSTRAINT ID_UtiXDef PRIMARY KEY (id_Uti, id_Def));
 
-create table UtilisateurXEcheance (
+CREATE TABLE UtilisateurXEcheance (
    id_Uti NUMBER(10) NOT NULL,
    id_Ech NUMBER(10) NOT NULL,
    CONSTRAINT ID_UtiXEch PRIMARY KEY (id_Uti, id_Ech));
 
-create table UtilisateurXTFE (
+CREATE TABLE UtilisateurXTFE (
    id_Uti NUMBER(10) NOT NULL,
    id_TFE NUMBER(10) NOT NULL,
    CONSTRAINT ID_UtiXTFE PRIMARY KEY (id_Uti, id_TFE));
 
-create table UtilisateurXStage (
+CREATE TABLE UtilisateurXStage (
    id_Uti NUMBER(10) NOT NULL,
    id_Sta NUMBER(10) NOT NULL,
    CONSTRAINT ID_UtiXSta PRIMARY KEY (id_Uti, id_Sta));
@@ -78,12 +78,12 @@ CREATE TABLE Technologie (
    CONSTRAINT id_Tec PRIMARY KEY (Id_Tec)
 );
 
-create table TechnologieXTFE (
+CREATE TABLE TechnologieXTFE (
    id_Tec NUMBER(10) NOT NULL,
    id_TFE NUMBER(10) NOT NULL,
    CONSTRAINT ID_TecXTFE PRIMARY KEY (id_Tec, id_TFE));
 
-create table TechnologieXSta (
+CREATE TABLE TechnologieXSta (
    id_Tec NUMBER(10) NOT NULL,
    id_Sta NUMBER(10) NOT NULL,
    CONSTRAINT ID_TecXSta PRIMARY KEY (id_Tec, id_Sta));
@@ -97,7 +97,7 @@ CREATE TABLE Stage (
    CONSTRAINT id_Sta PRIMARY KEY (Id_Sta)
 );
 
-create table StageXEcheance (
+CREATE TABLE StageXEcheance (
    id_Sta NUMBER(10) NOT NULL,
    id_Ech NUMBER(10) NOT NULL,
    CONSTRAINT ID_StaXEch PRIMARY KEY (id_Sta, id_Ech));
@@ -146,7 +146,7 @@ CREATE TABLE TFE(
    CONSTRAINT id_TFE PRIMARY KEY (Id_TFE)
 );
 
-create table TFEXEcheance (
+CREATE TABLE TFEXEcheance (
    id_TFE NUMBER(10) NOT NULL,
    id_Ech NUMBER(10) NOT NULL,
    CONSTRAINT ID_TFEXEch PRIMARY KEY (id_TFE, id_Ech));
@@ -285,7 +285,6 @@ ALTER TABLE LieuStage ADD CONSTRAINT CHK_LieuStageMail check (regexp_like(mail,'
 
 ALTER TABLE Utilisateur ADD CONSTRAINT CHK_UtilisateurTel CHECK (regexp_like(telephone,'^(([+]32|0032)\\s\\(0\\)([0-9]{9})|([+]32|0032)\\s0([0-9]{9})|0([0-9]{9}))$'));
 ALTER TABLE LieuStage ADD CONSTRAINT CHK_telephoneLie CHECK (regexp_like(telephone,'^(([+]32|0032)\\s\\(0\\)([0-9]{9})|([+]32|0032)\\s0([0-9]{9})|0([0-9]{9}))$'));
-
 
 --CREATE ALTER TABLE FK
 
