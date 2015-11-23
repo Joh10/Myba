@@ -6,6 +6,11 @@ CREATE TABLE PermissionTable(
    constraint id_Per primary key (Id_Per)
 );
 
+create table PermissionTableXRoleTable (
+   id_Per NUMBER(10) NOT NULL,
+   id_Rol NUMBER(10) NOT NULL,
+   CONSTRAINT ID_PerXRol PRIMARY KEY (id_Per, id_Rol));
+
 CREATE TABLE RoleTable (
    id_Rol NUMBER(10) NOT NULL,
    nom VARCHAR2(35 char) NOT NULL
@@ -207,12 +212,18 @@ FOR EACH ROW
    END;
 
 --CREATE TRIGGER BOOLEAN CHECK
-alter table Utilisateur add constraint CHK_Enable check (enable = 0 or enable = 1); -- check boolean
-alter table Utilisateur add constraint CHK_Doublant check (doublant = 0 or doublant = 1); -- check boolean
-alter table SuiviEcheance add constraint CHK_Valide check (valide = 0 or valide = 1); -- check boolean
-alter table PropositionStage add constraint CHK_Valide check (valide = 0 or valide = 1); -- check boolean
+
+alter table Utilisateur add constraint CHK_Enable check (enable = 0 or enable = 1);
+alter table Utilisateur add constraint CHK_Doublant check (doublant = 0 or doublant = 1);
+alter table SuiviEcheance add constraint CHK_Valide check (valide = 0 or valide = 1);
+alter table PropositionStage add constraint CHK_Valide check (valide = 0 or valide = 1);
+
+--CREATE TRIGGER MAIL
+
+--CREATE TRIGGER TELEPHONE
+alter table Utilisateur add constraint CHK_UtilisateurTel check (regexp_like(telephone,'^(([+]32|0032)\\s\\(0\\)([0-9]{9})|([+]32|0032)\\s0([0-9]{9})|0([0-9]{9}))$'));
+alter table lieuDeStage add constraint CHK_telephoneLie check (regexp_like(per_telephone,'^(([+]32|0032)\\s\\(0\\)([0-9]{9})|([+]32|0032)\\s0([0-9]{9})|0([0-9]{9}))$'));
 
 
---CREATE TRIGGER
 
 
