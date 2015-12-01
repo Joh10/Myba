@@ -9,9 +9,10 @@ CREATE TABLE PermissionTable(
 CREATE TABLE PermissionTableXRoleTable (
    id_Per NUMBER(10) NOT NULL,
    id_Rol NUMBER(10) NOT NULL,
-   CONSTRAINT ID_PerXRol PRIMARY KEY (id_Per, id_Rol));
-
-CREATE TABLE RoleTable (
+   CONSTRAINT ID_PerXRol PRIMARY KEY (id_Per, id_Rol)
+ );
+ 
+ CREATE TABLE RoleTable (
    id_Rol NUMBER(10) NOT NULL,
    nom VARCHAR2(35 char) NOT NULL,
    CONSTRAINT id_Rol PRIMARY KEY (Id_Rol)
@@ -20,7 +21,8 @@ CREATE TABLE RoleTable (
 CREATE TABLE UtilisateurXRoleTable (
    id_Uti NUMBER(10) NOT NULL,
    id_Rol NUMBER(10) NOT NULL,
-   CONSTRAINT ID_UtiXRol PRIMARY KEY (id_Uti, id_Rol));
+   CONSTRAINT ID_UtiXRol PRIMARY KEY (id_Uti, id_Rol)
+);
 
 CREATE TABLE Utilisateur (
    id_Uti NUMBER(10) NOT NULL,
@@ -38,24 +40,28 @@ CREATE TABLE Utilisateur (
 CREATE TABLE UtilisateurXDefense (
    id_Uti NUMBER(10) NOT NULL,
    id_Def NUMBER(10) NOT NULL,
-   CONSTRAINT ID_UtiXDef PRIMARY KEY (id_Uti, id_Def));
+   CONSTRAINT ID_UtiXDef PRIMARY KEY (id_Uti, id_Def)
+);
 
 CREATE TABLE UtilisateurXEcheance (
    id_Uti NUMBER(10) NOT NULL,
    id_Ech NUMBER(10) NOT NULL,
-   CONSTRAINT ID_UtiXEch PRIMARY KEY (id_Uti, id_Ech));
-
-CREATE TABLE UtilisateurXTFE (
+   CONSTRAINT ID_UtiXEch PRIMARY KEY (id_Uti, id_Ech)
+ );
+ 
+ CREATE TABLE UtilisateurXTFE (
    id_Uti NUMBER(10) NOT NULL,
    id_TFE NUMBER(10) NOT NULL,
-   CONSTRAINT ID_UtiXTFE PRIMARY KEY (id_Uti, id_TFE));
-
-CREATE TABLE UtilisateurXStage (
+   CONSTRAINT ID_UtiXTFE PRIMARY KEY (id_Uti, id_TFE)
+ );
+ 
+ CREATE TABLE UtilisateurXStage (
    id_Uti NUMBER(10) NOT NULL,
    id_Sta NUMBER(10) NOT NULL,
-   CONSTRAINT ID_UtiXSta PRIMARY KEY (id_Uti, id_Sta));
-
-CREATE TABLE SuiviEcheance (
+   CONSTRAINT ID_UtiXSta PRIMARY KEY (id_Uti, id_Sta)
+ );
+ 
+ CREATE TABLE SuiviEcheance (
    id_Sui NUMBER(10) NOT NULL,
    dateRemis DATE NOT NULL,
    commentaire VARCHAR2(512 char) NOT NULL , -- TODO correctionProf c'est quoi?
@@ -66,7 +72,7 @@ CREATE TABLE SuiviEcheance (
 
 CREATE TABLE Defense (
    id_Def NUMBER(10) NOT NULL,
-   date DATE NOT NULL,
+   dateDefense DATE NOT NULL,
    local VARCHAR2(5 char) NOT NULL,
    CONSTRAINT id_Def PRIMARY KEY (Id_Def)
 );
@@ -81,13 +87,15 @@ CREATE TABLE Technologie (
 CREATE TABLE TechnologieXTFE (
    id_Tec NUMBER(10) NOT NULL,
    id_TFE NUMBER(10) NOT NULL,
-   CONSTRAINT ID_TecXTFE PRIMARY KEY (id_Tec, id_TFE));
-
+   CONSTRAINT ID_TecXTFE PRIMARY KEY (id_Tec, id_TFE)
+ );
+   
 CREATE TABLE TechnologieXSta (
    id_Tec NUMBER(10) NOT NULL,
    id_Sta NUMBER(10) NOT NULL,
-   CONSTRAINT ID_TecXSta PRIMARY KEY (id_Tec, id_Sta));
-
+   CONSTRAINT ID_TecXSta PRIMARY KEY (id_Tec, id_Sta)
+ );
+ 
 CREATE TABLE Stage (
    id_Sta NUMBER(10) NOT NULL,
    dateDebut DATE NOT NULL,
@@ -100,7 +108,8 @@ CREATE TABLE Stage (
 CREATE TABLE StageXEcheance (
    id_Sta NUMBER(10) NOT NULL,
    id_Ech NUMBER(10) NOT NULL,
-   CONSTRAINT ID_StaXEch PRIMARY KEY (id_Sta, id_Ech));
+   CONSTRAINT ID_StaXEch PRIMARY KEY (id_Sta, id_Ech)
+);
 
 CREATE TABLE PropositionStage (
    id_Pro NUMBER(10) NOT NULL,
@@ -112,7 +121,7 @@ CREATE TABLE PropositionStage (
 
 CREATE TABLE Evaluation (
    id_Eva NUMBER(10) NOT NULL,
-   date DATE NOT NULL,
+   dateDefense DATE NOT NULL,
    note NUMBER(3) NOT NULL,
    commentaire VARCHAR2 (512 char) NOT NULL,
    CONSTRAINT id_Eva PRIMARY KEY (Id_Eva)
@@ -149,7 +158,8 @@ CREATE TABLE TFE(
 CREATE TABLE TFEXEcheance (
    id_TFE NUMBER(10) NOT NULL,
    id_Ech NUMBER(10) NOT NULL,
-   CONSTRAINT ID_TFEXEch PRIMARY KEY (id_TFE, id_Ech));
+   CONSTRAINT ID_TFEXEch PRIMARY KEY (id_TFE, id_Ech)
+);
 
 CREATE TABLE Echeance (
    id_Ech NUMBER(10) NOT NULL,
@@ -274,18 +284,14 @@ FOR EACH ROW
 ALTER TABLE Utilisateur ADD CONSTRAINT CHK_Enable CHECK (enable = 0 OR enable = 1);
 ALTER TABLE Utilisateur ADD CONSTRAINT CHK_Doublant CHECK (doublant = 0 OR doublant = 1);
 ALTER TABLE SuiviEcheance ADD CONSTRAINT CHK_Valide CHECK (valide = 0 OR valide = 1);
-ALTER TABLE PropositionStage ADD CONSTRAINT CHK_Valide CHECK (valide = 0 OR valide = 1);
+ALTER TABLE PropositionStage ADD CONSTRAINT CHK_Valide_Propo CHECK (valide = 0 OR valide = 1);
 
 --CREATE TRIGGER MAIL
 
-ALTER TABLE Utilisateur ADD CONSTRAINT CHK_UtilisateurMail check (regexp_like(mail,'^.+@.+\..+$'));
-ALTER TABLE LieuStage ADD CONSTRAINT CHK_LieuStageMail check (regexp_like(mail,'^.+@.+\..+$'));
+ALTER TABLE Utilisateur ADD CONSTRAINT CHK_UtilisateurMail check (regexp_like(email,'^.+@.+\..+$'));
+ALTER TABLE LieuStage ADD CONSTRAINT CHK_LieuStageMail check (regexp_like(email,'^.+@.+\..+$'));
 
 --CREATE TRIGGER TELEPHONE
 
 ALTER TABLE Utilisateur ADD CONSTRAINT CHK_UtilisateurTel CHECK (regexp_like(telephone,'^(([+]32|0032)\\s\\(0\\)([0-9]{9})|([+]32|0032)\\s0([0-9]{9})|0([0-9]{9}))$'));
 ALTER TABLE LieuStage ADD CONSTRAINT CHK_telephoneLie CHECK (regexp_like(telephone,'^(([+]32|0032)\\s\\(0\\)([0-9]{9})|([+]32|0032)\\s0([0-9]{9})|0([0-9]{9}))$'));
-
---CREATE ALTER TABLE FK
-
-
