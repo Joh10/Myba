@@ -66,7 +66,7 @@ CREATE TABLE SuiviEcheance (
 
 CREATE TABLE Defense (
    id_Def NUMBER(10) NOT NULL,
-   date DATE NOT NULL,
+   dateDefense DATE NOT NULL,
    local VARCHAR2(5 char) NOT NULL,
    CONSTRAINT id_Def PRIMARY KEY (Id_Def)
 );
@@ -112,7 +112,7 @@ CREATE TABLE PropositionStage (
 
 CREATE TABLE Evaluation (
    id_Eva NUMBER(10) NOT NULL,
-   date DATE NOT NULL,
+   dateDefense DATE NOT NULL,
    note NUMBER(3) NOT NULL,
    commentaire VARCHAR2 (512 char) NOT NULL,
    CONSTRAINT id_Eva PRIMARY KEY (Id_Eva)
@@ -274,12 +274,12 @@ FOR EACH ROW
 ALTER TABLE Utilisateur ADD CONSTRAINT CHK_Enable CHECK (enable = 0 OR enable = 1);
 ALTER TABLE Utilisateur ADD CONSTRAINT CHK_Doublant CHECK (doublant = 0 OR doublant = 1);
 ALTER TABLE SuiviEcheance ADD CONSTRAINT CHK_Valide CHECK (valide = 0 OR valide = 1);
-ALTER TABLE PropositionStage ADD CONSTRAINT CHK_Valide CHECK (valide = 0 OR valide = 1);
+ALTER TABLE PropositionStage ADD CONSTRAINT CHK_Valide_Propo CHECK (valide = 0 OR valide = 1);
 
 --CREATE TRIGGER MAIL
 
-ALTER TABLE Utilisateur ADD CONSTRAINT CHK_UtilisateurMail check (regexp_like(mail,'^.+@.+\..+$'));
-ALTER TABLE LieuStage ADD CONSTRAINT CHK_LieuStageMail check (regexp_like(mail,'^.+@.+\..+$'));
+ALTER TABLE Utilisateur ADD CONSTRAINT CHK_UtilisateurMail check (regexp_like(email,'^.+@.+\..+$'));
+ALTER TABLE LieuStage ADD CONSTRAINT CHK_LieuStageMail check (regexp_like(email,'^.+@.+\..+$'));
 
 --CREATE TRIGGER TELEPHONE
 
@@ -288,31 +288,4 @@ ALTER TABLE LieuStage ADD CONSTRAINT CHK_telephoneLie CHECK (regexp_like(telepho
 
 --CREATE ALTER TABLE FK
 
-Alter table PropositionStage Add constraint FK_Utilisateur FOREIGN KEY (ref_Utilisateur) References Utilisateur(id_Uti);
-
-Alter table SuiviEcheance Add constraint FK_Utilisateur FOREIGN KEY (ref_Utilisateur) References Utilisateur(id_Uti);
-
-Alter table LieuStage Add Constraint FK_Utilisateur FOREIGN KEY (ref_Utilisateur) References Utilisateur(id_Uti);
-
-Alter table PropositionStage Add Constraint FK_LieuStage FOREIGN KEY (ref_LieuStage) References LieuStage(id_Lie);
-
-Alter table Stage Add constraint FK_PropositionStage Foreign KEy (ref_PropositionStage) References PropositionStage(id_Pro);
-
-Alter table Evaluation Add constraint FK_Utilisateur FOREIGN KEY (ref_Utilisateur) References Utilisateur(id_Uti);
-
-Alter table Evaluation Add constraint FK_Critere Foreign Key (ref_Critere) References Critere(id_Crit);
-
-Alter table Evaluation Add constraint FK_TFE Foreign Key (ref_TFE) References TFE(id_Tfe);
-
-Alter table Defense Add constraint FK_Stage Foreign Key (ref_Stage) References Stage(id_Sta);
-
-Alter table Defense Add constraint FK_Utilisateur Foreign Key (ref_Utilisateur) References Utilisateur(id_Uti);
-
-Alter Table Evaluation Add constraint FK_Defense Foreign Key (ref_Defense) References Defense(id_Def);
-
-Alter table Evaluation Add constraint FK_Stage Foreign Key (ref_Stage) References Stage(id_Stage);
-
-Alter table Defense Add constraint FK_TFE Foreign Key (ref_Tfe) References TFE(id_Tfe);
-
-Alter table SuiviEcheance et echeance. Verif Diag.
 
