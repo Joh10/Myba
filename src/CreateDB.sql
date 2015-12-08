@@ -288,4 +288,32 @@ ALTER TABLE LieuStage ADD CONSTRAINT CHK_telephoneLie CHECK (regexp_like(telepho
 
 --CREATE ALTER TABLE FK
 
+Alter table PropositionStage Add constraint FK_Utilisateur FOREIGN KEY (ref_Utilisateur) References Utilisateur(id_Uti);
+
+Alter table SuiviEcheance Add constraint FK_Utilisateur FOREIGN KEY (ref_Utilisateur) References Utilisateur(id_Uti);
+
+Alter table LieuStage Add Constraint FK_Utilisateur FOREIGN KEY (ref_Utilisateur) References Utilisateur(id_Uti);
+
+Alter table PropositionStage Add Constraint FK_LieuStage FOREIGN KEY (ref_LieuStage) References LieuStage(id_Lie);
+
+Alter table Stage Add constraint FK_PropositionStage Foreign KEy (ref_PropositionStage) References PropositionStage(id_Pro);
+
+Alter table Evaluation Add constraint FK_Utilisateur FOREIGN KEY (ref_Utilisateur) References Utilisateur(id_Uti);
+
+Alter table Evaluation Add constraint FK_Critere Foreign Key (ref_Critere) References Critere(id_Crit);
+
+Alter table Evaluation Add constraint FK_TFE Foreign Key (ref_TFE) References TFE(id_Tfe);
+
+Alter table Defense Add constraint FK_Stage Foreign Key (ref_Stage) References Stage(id_Sta);
+
+Alter table Defense Add constraint FK_Utilisateur Foreign Key (ref_Utilisateur) References Utilisateur(id_Uti);
+
+Alter Table Evaluation Add constraint FK_Defense Foreign Key (ref_Defense) References Defense(id_Def);
+
+Alter table Evaluation Add constraint FK_Stage Foreign Key (ref_Stage) References Stage(id_Stage);
+
+Alter table Defense Add constraint FK_TFE Foreign Key (ref_Tfe) References TFE(id_Tfe);
+
+Alter table SuiviEcheance et echeance. Verif Diag.
+
 
