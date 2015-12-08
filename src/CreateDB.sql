@@ -35,10 +35,11 @@ CREATE TABLE Utilisateur (
    CONSTRAINT id_Uti PRIMARY KEY (Id_Uti)
 );
 
+/* Pas besion car dans la model métier les utilisateur d'une défense sont connut par leur stage/TFE
 CREATE TABLE UtilisateurXDefense (
    id_Uti NUMBER(10) NOT NULL,
    id_Def NUMBER(10) NOT NULL,
-   CONSTRAINT ID_UtiXDef PRIMARY KEY (id_Uti, id_Def));
+   CONSTRAINT ID_UtiXDef PRIMARY KEY (id_Uti, id_Def));*/
 
 CREATE TABLE UtilisateurXEcheance (
    id_Uti NUMBER(10) NOT NULL,
@@ -55,14 +56,15 @@ CREATE TABLE UtilisateurXStage (
    id_Sta NUMBER(10) NOT NULL,
    CONSTRAINT ID_UtiXSta PRIMARY KEY (id_Uti, id_Sta));
 
-CREATE TABLE SuiviEcheance (
+--Pas de classe métier suivit échéance
+/*CREATE TABLE SuiviEcheance (
    id_Sui NUMBER(10) NOT NULL,
    dateRemis DATE NOT NULL,
    commentaire VARCHAR2(512 char) NOT NULL , -- TODO correctionProf c'est quoi?
    -- TODO documentProf c'est quoi?
    valide NUMBER(1) NOT NULL,
    CONSTRAINT id_Sui PRIMARY KEY (Id_Sui)
-);
+);*/
 
 CREATE TABLE Defense (
    id_Def NUMBER(10) NOT NULL,
@@ -314,6 +316,6 @@ Alter table Evaluation Add constraint FK_Stage Foreign Key (ref_Stage) Reference
 
 Alter table Defense Add constraint FK_TFE Foreign Key (ref_Tfe) References TFE(id_Tfe);
 
-Alter table SuiviEcheance et echeance. Verif Diag.
+--Alter table SuiviEcheance et echeance. Verif Diag.
 
 
