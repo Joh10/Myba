@@ -1,4 +1,4 @@
-package Model;
+package beans;
 
 public class PropositionStage {
 	private int id;
