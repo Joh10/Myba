@@ -24,9 +24,10 @@ CREATE TABLE UtilisateurXRoleTable (
 
 CREATE TABLE Utilisateur (
    id_Uti NUMBER(10) NOT NULL,
-   enable NUMBER(1) NOT NULL, -- TODO enable c'est quoi? utilisateur est activ� ou pas
+   enable NUMBER(1) NOT NULL,
    email VARCHAR2(254 char) NOT NULL,
    password VARCHAR2(254 char) NOT NULL,
+   matricule Number(20) NOT NULL,
    nom VARCHAR2(35 char) NOT NULL,
    prenom VARCHAR2(35 char) NOT NULL,
    telephone VARCHAR2(10 char) NOT NULL,
@@ -60,8 +61,7 @@ CREATE TABLE UtilisateurXStage (
 /*CREATE TABLE SuiviEcheance (
    id_Sui NUMBER(10) NOT NULL,
    dateRemis DATE NOT NULL,
-   commentaire VARCHAR2(512 char) NOT NULL , -- TODO correctionProf c'est quoi?
-   -- TODO documentProf c'est quoi?
+   commentaire VARCHAR2(512 char) NOT NULL ,
    valide NUMBER(1) NOT NULL,
    CONSTRAINT id_Sui PRIMARY KEY (Id_Sui)
 );*/
@@ -108,7 +108,7 @@ CREATE TABLE PropositionStage (
    id_Pro NUMBER(10) NOT NULL,
    valide NUMBER(1) NOT NULL,
    sujet VARCHAR2(1024 char) NOT NULL,
-   -- TODO annexe quel type
+   annexe VARCHAR2 (1024 char),
    CONSTRAINT id_Pro PRIMARY KEY (Id_Pro)
 );
 
@@ -158,7 +158,7 @@ CREATE TABLE Echeance (
    dateCreation DATE NOT NULL,
    dateEcheance DATE NOT NULL,
    description VARCHAR2 (1024 char) NOT NULL,
-   --TODO annexe ?
+   annexe VARCHAR2 (1024 char),
    CONSTRAINT id_Ech PRIMARY KEY (Id_Ech)
 );
 
@@ -271,23 +271,6 @@ FOR EACH ROW
       SELECT seq_Echeance.NEXTVAL INTO :new.id_Ech FROM dual;
    END;
 
---CREATE TRIGGER BOOLEAN CHECK
-
-ALTER TABLE Utilisateur ADD CONSTRAINT CHK_Enable CHECK (enable = 0 OR enable = 1);
-ALTER TABLE Utilisateur ADD CONSTRAINT CHK_Doublant CHECK (doublant = 0 OR doublant = 1);
-ALTER TABLE SuiviEcheance ADD CONSTRAINT CHK_Valide CHECK (valide = 0 OR valide = 1);
-ALTER TABLE PropositionStage ADD CONSTRAINT CHK_Valide_Propo CHECK (valide = 0 OR valide = 1);
-
---CREATE TRIGGER MAIL
-
-ALTER TABLE Utilisateur ADD CONSTRAINT CHK_UtilisateurMail check (regexp_like(email,'^.+@.+\..+$'));
-ALTER TABLE LieuStage ADD CONSTRAINT CHK_LieuStageMail check (regexp_like(email,'^.+@.+\..+$'));
-
---CREATE TRIGGER TELEPHONE
-
-ALTER TABLE Utilisateur ADD CONSTRAINT CHK_UtilisateurTel CHECK (regexp_like(telephone,'^(([+]32|0032)\\s\\(0\\)([0-9]{9})|([+]32|0032)\\s0([0-9]{9})|0([0-9]{9}))$'));
-ALTER TABLE LieuStage ADD CONSTRAINT CHK_telephoneLie CHECK (regexp_like(telephone,'^(([+]32|0032)\\s\\(0\\)([0-9]{9})|([+]32|0032)\\s0([0-9]{9})|0([0-9]{9}))$'));
-
 --CREATE ALTER TABLE FK
 
 Alter table PropositionStage Add constraint FK_Utilisateur FOREIGN KEY (ref_Utilisateur) References Utilisateur(id_Uti);
@@ -319,3 +302,23 @@ Alter table Defense Add constraint FK_TFE Foreign Key (ref_Tfe) References TFE(i
 --Alter table SuiviEcheance et echeance. Verif Diag.
 
 
+--CREATE CONSTRAINT BOOLEAN CHECK
+
+ALTER TABLE Utilisateur ADD CONSTRAINT CHK_Enable CHECK (enable = 0 OR enable = 1);
+ALTER TABLE Utilisateur ADD CONSTRAINT CHK_Doublant CHECK (doublant = 0 OR doublant = 1);
+ALTER TABLE SuiviEcheance ADD CONSTRAINT CHK_Valide CHECK (valide = 0 OR valide = 1);
+ALTER TABLE PropositionStage ADD CONSTRAINT CHK_Valide_Propo CHECK (valide = 0 OR valide = 1);
+
+--CREATE CONSTRAINTR MAIL
+
+ALTER TABLE Utilisateur ADD CONSTRAINT CHK_UtilisateurMail check (regexp_like(email,'^.+@.+\..+$'));
+ALTER TABLE LieuStage ADD CONSTRAINT CHK_LieuStageMail check (regexp_like(email,'^.+@.+\..+$'));
+
+--CREATE CONSTRAINTR TELEPHONE
+
+ALTER TABLE Utilisateur ADD CONSTRAINT CHK_UtilisateurTel CHECK (regexp_like(telephone,'^(([+]\d\d|00\d\d)\\s\\(0\\)([0-9]{9})|([+]32|0032)\\s0([0-9]{9})|0([0-9]{9}))$'));
+ALTER TABLE LieuStage ADD CONSTRAINT CHK_LieuStageTel CHECK (regexp_like(telephone,'^(([+]\d\d|00\d\d)\\s\\(0\\)([0-9]{9})|([+]32|0032)\\s0([0-9]{9})|0([0-9]{9}))$'));
+
+--CREATE CONSTRAINT FILE PATH
+ALTER TABLE Echeance ADD CONSTRAINT CHK_EcheanceAnnexe CHECK (regexp_like(annexe,'^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.(txt|gif|pdf|doc|docx|xls|xlsx)$'));
+ALTER TABLE PropositionStage ADD CONSTRAINT CHK_PropositionStageAnnexe CHECK (regexp_like(annexe,'^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.(txt|gif|pdf|doc|docx|xls|xlsx)$'));
