@@ -320,5 +320,5 @@ ALTER TABLE Utilisateur ADD CONSTRAINT CHK_UtilisateurTel CHECK (regexp_like(tel
 ALTER TABLE LieuStage ADD CONSTRAINT CHK_LieuStageTel CHECK (regexp_like(telephone,'^(([+]\d\d|00\d\d)\\s\\(0\\)([0-9]{9})|([+]32|0032)\\s0([0-9]{9})|0([0-9]{9}))$'));
 
 --CREATE CONSTRAINT FILE PATH
-ALTER TABLE Echeance ADD CONSTRAINT CHK_EcheanceAnnexe CHECK (regexp_like(annexe,'^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.(txt|gif|pdf|doc|docx|xls|xlsx)$'));
-ALTER TABLE PropositionStage ADD CONSTRAINT CHK_PropositionStageAnnexe CHECK (regexp_like(annexe,'^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.(txt|gif|pdf|doc|docx|xls|xlsx)$'));
+ALTER TABLE Echeance ADD CONSTRAINT CHK_EcheanceAnnexe CHECK (regexp_like(annexe,'^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.(...|....)$'));
+ALTER TABLE PropositionStage ADD CONSTRAINT CHK_PropositionStageAnnexe CHECK (regexp_like(annexe,'^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.(...|....)$'));
