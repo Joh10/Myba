@@ -36,12 +36,6 @@ CREATE TABLE Utilisateur (
    CONSTRAINT id_Uti PRIMARY KEY (Id_Uti)
 );
 
-/* Pas besion car dans la model métier les utilisateur d'une défense sont connut par leur stage/TFE
-CREATE TABLE UtilisateurXDefense (
-   id_Uti NUMBER(10) NOT NULL,
-   id_Def NUMBER(10) NOT NULL,
-   CONSTRAINT ID_UtiXDef PRIMARY KEY (id_Uti, id_Def));*/
-
 CREATE TABLE UtilisateurXEcheance (
    id_Uti NUMBER(10) NOT NULL,
    id_Ech NUMBER(10) NOT NULL,
@@ -199,13 +193,6 @@ BEFORE INSERT ON Utilisateur
 FOR EACH ROW
    BEGIN
       SELECT seq_Utilisateur.NEXTVAL INTO :new.id_Uti FROM dual;
-   END;
-
-CREATE OR REPLACE TRIGGER  id_gen_SuiviEcheance
-BEFORE INSERT ON SuiviEcheance
-FOR EACH ROW
-   BEGIN
-      SELECT seq_SuiviEcheance.NEXTVAL INTO :new.id_Sui FROM dual;
    END;
 
 CREATE OR REPLACE TRIGGER  id_gen_Defense
