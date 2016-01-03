@@ -7,12 +7,26 @@ public class LieuStage implements Serializable {
 	 * Serializable car utilisé dans des comboBox
 	 */
 	private static final long serialVersionUID = -4714026859138312539L;
+
+	@Id
+	@Column(name = "id_Lie")
 	private int id;
+
 	private Utilisateur owner;
+
+	@Column(name = "entreprise")
 	private String nom;
+
+	@Column(name = "adresse")
 	private String adresse;
+
+	@Column(name = "personneContact")
 	private String personneContact;
+
+	@Column(name = "telephone")
 	private String telephone;
+
+	@Column(name = "email")
 	private String email;
 	
 	/**

@@ -3,13 +3,25 @@ package beans;
 import java.util.ArrayList;
 
 public class TFE {
+
+	@Column(name = "id_Tfe")
 	private int id;
+
 	private Utilisateur owner;
 	private Utilisateur promoteur;
+
+	@Column(name = "titre")
 	private String titre;
+
+	@Column(name = "pointsTotaux")
 	private double pointsTotaux;
+
+	@Column(name = "anneeAcadDebut")
 	private int anneeDebut;
+
+	@Column(name = "anneeAcadFin")
 	private int anneeFin;
+
 	private ArrayList<Technologie> technologies;
 	
 	/**

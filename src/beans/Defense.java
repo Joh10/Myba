@@ -3,11 +3,19 @@ package beans;
 import java.util.Date;
 
 public class Defense {
+
+	@Id
+	@Column(name = "id_Def")
 	private int id;
+
 	private Utilisateur presidentJury;
 	private Stage stage;
 	private TFE tfe;
+
+	@Column(name = "dateDefense")
 	private Date date;
+
+	@Column(name = "local")
 	private String local;
 	
 	/**

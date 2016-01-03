@@ -4,14 +4,27 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Echeance {
+
+	@Id
+	@Column(name = "id_Ech")
 	private int id;
+
 	private Utilisateur owner;
+
+	@Column(name = "dateCreation")
 	private Date dateCreation;
+
+	@Column(name = "dateEcheance")
 	private Date dateEcheance;
+
 	private TFE tfe;
 	private Stage stage;
 	private ArrayList<Utilisateur> users;
+
+	@Column(name = "description")
 	private String description;
+
+	@Column(name = "annexe")
 	private String annexe;
 
 	/**

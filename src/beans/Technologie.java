@@ -7,8 +7,15 @@ public class Technologie implements Serializable {
 	 * Sérializable nécessaire pour les HashMap (TwinColSelect)
 	 */
 	private static final long serialVersionUID = 3824815621140749028L;
+
+	@Id
+	@Column(name = "id_Tech")
 	private int id;
+
+	@Column(name = "nom")
 	private String nom;
+
+	@Column(name = "version")
 	private String version;
 	
 	/**

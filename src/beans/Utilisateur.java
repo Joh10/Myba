@@ -8,16 +8,39 @@ public class Utilisateur implements Serializable {
 	 * Sérializable car l'utilisateur va être stocké dans les sessions
 	 */
 	private static final long serialVersionUID = -2505999672679566044L;
+
+	@Id
+	@Column(name = "id_Uti")
 	private int id;
+
+	@Column(name = "enable")
 	private boolean enabled;
+
 	private Role role;
+
+	@Column(name = "email")
 	private String email;
+
+	@Column(name = "password")
 	private String passwordHash;
+
+	@Column(name = "matricule")
 	private Integer matricule;
+	//TODO Integer??? Fuck the what porlquè (si jms dans la bd c'est numeric (20)
+
+	@Column(name = "nom")
 	private String nom;
+
+	@Column(name = "prenom")
 	private String prenom;
+
+	@Column(name = "telephone")
 	private String telephone;
+
+	@Column(name = "annee")
 	private Integer annee;
+
+	@Column(name = "doublant")
 	private Boolean doublant;
 	
 	/**

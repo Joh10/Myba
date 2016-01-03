@@ -1,11 +1,20 @@
 package beans;
 
 public class PropositionStage {
+
+	@Column(name = "id_Pro")
 	private int id;
+
 	private Utilisateur owner;
 	private LieuStage lieu;
+
+	@Column(name = "valide")
 	private boolean valide;
+
+	@Column(name = "sujet")
 	private String sujet;
+
+	@Column(name = "annexe")
 	private String annexe;
 	
 	/**

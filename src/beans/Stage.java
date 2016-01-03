@@ -4,15 +4,28 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Stage {
+
+	@Id
+	@Column(name = "id_Sta")
 	private int id;
+
 	private Utilisateur owner;
 	private Utilisateur superviseur;
 	private Utilisateur suiveur;
 	private PropositionStage proposition;
+
+	@Column(name = "dateDebut")
 	private Date dateDebut;
+
+	@Column(name = "dateFin")
 	private Date dateFin;
+
+	@Column(name = "pointsTotaux")
 	private double pointsTotaux;
+
+	@Column(name = "commentaires")
 	private String commentaires;
+
 	private ArrayList<Technologie> technologies;
 	
 	/**

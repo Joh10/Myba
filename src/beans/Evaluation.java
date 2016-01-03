@@ -3,14 +3,24 @@ package beans;
 import java.util.Date;
 
 public class Evaluation {
+
+	@Id
+	@Column(name = "id_Eva")
 	private int id;
+
+	@Column(name = "id_dateDefense")
 	private Date date;
 	private Utilisateur owner;
 	private CritereEvaluation critere;
 	private TFE tfe;
 	private Stage stage;
+
 	private Defense defense;
+
+	@Column(name = "note")
 	private double note;
+
+	@Column(name = "commentaire")
 	private String commentaire;
 	
 	/**

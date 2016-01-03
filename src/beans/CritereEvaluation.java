@@ -7,9 +7,18 @@ public class CritereEvaluation implements Serializable {
 	 * Serializable car utilisé dans des combobox
 	 */
 	private static final long serialVersionUID = 2079767621417345684L;
+
+	@Id
+	@Column(name = "id_Cri")
 	private int id;
+
+	@Column(name = "nom")
 	private String nom;
+
+	@Column(name = "type")
 	private String type;
+
+	@Column(name = "noteMax")
 	private int noteMax;
 	
 	/**
