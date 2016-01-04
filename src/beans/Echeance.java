@@ -1,13 +1,13 @@
 package beans;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 
+@Entity
+@Table(name = "ECHEANCE")
 public class Echeance
 {
-
     @Id
     @Column(name = "id_Ech")
     private int id;
@@ -20,8 +20,12 @@ public class Echeance
     @Column(name = "dateEcheance")
     private Date dateEcheance;
 
+    //TODO ????????
     private TFE tfe;
     private Stage stage;
+
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="UTILISATEURXECHEANCE", joinColumns=@JoinColumn(name="ID_UTI"), inverseJoinColumns=@JoinColumn(name="ID_ECH"))
     private ArrayList<Utilisateur> users;
 
     @Column(name = "description")

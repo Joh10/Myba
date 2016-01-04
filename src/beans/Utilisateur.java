@@ -1,10 +1,13 @@
 package beans;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.List;
 
+@Entity
+@Table(name = "UTILISATEUR")
 public class Utilisateur implements Serializable
 {
     /*
@@ -19,7 +22,9 @@ public class Utilisateur implements Serializable
     @Column(name = "enable")
     private boolean enabled;
 
-    private Role role;
+    @ManyToMany(cascade= CascadeType.ALL)
+    @JoinTable(name="UTILISATEURXROLETABLE", joinColumns=@JoinColumn(name="ID_UTI"), inverseJoinColumns=@JoinColumn(name="ID_ROL"))
+    private ArrayList<Role> roles;
 
     @Column(name = "email")
     private String email;
@@ -61,11 +66,11 @@ public class Utilisateur implements Serializable
      * @param _annee     L'année dans laquelle se trouve l'utilisateur (uniquement pour les étudiants)
      * @param _doublant  L'utilisateur est doublant ou non (uniquement pour les étudiants)
      */
-    public Utilisateur(int _id, boolean _enabled, Role _role, String _email, String _password, Integer _matricule, String _nom, String _prenom, String _telephone, Integer _annee, Boolean _doublant)
+    public Utilisateur(int _id, boolean _enabled, ArrayList<Role> _role, String _email, String _password, Integer _matricule, String _nom, String _prenom, String _telephone, Integer _annee, Boolean _doublant)
     {
         id = _id;
         enabled = _enabled;
-        role = _role;
+        roles = _role;
         email = _email;
         passwordHash = _password;
         matricule = _matricule;
@@ -159,9 +164,9 @@ public class Utilisateur implements Serializable
     /**
      * @return le rôle de l'utilisateur
      */
-    public Role getRole()
+    public ArrayList<Role> getRole()
     {
-        return role;
+        return roles;
     }
 
 
@@ -171,9 +176,9 @@ public class Utilisateur implements Serializable
      *
      * @param _role Le rôle de l'utilisateur
      */
-    public void setRole(Role _role)
+    public void setRole(ArrayList<Role> _role)
     {
-        role = _role;
+        roles = _role;
     }
 
     /**

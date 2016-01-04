@@ -1,10 +1,11 @@
 package beans;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+@Entity
+@Table(name = "ROLETABLE")
 public class Role implements Serializable
 {
     /*
@@ -19,7 +20,9 @@ public class Role implements Serializable
     @Column(name = "nom")
     private String nom;
 
-    private ArrayList<String> permissions;
+    @ManyToMany(cascade= CascadeType.ALL)
+    @JoinTable(name="UTILISATEURXROLETABLE", joinColumns=@JoinColumn(name="ID_ROL"), inverseJoinColumns=@JoinColumn(name="ID_PER"))
+    private ArrayList<Permission> permissions;
 
     /**
      * Constructeur
@@ -31,7 +34,7 @@ public class Role implements Serializable
     {
         id = _id;
         nom = _nom;
-        permissions = new ArrayList<String>();
+        permissions = new ArrayList<>();
     }
 
     /**
@@ -83,7 +86,7 @@ public class Role implements Serializable
     /**
      * @param name nom de la permission à ajouter
      */
-    public void addPermission(String name)
+    public void addPermission(Permission name)
     {
         permissions.add(name);
     }

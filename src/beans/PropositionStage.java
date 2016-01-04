@@ -1,13 +1,18 @@
 package beans;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "PROPOSITIONSTAGE")
 public class PropositionStage
 {
 
     @Column(name = "id_Pro")
     private int id;
 
+    //TODO ?????
     private Utilisateur owner;
     private LieuStage lieu;
 

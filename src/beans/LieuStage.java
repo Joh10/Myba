@@ -1,9 +1,13 @@
 package beans;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "LIEUSTAGE")
 public class LieuStage implements Serializable
 {
     /*
@@ -15,6 +19,7 @@ public class LieuStage implements Serializable
     @Column(name = "id_Lie")
     private int id;
 
+    //TODO ?????
     private Utilisateur owner;
 
     @Column(name = "entreprise")

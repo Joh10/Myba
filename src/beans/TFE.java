@@ -1,29 +1,33 @@
 package beans;
 
-import javax.persistence.Column;
+import javax.persistence.*;
 import java.util.ArrayList;
 
+@Entity
+@Table(name = "EMPLOYEE")
 public class TFE
 {
-
-    @Column(name = "id_Tfe")
+    @Column(name = "ID_TFE")
     private int id;
 
+    @Column(name = "TITRE")
+    private String titre;
+
+    @Column(name = "POINTSTOTAUX")
+    private double pointsTotaux;
+
+    @Column(name = "ANNEEACADDEBUT")
+    private int anneeDebut;
+
+    @Column(name = "ANNEEACADFIN")
+    private int anneeFin;
+
+    //TODO WTF ?
     private Utilisateur owner;
     private Utilisateur promoteur;
 
-    @Column(name = "titre")
-    private String titre;
-
-    @Column(name = "pointsTotaux")
-    private double pointsTotaux;
-
-    @Column(name = "anneeAcadDebut")
-    private int anneeDebut;
-
-    @Column(name = "anneeAcadFin")
-    private int anneeFin;
-
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="TECHNOLOGIEXTFE", joinColumns=@JoinColumn(name="ID_TFE"), inverseJoinColumns=@JoinColumn(name="ID_TEC"))
     private ArrayList<Technologie> technologies;
 
     /**

@@ -1,16 +1,20 @@
 package beans;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
+@Entity
+@Table(name = "DEFENSE")
 public class Defense
 {
-
     @Id
     @Column(name = "id_Def")
     private int id;
 
+    //TODO ?????
     private Utilisateur presidentJury;
     private Stage stage;
     private TFE tfe;

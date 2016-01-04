@@ -1,23 +1,27 @@
 package beans;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
+@Entity
+@Table(name = "EVALUATION")
 public class Evaluation
 {
-
     @Id
     @Column(name = "id_Eva")
     private int id;
 
     @Column(name = "id_dateDefense")
     private Date date;
+
+    //TODO ?????
     private Utilisateur owner;
     private CritereEvaluation critere;
     private TFE tfe;
     private Stage stage;
-
     private Defense defense;
 
     @Column(name = "note")

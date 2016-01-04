@@ -1,9 +1,10 @@
 package beans;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "TECHNOLOGIE")
 public class Technologie implements Serializable
 {
     /*

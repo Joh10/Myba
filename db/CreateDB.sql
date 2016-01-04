@@ -51,19 +51,13 @@ CREATE TABLE UtilisateurXStage (
    id_Sta NUMBER(10) NOT NULL,
    CONSTRAINT ID_UtiXSta PRIMARY KEY (id_Uti, id_Sta));
 
---Pas de classe métier suivit échéance
-/*CREATE TABLE SuiviEcheance (
-   id_Sui NUMBER(10) NOT NULL,
-   dateRemis DATE NOT NULL,
-   commentaire VARCHAR2(512 char) NOT NULL ,
-   valide NUMBER(1) NOT NULL,
-   CONSTRAINT id_Sui PRIMARY KEY (Id_Sui)
-);*/
-
 CREATE TABLE Defense (
    id_Def NUMBER(10) NOT NULL,
    dateDefense DATE NOT NULL,
    local VARCHAR2(5 char) NOT NULL,
+   ref_Stage NUMBER(10),
+   ref_Utilisateur NUMBER(10),
+   ref_Tfe NUMBER(10),
    CONSTRAINT id_Def PRIMARY KEY (Id_Def)
 );
 
@@ -90,6 +84,7 @@ CREATE TABLE Stage (
    dateFin DATE NOT NULL,
    pointsTotaux NUMBER(3,2) NOT NULL,
    commentaire VARCHAR2(512 char) NOT NULL,
+   ref_PropositionStage NUMBER(10),
    CONSTRAINT id_Sta PRIMARY KEY (Id_Sta)
 );
 
@@ -103,6 +98,8 @@ CREATE TABLE PropositionStage (
    valide NUMBER(1) NOT NULL,
    sujet VARCHAR2(1024 char) NOT NULL,
    annexe VARCHAR2 (1024 char),
+   ref_Utilisateur NUMBER(10),
+   ref_LieuStage NUMBER(10),
    CONSTRAINT id_Pro PRIMARY KEY (Id_Pro)
 );
 
@@ -111,8 +108,12 @@ CREATE TABLE Evaluation (
    dateDefense DATE NOT NULL,
    note NUMBER(3) NOT NULL,
    commentaire VARCHAR2 (512 char) NOT NULL,
+   ref_Utilisateur NUMBER(10),
+   ref_Critere NUMBER(10),
+   ref_TFE NUMBER(10),
+   ref_Defense NUMBER(10),
+   ref_Stage NUMBER(10),
    CONSTRAINT id_Eva PRIMARY KEY (Id_Eva)
-
 );
 
 CREATE TABLE Critere (
@@ -130,6 +131,7 @@ CREATE TABLE LieuStage (
   personneContact VARCHAR2 (70 char) NOT NULL,
   telephone VARCHAR2 (10 char) NOT NULL,
   email VARCHAR2 (254 char) NOT NULL,
+  ref_Utilisateur NUMBER(10),
   CONSTRAINT id_Lie PRIMARY KEY (Id_Lie)
 );
 
@@ -161,7 +163,6 @@ CREATE TABLE Echeance (
 CREATE SEQUENCE seq_Permission;
 CREATE SEQUENCE seq_Role;
 CREATE SEQUENCE seq_Utilisateur;
-CREATE SEQUENCE seq_SuiviEcheance;
 CREATE SEQUENCE seq_Defense;
 CREATE SEQUENCE seq_Technologie;
 CREATE SEQUENCE seq_Stage;
@@ -260,40 +261,33 @@ FOR EACH ROW
 
 --CREATE ALTER TABLE FK
 
-Alter table PropositionStage Add constraint FK_Utilisateur FOREIGN KEY (ref_Utilisateur) References Utilisateur(id_Uti);
+Alter table PropositionStage Add constraint FK_Utilisateur_Pro FOREIGN KEY (ref_Utilisateur) References Utilisateur(id_Uti);
 
-Alter table SuiviEcheance Add constraint FK_Utilisateur FOREIGN KEY (ref_Utilisateur) References Utilisateur(id_Uti);
-
-Alter table LieuStage Add Constraint FK_Utilisateur FOREIGN KEY (ref_Utilisateur) References Utilisateur(id_Uti);
+Alter table LieuStage Add Constraint FK_Utilisateur_Lieu FOREIGN KEY (ref_Utilisateur) References Utilisateur(id_Uti);
 
 Alter table PropositionStage Add Constraint FK_LieuStage FOREIGN KEY (ref_LieuStage) References LieuStage(id_Lie);
 
 Alter table Stage Add constraint FK_PropositionStage Foreign KEy (ref_PropositionStage) References PropositionStage(id_Pro);
 
-Alter table Evaluation Add constraint FK_Utilisateur FOREIGN KEY (ref_Utilisateur) References Utilisateur(id_Uti);
+Alter table Evaluation Add constraint FK_Utilisateur_Eval FOREIGN KEY (ref_Utilisateur) References Utilisateur(id_Uti);
 
-Alter table Evaluation Add constraint FK_Critere Foreign Key (ref_Critere) References Critere(id_Crit);
+Alter table Evaluation Add constraint FK_Critere Foreign Key (ref_Critere) References Critere(id_Cri);
 
-Alter table Evaluation Add constraint FK_TFE Foreign Key (ref_TFE) References TFE(id_Tfe);
+Alter table Evaluation Add constraint FK_TFE_Eval Foreign Key (ref_TFE) References TFE(id_Tfe);
 
-Alter table Defense Add constraint FK_Stage Foreign Key (ref_Stage) References Stage(id_Sta);
+Alter table Defense Add constraint FK_Stage_Def Foreign Key (ref_Stage) References Stage(id_Sta);
 
-Alter table Defense Add constraint FK_Utilisateur Foreign Key (ref_Utilisateur) References Utilisateur(id_Uti);
+Alter table Defense Add constraint FK_Utilisateur_Def Foreign Key (ref_Utilisateur) References Utilisateur(id_Uti);
 
 Alter Table Evaluation Add constraint FK_Defense Foreign Key (ref_Defense) References Defense(id_Def);
 
-Alter table Evaluation Add constraint FK_Stage Foreign Key (ref_Stage) References Stage(id_Stage);
+Alter table Evaluation Add constraint FK_Stage_Eval Foreign Key (ref_Stage) References Stage(id_Sta);
 
-Alter table Defense Add constraint FK_TFE Foreign Key (ref_Tfe) References TFE(id_Tfe);
-
---Alter table SuiviEcheance et echeance. Verif Diag.
-
-
+Alter table Defense Add constraint FK_TFE_Defense Foreign Key (ref_Tfe) References TFE(id_Tfe);
 --CREATE CONSTRAINT BOOLEAN CHECK
 
 ALTER TABLE Utilisateur ADD CONSTRAINT CHK_Enable CHECK (enable = 0 OR enable = 1);
 ALTER TABLE Utilisateur ADD CONSTRAINT CHK_Doublant CHECK (doublant = 0 OR doublant = 1);
-ALTER TABLE SuiviEcheance ADD CONSTRAINT CHK_Valide CHECK (valide = 0 OR valide = 1);
 ALTER TABLE PropositionStage ADD CONSTRAINT CHK_Valide_Propo CHECK (valide = 0 OR valide = 1);
 
 --CREATE CONSTRAINTR MAIL

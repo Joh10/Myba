@@ -1,17 +1,18 @@
 package beans;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 
+@Entity
+@Table(name = "STAGE")
 public class Stage
 {
-
     @Id
     @Column(name = "id_Sta")
     private int id;
 
+    //TODO ?????????
     private Utilisateur owner;
     private Utilisateur superviseur;
     private Utilisateur suiveur;
@@ -29,6 +30,8 @@ public class Stage
     @Column(name = "commentaires")
     private String commentaires;
 
+    @ManyToMany(cascade= CascadeType.ALL)
+    @JoinTable(name="TECHNOLOGIEXSTA", joinColumns=@JoinColumn(name="ID_STA"), inverseJoinColumns=@JoinColumn(name="ID_TEC"))
     private ArrayList<Technologie> technologies;
 
     /**
