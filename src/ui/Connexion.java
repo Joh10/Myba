@@ -10,7 +10,7 @@ import com.vaadin.server.VaadinService;
 import com.vaadin.server.WrappedSession;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
-import dao.DAO_Utilisateur;
+import managers.UtilisateurManager;
 
 @SuppressWarnings({"serial", "deprecation"})
 public class Connexion extends Connexion_design implements View
@@ -32,7 +32,7 @@ public class Connexion extends Connexion_design implements View
             String pseudo = identifiant.getValue();
             String password = motDePasse.getValue();
 
-            DAO_Utilisateur user_DB = new DAO_Utilisateur();
+            UtilisateurManager user_DB = new UtilisateurManager();
             Utilisateur user = user_DB.find(pseudo, password);
 
             if (user != null)

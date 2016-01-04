@@ -10,7 +10,7 @@ import com.vaadin.server.VaadinService;
 import com.vaadin.server.WrappedSession;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
-import dao.DAO_Utilisateur;
+import managers.UtilisateurManager;
 
 import java.util.regex.Pattern;
 
@@ -76,7 +76,7 @@ public class MonCompte extends MonCompte_design implements View
                 }
                 if (erreurMsg.length() == 0)
                 {
-                    DAO_Utilisateur user_DB = new DAO_Utilisateur();
+                    UtilisateurManager user_DB = new UtilisateurManager();
                     Utilisateur user = user_DB.find(currentUser.getId());
                     user.update(true, mail, user.getMatricule(), user.getNom(), user.getPrenom(), tel, user.getAnnee(), user.isDoublant());
                     if (mdpNouveau.length() > 0) user.setPassword(mdpNouveau);

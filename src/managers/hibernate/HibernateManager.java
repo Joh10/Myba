@@ -1,4 +1,4 @@
-package dao;
+package managers.hibernate;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -6,8 +6,18 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
-public abstract class DAO<T>
+public abstract class HibernateManager<T>
 {
+    protected final List<T> fetchAll(Query q)
+    {
+        List list = q.list();
+
+        if (list != null && list.isEmpty())
+            return null;
+
+        return (List<T>) list;
+    }
+
     public final T find(int id)
     {
         try (Session session = HibernateConnector.getInstance().getSession())
@@ -17,10 +27,9 @@ public abstract class DAO<T>
 
             List queryList = query.list();
 
-            if (queryList != null && queryList.isEmpty())
-                return null;
+            if (queryList != null && queryList.isEmpty()) return null;
 
-                return (T) queryList.get(0);
+            return (T) queryList.get(0);
         }
         catch (Exception e)
         {

@@ -11,7 +11,8 @@ import com.vaadin.server.WrappedSession;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Upload.Receiver;
-import dao.*;
+import managers.*;
+import managers.EvaluationManager;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import java.io.File;
@@ -235,7 +236,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         // Modifier un professeur
         modifier.addClickListener((ClickListener) event -> {
             modification = true;
-            DAO_Utilisateur user_DB = new DAO_Utilisateur();
+            UtilisateurManager user_DB = new UtilisateurManager();
             Utilisateur user = user_DB.find(Integer.parseInt(elementSelected.toString()));
             tf_professeur_prenom.setValue(user.getPrenom());
             tf_professeur_nom.setValue(user.getNom());
@@ -258,7 +259,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 boolean compteActif = cb_professeur_compteActif.getValue();
                 if (!prenom.isEmpty() && !nom.isEmpty() && !email.isEmpty() && (!password.isEmpty() || modification))
                 {
-                    DAO_Utilisateur user_DB = new DAO_Utilisateur();
+                    UtilisateurManager user_DB = new UtilisateurManager();
                     if (modification)
                     {
                         Utilisateur user = user_DB.find((int) elementSelected);
@@ -305,7 +306,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
                 if (dialog.isConfirmed())
                 {
-                    DAO_Utilisateur user_DB = new DAO_Utilisateur();
+                    UtilisateurManager user_DB = new UtilisateurManager();
                     Utilisateur user = user_DB.find((int) elementSelected);
 
                     if (user_DB.delete(user))
@@ -340,7 +341,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         // Modifier un étudiant
         modifier2.addClickListener((ClickListener) event -> {
             modification = true;
-            DAO_Utilisateur user_DB = new DAO_Utilisateur();
+            UtilisateurManager user_DB = new UtilisateurManager();
             Utilisateur user = user_DB.find(Integer.parseInt(elementSelected.toString()));
             tf_etudiant_prenom.setValue(user.getPrenom());
             tf_etudiant_nom.setValue(user.getNom());
@@ -376,7 +377,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 else if (permission.equals("TFE et Stage")) role = new Role("etudiant_tfe_stage");
                 if (role != null && !prenom.isEmpty() && !nom.isEmpty() && !email.isEmpty() && matricule > 0 && annee > 0 && (!password.isEmpty() || modification))
                 {
-                    DAO_Utilisateur user_DB = new DAO_Utilisateur();
+                    UtilisateurManager user_DB = new UtilisateurManager();
                     if (modification)
                     {
                         Utilisateur user = user_DB.find((int) elementSelected);
@@ -424,7 +425,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
                 if (dialog.isConfirmed())
                 {
-                    DAO_Utilisateur user_DB = new DAO_Utilisateur();
+                    UtilisateurManager user_DB = new UtilisateurManager();
                     Utilisateur user = user_DB.find((int) elementSelected);
 
                     if (user_DB.delete(user))
@@ -458,7 +459,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         modifier3.addClickListener(event ->
         {
             modification = true;
-            DAO_Utilisateur user_DB = new DAO_Utilisateur();
+            UtilisateurManager user_DB = new UtilisateurManager();
             Utilisateur user = user_DB.find(Integer.parseInt(elementSelected.toString()));
             tf_maitreDeStage_prenom.setValue(user.getPrenom());
             tf_maitreDeStage_nom.setValue(user.getNom());
@@ -479,7 +480,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             boolean compteActif = cb_maitreDeStage_compteActif.getValue();
             if (!prenom.isEmpty() && !nom.isEmpty() && !email.isEmpty() && (!password.isEmpty() || modification))
             {
-                DAO_Utilisateur user_DB = new DAO_Utilisateur();
+                UtilisateurManager user_DB = new UtilisateurManager();
                 if (modification)
                 {
                     Utilisateur user = user_DB.find((int) elementSelected);
@@ -521,7 +522,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
                 if (dialog.isConfirmed())
                 {
-                    DAO_Utilisateur user_DB = new DAO_Utilisateur();
+                    UtilisateurManager user_DB = new UtilisateurManager();
                     Utilisateur user = user_DB.find((int) elementSelected);
                     if (user_DB.delete(user))
                     {
@@ -552,7 +553,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         // Modifier un président de jury
         modifier4.addClickListener(event -> {
             modification = true;
-            DAO_Utilisateur user_DB = new DAO_Utilisateur();
+            UtilisateurManager user_DB = new UtilisateurManager();
             Utilisateur user = user_DB.find(Integer.parseInt(elementSelected.toString()));
             tf_presidentJury_prenom.setValue(user.getPrenom());
             tf_presidentJury_nom.setValue(user.getNom());
@@ -573,7 +574,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             boolean compteActif = tf_presidentJury_compteActif.getValue();
             if (!prenom.isEmpty() && !nom.isEmpty() && !email.isEmpty() && (!password.isEmpty() || modification))
             {
-                DAO_Utilisateur user_DB = new DAO_Utilisateur();
+                UtilisateurManager user_DB = new UtilisateurManager();
                 if (modification)
                 {
                     Utilisateur user = user_DB.find((int) elementSelected);
@@ -614,7 +615,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
                 if (dialog.isConfirmed())
                 {
-                    DAO_Utilisateur user_DB = new DAO_Utilisateur();
+                    UtilisateurManager user_DB = new UtilisateurManager();
                     Utilisateur user = user_DB.find((int) elementSelected);
                     if (user_DB.delete(user))
                     {
@@ -628,7 +629,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                     Notification.show("Suppression annulée", Notification.TYPE_TRAY_NOTIFICATION);
                 }
             });
-            DAO_Utilisateur user_DB = new DAO_Utilisateur();
+            UtilisateurManager user_DB = new UtilisateurManager();
             Utilisateur user = user_DB.find((int) elementSelected);
             if (user_DB.delete(user))
             {
@@ -653,7 +654,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         // Modifier une entreprise
         modifier5.addClickListener(event -> {
             modification = true;
-            DAO_LieuStage lieuStage_DB = new DAO_LieuStage();
+            LieuStageManager lieuStage_DB = new LieuStageManager();
             LieuStage lieuStage = lieuStage_DB.find(Integer.parseInt(elementSelected.toString()));
             tf_entreprise_nom.setValue(lieuStage.getNom());
             ta_entreprise_adresse.setValue(lieuStage.getAdresse());
@@ -673,7 +674,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             String mail = tf_entreprise_adresseMail.getValue();
             if (!nomEntreprise.isEmpty() && !adresse.isEmpty() && !contact.isEmpty())
             {
-                DAO_LieuStage lieuStage_DB = new DAO_LieuStage();
+                LieuStageManager lieuStage_DB = new LieuStageManager();
                 if (modification)
                 {
                     LieuStage lieuStage = lieuStage_DB.find((int) elementSelected);
@@ -714,7 +715,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
                 if (dialog.isConfirmed())
                 {
-                    DAO_LieuStage lieuStage_DB = new DAO_LieuStage();
+                    LieuStageManager lieuStage_DB = new LieuStageManager();
                     LieuStage lieuStage = lieuStage_DB.find((int) elementSelected);
 
                     if (lieuStage_DB.delete(lieuStage))
@@ -742,7 +743,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         // Modifier un critère d'évaluation
         modifier6.addClickListener(event -> {
             modification = true;
-            DAO_CritereEvaluation critereEvaluation_DB = new DAO_CritereEvaluation();
+            CritereEvaluationManager critereEvaluation_DB = new CritereEvaluationManager();
             CritereEvaluation critereEvaluation = critereEvaluation_DB.find(Integer.parseInt(elementSelected.toString()));
             tf_critereEvaluation_nom.setValue(critereEvaluation.getNom());
             tf_critereEvaluation_noteMax.setValue(((Integer) critereEvaluation.getNote()).toString());
@@ -760,7 +761,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 String type = typeCB.toString();
                 if (!nom.isEmpty() && !noteMax.isEmpty() && !type.isEmpty())
                 {
-                    DAO_CritereEvaluation critereEvaluation_DB = new DAO_CritereEvaluation();
+                    CritereEvaluationManager critereEvaluation_DB = new CritereEvaluationManager();
                     if (modification)
                     {
                         CritereEvaluation critereEvaluation = critereEvaluation_DB.find((int) elementSelected);
@@ -808,7 +809,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
                 if (dialog.isConfirmed())
                 {
-                    DAO_CritereEvaluation critereEvaluation_DB = new DAO_CritereEvaluation();
+                    CritereEvaluationManager critereEvaluation_DB = new CritereEvaluationManager();
                     CritereEvaluation critereEvaluation = critereEvaluation_DB.find((int) elementSelected);
                     if (critereEvaluation_DB.delete(critereEvaluation))
                     {
@@ -835,7 +836,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         // Modifier une technologie
         modifier7.addClickListener(event -> {
             modification = true;
-            DAO_Technologie technologie_DB = new DAO_Technologie();
+            TechnologieManager technologie_DB = new TechnologieManager();
             Technologie technologie = technologie_DB.find(Integer.parseInt(elementSelected.toString()));
             tf_technologie_nom.setValue(technologie.getNom());
             tf_technologie_version.setValue(technologie.getVersion());
@@ -848,7 +849,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             String versionTechnologie = tf_technologie_version.getValue();
             if (!nomTechnologie.isEmpty())
             {
-                DAO_Technologie technologie_DB = new DAO_Technologie();
+                TechnologieManager technologie_DB = new TechnologieManager();
                 if (modification)
                 {
                     Technologie technologie = technologie_DB.find((int) elementSelected);
@@ -889,7 +890,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
                 if (dialog.isConfirmed())
                 {
-                    DAO_Technologie technologie_DB = new DAO_Technologie();
+                    TechnologieManager technologie_DB = new TechnologieManager();
                     Technologie technologie = technologie_DB.find((int) elementSelected);
 
                     if (technologie_DB.delete(technologie))
@@ -934,7 +935,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 ArrayList<Technologie> technologies = new ArrayList<>(temp);
                 if (!titre.isEmpty() && promoteur != null && etudiant != null && anneeDebut > 0 && anneeFin > 0)
                 {
-                    DAO_TFE tfe_DB = new DAO_TFE();
+                    TFEManager tfe_DB = new TFEManager();
                     TFE tfe = new TFE(0, etudiant, promoteur, titre, (double) 0, anneeDebut, anneeFin, technologies);
                     if (tfe_DB.create(tfe))
                     {
@@ -963,7 +964,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ArrayList<Technologie> technologies = new ArrayList<>(temp);
             if (!titre.isEmpty() && anneeDebut > 0 && anneeFin > 0)
             {
-                DAO_TFE tfe_DB = new DAO_TFE();
+                TFEManager tfe_DB = new TFEManager();
                 TFE tfe = tfe_DB.find((int) elementSelected);
                 tfe.update(promoteur, titre, tfe.getPoints(), anneeDebut, anneeFin, technologies);
                 if (tfe_DB.update(tfe))
@@ -994,7 +995,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         // Modifier un TFE
         button_modifierTFE.addClickListener(event -> {
             modification = true;
-            DAO_TFE tfe_DB = new DAO_TFE();
+            TFEManager tfe_DB = new TFEManager();
             TFE tfe = tfe_DB.find(Integer.parseInt(elementSelected.toString()));
             tf_tfe_modifier_titre.setValue(tfe.getTitre());
             tf_tfe_modifier_anneeDebut.setValue(Integer.toString(tfe.getAnneeDebut()));
@@ -1014,7 +1015,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
                 if (dialog.isConfirmed())
                 {
-                    DAO_TFE tfe_DB = new DAO_TFE();
+                    TFEManager tfe_DB = new TFEManager();
                     TFE tfe = tfe_DB.find((int) elementSelected);
 
                     if (tfe_DB.delete(tfe))
@@ -1053,7 +1054,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 button_retour_TFE2.setVisible(true);
                 tab_echeance3.setVisible(false);
                 tab_evaluationTFE.setVisible(true);
-                DAO_TFE tfe_DB = new DAO_TFE();
+                TFEManager tfe_DB = new TFEManager();
                 TFE tfe = tfe_DB.find((int) elementSelected);
                 tfeSelected = tfe;
                 label_evaluationTFE.setValue("Evaluations du TFE de " + tfe.getOwner().toString() + " (" + tfe.getTitre() + ")");
@@ -1098,8 +1099,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         // Modifier evaluation
         button_modifier_evaluationTFE.addClickListener(event -> {
             modification = true;
-            DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-            Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+            EvaluationManager evaluation_DB = new EvaluationManager();
+            beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
             tfe_evaluer_critere.clear();
             tfe_evaluer_critere.setVisible(false);
             tfe_evaluer_note.setValue(((Double) evaluation.getNote()).toString());
@@ -1113,8 +1114,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
                 if (dialog.isConfirmed())
                 {
-                    DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-                    Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+                    EvaluationManager evaluation_DB = new EvaluationManager();
+                    beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
                     if (evaluation_DB.delete(evaluation))
                     {
                         // Mise à jour des points du TFE
@@ -1142,9 +1143,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 Date date = Date.from(Instant.now());
                 if (modification)
                 {
-                    DAO_Evaluation evaluation_DB = new DAO_Evaluation();
+                    EvaluationManager evaluation_DB = new EvaluationManager();
 
-                    Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+                    beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
 
                     if (note > 0 && note <= evaluation.getCritere().getNote())
                     {
@@ -1173,9 +1174,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 {
                     if (critere != null && note != null && note > 0 && note <= critere.getNote())
                     {
-                        DAO_Evaluation evaluation_DB = new DAO_Evaluation();
+                        EvaluationManager evaluation_DB = new EvaluationManager();
 
-                        Evaluation evaluation = new Evaluation(0, date, currentUser, critere, tfeSelected, note, commentaire);
+                        beans.Evaluation evaluation = new beans.Evaluation(0, date, currentUser, critere, tfeSelected, note, commentaire);
                         if (evaluation_DB.create(evaluation))
                         {
                             // Mise à jour de la note du TFE
@@ -1222,11 +1223,11 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             Utilisateur presidentJury = (Utilisateur) tfe_defense_presidentJury.getValue();
             Date date = tfe_defense_date.getValue();
             String local = tfe_defense_local.getValue();
-            DAO_TFE tfe_DB = new DAO_TFE();
+            TFEManager tfe_DB = new TFEManager();
             TFE tfe = tfe_DB.find((int) elementSelected);
             if (presidentJury != null && date != null && !local.isEmpty())
             {
-                DAO_Defense defense_DB = new DAO_Defense();
+                DefenseManager defense_DB = new DefenseManager();
                 Defense defense = new Defense(0, presidentJury, tfe, date, local);
                 if (defense_DB.create(defense))
                 {
@@ -1267,7 +1268,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 button_retour_TFE2.setVisible(false);
                 tab_echeance3.setVisible(true);
                 tab_evaluationTFE.setVisible(false);
-                DAO_TFE tfe_DB = new DAO_TFE();
+                TFEManager tfe_DB = new TFEManager();
                 TFE tfe = tfe_DB.find((int) elementSelected);
                 tfeSelected = tfe;
                 label_echeances_tfe.setValue("Echéances du TFE de " + tfe.getOwner().toString() + " (" + tfe.getTitre() + ")");
@@ -1310,7 +1311,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         // Modifier une echeance de TFE
         button_TFE_modifierEcheance.addClickListener(event -> {
             modification = true;
-            DAO_Echeance echeance_DB = new DAO_Echeance();
+            EcheanceManager echeance_DB = new EcheanceManager();
             Echeance echeance = echeance_DB.find((int) elementSelected);
             tfe_echeance_description.setValue(echeance.getDescription());
             tfe_echeance_date.setValue(echeance.getDateEcheance());
@@ -1323,7 +1324,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
                 if (dialog.isConfirmed())
                 {
-                    DAO_Echeance echeance_DB = new DAO_Echeance();
+                    EcheanceManager echeance_DB = new EcheanceManager();
                     Echeance echeance = echeance_DB.find((int) elementSelected);
                     if (echeance_DB.delete(echeance))
                     {
@@ -1344,7 +1345,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             Date date = tfe_echeance_date.getValue();
             if (!description.isEmpty() && date != null)
             {
-                DAO_Echeance echeance_DB = new DAO_Echeance();
+                EcheanceManager echeance_DB = new EcheanceManager();
                 Echeance echeance = echeance_DB.find((int) elementSelected);
                 if (modification)
                 {
@@ -1389,8 +1390,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ArrayList<Technologie> technologies = new ArrayList<>(temp);
             if (!sujet.isEmpty() && dateDebut != null && dateFin != null && maitreStage != null && promoteur != null)
             {
-                DAO_Stage stage_DB = new DAO_Stage();
-                DAO_PropositionStage propositionStage_DB = new DAO_PropositionStage();
+                StageManager stage_DB = new StageManager();
+                PropositionStageManager propositionStage_DB = new PropositionStageManager();
                 Stage stage = stage_DB.find((int) elementSelected);
                 stage.update(promoteur, maitreStage, dateDebut, dateFin, "", technologies);
                 PropositionStage propStage = stage.getProposition();
@@ -1416,7 +1417,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         // Modifier un stage
         button_modifierStage.addClickListener(event -> {
             modification = true;
-            DAO_Stage stage_DB = new DAO_Stage();
+            StageManager stage_DB = new StageManager();
             Stage stage = stage_DB.find(Integer.parseInt(elementSelected.toString()));
             tf_stage_editer_sujet.setValue(stage.getProposition().getSubject());
             cb_stage_editer_etudiant.setReadOnly(false);
@@ -1443,7 +1444,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
                 if (dialog.isConfirmed())
                 {
-                    DAO_Stage stage_DB = new DAO_Stage();
+                    StageManager stage_DB = new StageManager();
                     Stage stage = stage_DB.find((int) elementSelected);
                     if (stage_DB.delete(stage))
                     {
@@ -1497,7 +1498,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 button_commenterStage.setVisible(false);
                 button_retour_Stage2.setVisible(true);
                 label_evaluationStage.setVisible(true);
-                DAO_Stage stage_DB = new DAO_Stage();
+                StageManager stage_DB = new StageManager();
                 Stage stage = stage_DB.find((int) elementSelected);
                 stageSelected = stage;
                 label_evaluationStage.setValue("Evaluations du stage de " + stage.getOwner() + " (" + stage.getProposition().getSubject() + ")");
@@ -1519,8 +1520,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         // Modifier evaluation stage
         button_modifier_evaluationStage.addClickListener(event -> {
             modification = true;
-            DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-            Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+            EvaluationManager evaluation_DB = new EvaluationManager();
+            beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
             stage_evaluer_critere.clear();
             stage_evaluer_note.setValue(((Double) evaluation.getNote()).toString());
             stage_evaluer_commentaire.setValue(evaluation.getCommentaire());
@@ -1534,8 +1535,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
                 if (dialog.isConfirmed())
                 {
-                    DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-                    Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+                    EvaluationManager evaluation_DB = new EvaluationManager();
+                    beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
 
                     if (evaluation_DB.delete(evaluation))
                     {
@@ -1563,8 +1564,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 Date date = Date.from(Instant.now());
                 if (modification)
                 {
-                    DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-                    Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+                    EvaluationManager evaluation_DB = new EvaluationManager();
+                    beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
                     if (note > 0 && note <= evaluation.getCritere().getNote())
                     {
                         evaluation.update(note, commentaire);
@@ -1594,8 +1595,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                     {
                         if (note >= 0 && note <= critere.getNote())
                         {
-                            DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-                            Evaluation evaluation = new Evaluation(0, date, currentUser, critere, stageSelected, note, commentaire);
+                            EvaluationManager evaluation_DB = new EvaluationManager();
+                            beans.Evaluation evaluation = new beans.Evaluation(0, date, currentUser, critere, stageSelected, note, commentaire);
                             if (evaluation_DB.create(evaluation))
                             {
                                 // Mise à jour des points du stage
@@ -1645,11 +1646,11 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             Utilisateur presidentJury = (Utilisateur) stage_defense_presidentJury.getValue();
             Date date = stage_defense_date.getValue();
             String local = stage_defense_local.getValue();
-            DAO_Stage stage_DB = new DAO_Stage();
+            StageManager stage_DB = new StageManager();
             Stage stage = stage_DB.find((int) elementSelected);
             if (presidentJury != null && date != null && !local.isEmpty())
             {
-                DAO_Defense defense_DB = new DAO_Defense();
+                DefenseManager defense_DB = new DefenseManager();
                 Defense defense = new Defense(0, presidentJury, stage, date, local);
                 if (defense_DB.create(defense))
                 {
@@ -1684,7 +1685,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 stage_cb_recherche.setVisible(false);
                 tab_stage.setVisible(false);
                 tab_echeance4.setVisible(true);
-                DAO_Stage stage_DB = new DAO_Stage();
+                StageManager stage_DB = new StageManager();
                 Stage stage = stage_DB.find((int) elementSelected);
                 label_echeances_stage.setValue("Echéances du stage de " + stage.getOwner().toString() + " (" + stage.getProposition().getSubject() + ")");
                 button_retour_Stage.setVisible(true);
@@ -1726,7 +1727,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         // Modifier echeance stage
         button_stage_modifierEcheance.addClickListener(event -> {
             modification = true;
-            DAO_Echeance echeance_DB = new DAO_Echeance();
+            EcheanceManager echeance_DB = new EcheanceManager();
             Echeance echeance = echeance_DB.find((int) elementSelected);
             stage_echeance_description.setValue(echeance.getDescription());
             stage_echeance_date.setValue(echeance.getDateEcheance());
@@ -1737,7 +1738,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         button_stage_supprimerEcheance.addClickListener(event -> ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
             if (dialog.isConfirmed())
             {
-                DAO_Echeance echeance_DB = new DAO_Echeance();
+                EcheanceManager echeance_DB = new EcheanceManager();
                 Echeance echeance = echeance_DB.find(Integer.parseInt(elementSelected.toString()));
                 if (echeance_DB.delete(echeance))
                 {
@@ -1755,11 +1756,11 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         button_stage_echeance_valider.addClickListener(event -> {
             String description = stage_echeance_description.getValue();
             Date date = stage_echeance_date.getValue();
-            DAO_Stage stage_DB = new DAO_Stage();
+            StageManager stage_DB = new StageManager();
             Stage stage = stage_DB.find((int) elementSelected);
             if (!description.isEmpty() && date != null)
             {
-                DAO_Echeance echeance_DB = new DAO_Echeance();
+                EcheanceManager echeance_DB = new EcheanceManager();
                 Echeance echeance = new Echeance(0, currentUser, Date.from(Instant.now()), date, stage, description, null);
                 if (echeance_DB.create(echeance))
                 {
@@ -1781,7 +1782,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         button_commenterStage.addClickListener(event -> {
             hideForms();
             form_stage_commenter.setVisible(true);
-            DAO_Stage stage_DB = new DAO_Stage();
+            StageManager stage_DB = new StageManager();
             Stage stage = stage_DB.find((int) elementSelected);
             stage_commenter_commentaire.setValue(stage.getCommentaire());
             button_stage_commenter_valider.setClickShortcut(KeyCode.ENTER);
@@ -1791,7 +1792,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             String commentaire = stage_commenter_commentaire.getValue();
             if (!commentaire.isEmpty())
             {
-                DAO_Stage stage_DB = new DAO_Stage();
+                StageManager stage_DB = new StageManager();
                 Stage stage = stage_DB.find((int) elementSelected);
                 stage.update(stage.getSuperviseur(), stage.getSuiveur(), stage.getDateDebut(), stage.getDateFin(), commentaire, stage.getTechnologies());
                 if (stage_DB.update(stage))
@@ -1816,7 +1817,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
 
             if (!sujet.isEmpty())
             {
-                DAO_PropositionStage propositionStage_DB = new DAO_PropositionStage();
+                PropositionStageManager propositionStage_DB = new PropositionStageManager();
                 if (modification)
                 {
                     cb_PropositionStage_editer_entreprise.setReadOnly(false);
@@ -1878,7 +1879,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         button_modifierPropositionStage.addClickListener(event -> {
             modification = true;
             cb_PropositionStage_editer_entreprise.setReadOnly(false);
-            DAO_PropositionStage propositionStage_DB = new DAO_PropositionStage();
+            PropositionStageManager propositionStage_DB = new PropositionStageManager();
             PropositionStage propositionStage = propositionStage_DB.find(Integer.parseInt(elementSelected.toString()));
             tf_PropositionStage_editer_sujet.setValue(propositionStage.getSubject());
             cb_PropositionStage_editer_entreprise.setReadOnly(false);
@@ -1899,7 +1900,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
                 if (dialog.isConfirmed())
                 {
-                    DAO_PropositionStage propositionStage_DB = new DAO_PropositionStage();
+                    PropositionStageManager propositionStage_DB = new PropositionStageManager();
                     PropositionStage propositionStage = propositionStage_DB.find((int) elementSelected);
 
                     if (propositionStage_DB.delete(propositionStage))
@@ -1917,7 +1918,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         });
         /* Valider une proposition de stage */
         button_validerPropositionStage.addClickListener(event -> {
-            DAO_PropositionStage propositionStage_DB = new DAO_PropositionStage();
+            PropositionStageManager propositionStage_DB = new PropositionStageManager();
             PropositionStage propositionStage = propositionStage_DB.find(Integer.parseInt(elementSelected.toString()));
             tf_PropositionStage_valider_sujet.setValue(propositionStage.getSubject());
             form_propositionStage_editer.setVisible(false);
@@ -1934,13 +1935,13 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             Utilisateur promoteur = (Utilisateur) cb_PropositionStage_valider_promoteur.getValue();
             @SuppressWarnings("unchecked") Set<Technologie> temp = (Set<Technologie>) tc_PropositionStage_valider_technologies.getValue();
             ArrayList<Technologie> technologies = new ArrayList<>(temp);
-            DAO_PropositionStage propositionStage_DB = new DAO_PropositionStage();
+            PropositionStageManager propositionStage_DB = new PropositionStageManager();
             PropositionStage propositionStage = propositionStage_DB.find((int) elementSelected);
             if (!sujet.isEmpty() && dateDebut != null && dateFin != null && maitreStage != null && promoteur != null)
             {
                 if (dateDebut.before(dateFin))
                 {
-                    DAO_Stage stage_DB = new DAO_Stage();
+                    StageManager stage_DB = new StageManager();
                     Stage stage = new Stage(0, propositionStage.getOwner(), promoteur, maitreStage, propositionStage, dateDebut, dateFin, 0, "", technologies);
                     propositionStage.update(sujet, propositionStage.getAnnexe());
                     propositionStage.update(true);
@@ -1970,7 +1971,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             Date date = date_defense_date.getValue();
             if (!local.isEmpty() && date != null)
             {
-                DAO_Defense defense_DB = new DAO_Defense();
+                DefenseManager defense_DB = new DefenseManager();
                 if (modification)
                 {
                     Defense defense = defense_DB.find((int) elementSelected);
@@ -1995,7 +1996,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         // Modifier une defense
         button_modifierDefense.addClickListener(event -> {
             modification = true;
-            DAO_Defense defense_DB = new DAO_Defense();
+            DefenseManager defense_DB = new DefenseManager();
             Defense defense = defense_DB.find(Integer.parseInt(elementSelected.toString()));
             Date date = defense.getDate();
             tf_defense_local.setValue(defense.getLocal());
@@ -2010,7 +2011,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
                 if (dialog.isConfirmed())
                 {
-                    DAO_Defense defense_DB = new DAO_Defense();
+                    DefenseManager defense_DB = new DefenseManager();
                     Defense defense = defense_DB.find((int) elementSelected);
                     if (defense_DB.delete(defense))
                         Notification.show("La défense a bien été supprimée", Notification.TYPE_TRAY_NOTIFICATION);
@@ -2052,7 +2053,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             button_retour_Defense.setVisible(true);
             tab_defense.setVisible(false);
             tab_evaluationDefense.setVisible(true);
-            DAO_Defense defense_DB = new DAO_Defense();
+            DefenseManager defense_DB = new DefenseManager();
             Defense defense = defense_DB.find((int) elementSelected);
             defenseSelected = defense;
             load_tab_evaluationDefense(defense);
@@ -2073,8 +2074,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         // Modifier une evaluation de défense
         button_modifier_evaluationDefense.addClickListener(event -> {
             modification = true;
-            DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-            Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+            EvaluationManager evaluation_DB = new EvaluationManager();
+            beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
             defense_evaluer_critere.clear();
             defense_evaluer_note.setValue(((Double) evaluation.getNote()).toString());
             defense_evaluer_commentaire.setValue(evaluation.getCommentaire());
@@ -2088,8 +2089,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
                 if (dialog.isConfirmed())
                 {
-                    DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-                    Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+                    EvaluationManager evaluation_DB = new EvaluationManager();
+                    beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
                     if (evaluation_DB.delete(evaluation))
                     {
                         // Mise à jour des points de la défense
@@ -2118,8 +2119,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 {
                     if (note > 0 && commentaire != null)
                     {
-                        DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-                        Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+                        EvaluationManager evaluation_DB = new EvaluationManager();
+                        beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
                         CritereEvaluation critere = evaluation.getCritere();
                         if (critere != null && note <= critere.getNote())
                         {
@@ -2149,8 +2150,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                     CritereEvaluation critere = (CritereEvaluation) defense_evaluer_critere.getValue();
                     if (critere != null && note != null && note > 0 && note <= critere.getNote())
                     {
-                        DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-                        Evaluation evaluation = new Evaluation(0, date, currentUser, critere, defenseSelected, note, commentaire);
+                        EvaluationManager evaluation_DB = new EvaluationManager();
+                        beans.Evaluation evaluation = new beans.Evaluation(0, date, currentUser, critere, defenseSelected, note, commentaire);
                         if (evaluation_DB.create(evaluation))
                         {
                             // Mise à jour des points de la défense
@@ -2196,7 +2197,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         // Modifier echeance
         button_modifierEcheance.addClickListener(event -> {
             modification = true;
-            DAO_Echeance echeance_DB = new DAO_Echeance();
+            EcheanceManager echeance_DB = new EcheanceManager();
             Echeance echeance = echeance_DB.find(Integer.parseInt(elementSelected.toString()));
             tf_echeance_ajouter_description.setValue(echeance.getDescription());
             date_echeance_ajouter_date.setValue(echeance.getDateEcheance());
@@ -2215,7 +2216,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         button_supprimerEcheance.addClickListener(event -> ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
             if (dialog.isConfirmed())
             {
-                DAO_Echeance echeance_DB = new DAO_Echeance();
+                EcheanceManager echeance_DB = new EcheanceManager();
                 Echeance echeance = echeance_DB.find(Integer.parseInt(elementSelected.toString()));
                 if (echeance_DB.delete(echeance))
                 {
@@ -2240,7 +2241,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
 
             if (!description.isEmpty() && date != null && etudiants.size() > 0)
             {
-                DAO_Echeance echeance_DB = new DAO_Echeance();
+                EcheanceManager echeance_DB = new EcheanceManager();
                 if (modification)
                 {
                     Echeance echeance = echeance_DB.find((int) elementSelected);
@@ -2298,7 +2299,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             String mail = tf_entreprise_adresseMail2.getValue();
             if (!nomEntreprise.isEmpty() && !adresse.isEmpty() && !contact.isEmpty())
             {
-                DAO_LieuStage lieuStage_DB = new DAO_LieuStage();
+                LieuStageManager lieuStage_DB = new LieuStageManager();
                 LieuStage lieuStage = new LieuStage(0, currentUser, nomEntreprise, adresse, contact, tel, mail);
                 if (lieuStage_DB.create(lieuStage))
                 {
@@ -2335,7 +2336,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         // modifier
         button_modifierPropositionStage3.addClickListener(event -> {
             modification = true;
-            DAO_PropositionStage propositionStage_DB = new DAO_PropositionStage();
+            PropositionStageManager propositionStage_DB = new PropositionStageManager();
             PropositionStage propositionStage = propositionStage_DB.find(Integer.parseInt(elementSelected.toString()));
             cb_PropositionStage_etudiant_editer_entreprise.setReadOnly(false);
             tf_PropositionStage_etudiant_editer_sujet.setValue(propositionStage.getSubject());
@@ -2356,7 +2357,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
 
             if (!sujet.isEmpty())
             {
-                DAO_PropositionStage propositionStage_DB = new DAO_PropositionStage();
+                PropositionStageManager propositionStage_DB = new PropositionStageManager();
                 if (modification)
                 {
                     cb_PropositionStage_etudiant_editer_entreprise.setReadOnly(false);
@@ -2400,7 +2401,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
                 if (dialog.isConfirmed())
                 {
-                    DAO_PropositionStage propositionStage_DB = new DAO_PropositionStage();
+                    PropositionStageManager propositionStage_DB = new PropositionStageManager();
                     PropositionStage propositionStage = propositionStage_DB.find((int) elementSelected);
                     if (propositionStage_DB.delete(propositionStage))
                     {
@@ -2419,7 +2420,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         // dupliquer
         button_dupliquerPropositionStage3.addClickListener(event -> {
             modification = false;
-            DAO_PropositionStage propositionStage_DB = new DAO_PropositionStage();
+            PropositionStageManager propositionStage_DB = new PropositionStageManager();
             PropositionStage propositionStage = propositionStage_DB.find((int) elementSelected);
             cb_PropositionStage_etudiant_editer_entreprise.setReadOnly(false);
             tf_PropositionStage_etudiant_editer_sujet.setValue(propositionStage.getSubject());
@@ -2444,15 +2445,15 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             tab_evaluations_maitreStage.setVisible(true);
             label_maitreStage_form.setValue("Nouvelle évaluation");
             modification = false;
-            DAO_Stage stage_DB = new DAO_Stage();
+            StageManager stage_DB = new StageManager();
             stageSelected = stage_DB.find(Integer.parseInt(elementSelected.toString()));
             load_tab_evaluations_maitreStage(stageSelected);
             button_stage_evaluer_maitreDeStage_valider.setClickShortcut(KeyCode.ENTER);
         });
         // modifier evaluation
         button_modifierEvaluation_maitreDeStage.addClickListener(event -> {
-            DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-            Evaluation evaluation = evaluation_DB.find(Integer.parseInt(elementSelected.toString()));
+            EvaluationManager evaluation_DB = new EvaluationManager();
+            beans.Evaluation evaluation = evaluation_DB.find(Integer.parseInt(elementSelected.toString()));
             stage_evaluer_maitreDeStage_critere.clear();
             stage_evaluer_maitreDeStage_critere.setVisible(false);
             stage_evaluer_maitreDeStage_note.setValue(((Double) evaluation.getNote()).toString());
@@ -2468,8 +2469,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
                 if (dialog.isConfirmed())
                 {
-                    DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-                    Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+                    EvaluationManager evaluation_DB = new EvaluationManager();
+                    beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
                     if (evaluation_DB.delete(evaluation))
                     {
                         // Mise à jour des points de la défense
@@ -2507,8 +2508,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             Date date = Date.from(Instant.now());
             if (modification)
             {
-                DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-                Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+                EvaluationManager evaluation_DB = new EvaluationManager();
+                beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
                 CritereEvaluation critere = evaluation.getCritere();
                 if (note >= 0 && note <= critere.getNote())
                 {
@@ -2538,10 +2539,10 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 {
                     if (note >= 0 && note <= critere.getNote())
                     {
-                        DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-                        DAO_Stage stage_DB = new DAO_Stage();
+                        EvaluationManager evaluation_DB = new EvaluationManager();
+                        StageManager stage_DB = new StageManager();
                         Stage stage = stage_DB.find((int) elementSelected);
-                        Evaluation evaluation = new Evaluation(0, date, currentUser, critere, stage, note, commentaire);
+                        beans.Evaluation evaluation = new beans.Evaluation(0, date, currentUser, critere, stage, note, commentaire);
                         if (evaluation_DB.create(evaluation))
                         {
                             // Mise à jour des points de la défense
@@ -2586,15 +2587,15 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             tab_evaluations_presidentJury.setVisible(true);
             label_form_presidentJury.setValue("Nouvelle évaluation");
             modification = false;
-            DAO_Defense defense_DB = new DAO_Defense();
+            DefenseManager defense_DB = new DefenseManager();
             defenseSelected = defense_DB.find(Integer.parseInt(elementSelected.toString()));
             load_tab_evaluations_presidentJury(defenseSelected);
             button_defense_evaluer_presidentDeJury_valider.setClickShortcut(KeyCode.ENTER);
         });
         // modifier evaluation
         button_modifierEvaluation_presidentDeJury.addClickListener(event -> {
-            DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-            Evaluation evaluation = evaluation_DB.find(Integer.parseInt(elementSelected.toString()));
+            EvaluationManager evaluation_DB = new EvaluationManager();
+            beans.Evaluation evaluation = evaluation_DB.find(Integer.parseInt(elementSelected.toString()));
             stage_evaluer_maitreDeStage_critere.clear();
             stage_evaluer_maitreDeStage_critere.setVisible(false);
             defense_evaluer_presidentDeJury_note.setValue(((Double) evaluation.getNote()).toString());
@@ -2610,8 +2611,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
                 if (dialog.isConfirmed())
                 {
-                    DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-                    Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+                    EvaluationManager evaluation_DB = new EvaluationManager();
+                    beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
                     if (evaluation_DB.delete(evaluation))
                     {
                         // Mise à jour des points de la défense
@@ -2650,8 +2651,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             Date date = Date.from(Instant.now());
             if (modification)
             {
-                DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-                Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+                EvaluationManager evaluation_DB = new EvaluationManager();
+                beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
                 CritereEvaluation critere = evaluation.getCritere();
                 if (note >= 0 && note <= critere.getNote())
                 {
@@ -2682,10 +2683,10 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 {
                     if (note >= 0 && note <= critere.getNote())
                     {
-                        DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-                        DAO_Defense defense_DB = new DAO_Defense();
+                        EvaluationManager evaluation_DB = new EvaluationManager();
+                        DefenseManager defense_DB = new DefenseManager();
                         Defense defense = defense_DB.find((int) elementSelected);
-                        Evaluation evaluation = new Evaluation(0, date, currentUser, critere, defense, note, commentaire);
+                        beans.Evaluation evaluation = new beans.Evaluation(0, date, currentUser, critere, defense, note, commentaire);
                         if (evaluation_DB.create(evaluation))
                         {
                             // Mise à jour des points de la défense
@@ -2719,7 +2720,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_etudiants()
     {
         tab_etudiants.removeAllItems();
-        DAO_Utilisateur user_DB = new DAO_Utilisateur();
+        UtilisateurManager user_DB = new UtilisateurManager();
         ArrayList<Utilisateur> userList = user_DB.fetchAll("etudiant_tfe");
         userList.addAll(user_DB.fetchAll("etudiant_tfe_stage"));
         for (Utilisateur user : userList)
@@ -2746,7 +2747,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_etudiants_filtre()
     {
         tab_etudiants.removeAllItems();
-        DAO_Utilisateur user_DB = new DAO_Utilisateur();
+        UtilisateurManager user_DB = new UtilisateurManager();
         ArrayList<Utilisateur> userList = user_DB.fetchAll("etudiant_tfe");
         userList.addAll(user_DB.fetchAll("etudiant_tfe_stage"));
         userList.stream().filter(etudiant -> tf_etudiant_recherche.isEmpty() || (etudiant.toString().toLowerCase().contains(tf_etudiant_recherche.getValue().toLowerCase()))).forEach(etudiant -> tab_etudiants.addItem(new Object[]{etudiant.getNom(), etudiant.getPrenom(), etudiant.getMatricule(), etudiant.getEmail(), etudiant.getTelephone()}, etudiant.getId()));
@@ -2755,7 +2756,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_professeurs()
     {
         tab_professeurs.removeAllItems();
-        DAO_Utilisateur user_DB = new DAO_Utilisateur();
+        UtilisateurManager user_DB = new UtilisateurManager();
         ArrayList<Utilisateur> userList = user_DB.fetchAll("professeur");
         for (Utilisateur user : userList)
             tab_professeurs.addItem(new Object[]{user.getNom(), user.getPrenom(), user.getEmail(), user.getTelephone()}, user.getId());
@@ -2779,7 +2780,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_professeurs_filtre()
     {
         tab_professeurs.removeAllItems();
-        DAO_Utilisateur user_DB = new DAO_Utilisateur();
+        UtilisateurManager user_DB = new UtilisateurManager();
         ArrayList<Utilisateur> userList = user_DB.fetchAll("professeur");
         userList.stream().filter(professeur -> tf_professeur_recherche.isEmpty() || (professeur.toString().toLowerCase().contains(tf_professeur_recherche.getValue().toLowerCase()))).forEach(professeur -> tab_professeurs.addItem(new Object[]{professeur.getNom(), professeur.getPrenom(), professeur.getEmail(), professeur.getTelephone()}, professeur.getId()));
     }
@@ -2787,7 +2788,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_maitresDeStage()
     {
         tab_maitresDeStage.removeAllItems();
-        DAO_Utilisateur user_DB = new DAO_Utilisateur();
+        UtilisateurManager user_DB = new UtilisateurManager();
         ArrayList<Utilisateur> userList = user_DB.fetchAll("maitre_stage");
         for (Utilisateur user : userList)
             tab_maitresDeStage.addItem(new Object[]{user.getNom(), user.getPrenom(), user.getTelephone(), user.getEmail()}, user.getId());
@@ -2811,7 +2812,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_maitresDeStage_filtre()
     {
         tab_maitresDeStage.removeAllItems();
-        DAO_Utilisateur user_DB = new DAO_Utilisateur();
+        UtilisateurManager user_DB = new UtilisateurManager();
         ArrayList<Utilisateur> userList = user_DB.fetchAll("maitre_stage");
         userList.stream().filter(maitreStage -> tf_maitreDeStage_recherche.isEmpty() || (maitreStage.toString().toLowerCase().contains(tf_maitreDeStage_recherche.getValue().toLowerCase()))).forEach(maitreStage -> tab_maitresDeStage.addItem(new Object[]{maitreStage.getNom(), maitreStage.getPrenom(), maitreStage.getTelephone(), maitreStage.getEmail()}, maitreStage.getId()));
     }
@@ -2819,7 +2820,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_presidentsDeJury()
     {
         tab_presidentsDeJury.removeAllItems();
-        DAO_Utilisateur user_DB = new DAO_Utilisateur();
+        UtilisateurManager user_DB = new UtilisateurManager();
         ArrayList<Utilisateur> userList = user_DB.fetchAll("president_jury");
         for (Utilisateur user : userList)
             tab_presidentsDeJury.addItem(new Object[]{user.getNom(), user.getPrenom(), user.getTelephone(), user.getEmail()}, user.getId());
@@ -2843,7 +2844,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_presidentsDeJury_filtre()
     {
         tab_presidentsDeJury.removeAllItems();
-        DAO_Utilisateur user_DB = new DAO_Utilisateur();
+        UtilisateurManager user_DB = new UtilisateurManager();
         ArrayList<Utilisateur> userList = user_DB.fetchAll("president_jury");
         userList.stream().filter(presidentJury -> tf_presidentDeJury_recherche.isEmpty() || (presidentJury.toString().toLowerCase().contains(tf_presidentDeJury_recherche.getValue().toLowerCase()))).forEach(presidentJury -> tab_presidentsDeJury.addItem(new Object[]{presidentJury.getNom(), presidentJury.getPrenom(), presidentJury.getTelephone(), presidentJury.getEmail()}, presidentJury.getId()));
     }
@@ -2851,7 +2852,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_entreprises()
     {
         tab_entreprises.removeAllItems();
-        DAO_LieuStage lieuStage_DB = new DAO_LieuStage();
+        LieuStageManager lieuStage_DB = new LieuStageManager();
         ArrayList<LieuStage> lieuStageList = lieuStage_DB.fetchAll();
         for (LieuStage lieuStage : lieuStageList)
             tab_entreprises.addItem(new Object[]{lieuStage.getNom(), lieuStage.getAdresse(), lieuStage.getContact(), lieuStage.getTelephone()}, lieuStage.getId());
@@ -2875,7 +2876,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_entreprises_etudiant()
     {
         tab_entreprises3.removeAllItems();
-        DAO_LieuStage lieuStage_DB = new DAO_LieuStage();
+        LieuStageManager lieuStage_DB = new LieuStageManager();
         ArrayList<LieuStage> lieuStageList = lieuStage_DB.fetchAll();
         for (LieuStage lieuStage : lieuStageList)
             tab_entreprises3.addItem(new Object[]{lieuStage.getNom(), lieuStage.getAdresse(), lieuStage.getContact(), lieuStage.getTelephone()}, lieuStage.getId());
@@ -2890,7 +2891,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_entreprises_filtre()
     {
         tab_entreprises.removeAllItems();
-        DAO_LieuStage lieuStage_DB = new DAO_LieuStage();
+        LieuStageManager lieuStage_DB = new LieuStageManager();
         ArrayList<LieuStage> lieuStageList = lieuStage_DB.fetchAll();
         lieuStageList.stream().filter(lieuStage -> tf_entreprise_recherche.isEmpty() || (lieuStage.getNom().toLowerCase().contains(tf_entreprise_recherche.getValue().toLowerCase())) || (lieuStage.getAdresse().toLowerCase().contains(tf_entreprise_recherche.getValue().toLowerCase()))).forEach(lieuStage -> tab_entreprises.addItem(new Object[]{lieuStage.getNom(), lieuStage.getAdresse(), lieuStage.getContact(), lieuStage.getTelephone()}, lieuStage.getId()));
     }
@@ -2898,7 +2899,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_entreprises_etudiant_filtre()
     {
         tab_entreprises3.removeAllItems();
-        DAO_LieuStage lieuStage_DB = new DAO_LieuStage();
+        LieuStageManager lieuStage_DB = new LieuStageManager();
         ArrayList<LieuStage> lieuStageList = lieuStage_DB.fetchAll();
         lieuStageList.stream().filter(lieuStage -> tf_entreprise_recherche3.isEmpty() || (lieuStage.getNom().toLowerCase().contains(tf_entreprise_recherche3.getValue().toLowerCase())) || (lieuStage.getAdresse().toLowerCase().contains(tf_entreprise_recherche3.getValue().toLowerCase()))).forEach(lieuStage -> tab_entreprises3.addItem(new Object[]{lieuStage.getNom(), lieuStage.getAdresse(), lieuStage.getContact(), lieuStage.getTelephone()}, lieuStage.getId()));
     }
@@ -2906,7 +2907,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_criteresEvaluation()
     {
         tab_criteresEvaluation.removeAllItems();
-        DAO_CritereEvaluation critereEvaluation_DB = new DAO_CritereEvaluation();
+        CritereEvaluationManager critereEvaluation_DB = new CritereEvaluationManager();
         List<CritereEvaluation> critereEvaluationList = critereEvaluation_DB.fetchAll(null);
         for (CritereEvaluation critereEvaluation : critereEvaluationList)
             tab_criteresEvaluation.addItem(new Object[]{critereEvaluation.getNom(), critereEvaluation.getType(), critereEvaluation.getNote()}, critereEvaluation.getId());
@@ -2930,7 +2931,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_criteresEvaluation_filtre()
     {
         tab_criteresEvaluation.removeAllItems();
-        DAO_CritereEvaluation critereEvaluation_DB = new DAO_CritereEvaluation();
+        CritereEvaluationManager critereEvaluation_DB = new CritereEvaluationManager();
         List<CritereEvaluation> critereEvaluationList = critereEvaluation_DB.fetchAll(null);
         critereEvaluationList.stream().filter(critereEvaluation -> tf_evaluation_recherche.isEmpty() || (critereEvaluation.getNom().toLowerCase().contains(tf_evaluation_recherche.getValue().toLowerCase()))).forEach(critereEvaluation -> tab_criteresEvaluation.addItem(new Object[]{critereEvaluation.getNom(), critereEvaluation.getType(), critereEvaluation.getNote()}, critereEvaluation.getId()));
     }
@@ -2938,7 +2939,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_technologies()
     {
         tab_technologies.removeAllItems();
-        DAO_Technologie technologie_DB = new DAO_Technologie();
+        TechnologieManager technologie_DB = new TechnologieManager();
         ArrayList<Technologie> technologieList = technologie_DB.fetchAll();
         for (Technologie technologie : technologieList)
             tab_technologies.addItem(new Object[]{technologie.getNom(), technologie.getVersion()}, technologie.getId());
@@ -2962,7 +2963,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_technologies_filtre()
     {
         tab_technologies.removeAllItems();
-        DAO_Technologie technologie_DB = new DAO_Technologie();
+        TechnologieManager technologie_DB = new TechnologieManager();
         ArrayList<Technologie> technologieList = technologie_DB.fetchAll();
         technologieList.stream().filter(technologie -> tf_technologie_recherche.isEmpty() || (technologie.getNom().toLowerCase().contains(tf_technologie_recherche.getValue().toLowerCase()))).forEach(technologie -> tab_technologies.addItem(new Object[]{technologie.getNom(), technologie.getVersion()}, technologie.getId()));
     }
@@ -2970,7 +2971,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_tfe()
     {
         tab_tfe.removeAllItems();
-        DAO_TFE tfe_DB = new DAO_TFE();
+        TFEManager tfe_DB = new TFEManager();
         ArrayList<TFE> tfeList = tfe_DB.fetchAll();
         for (TFE tfe : tfeList)
             tab_tfe.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), tfe.getPoints(), tfe.getAnneeDebut(), tfe.getAnneeFin(),}, tfe.getId());
@@ -3015,7 +3016,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         button_defenseTFE.setEnabled(false);
         button_echeanceTFE.setEnabled(false);
         tab_tfe.removeAllItems();
-        DAO_TFE tfe_DB = new DAO_TFE();
+        TFEManager tfe_DB = new TFEManager();
         ArrayList<TFE> tfeList = tfe_DB.fetchAll();
         Technologie technologie = (Technologie) cb_tfe_technologie.getValue();
         int anneeAcademiqueDebut = 0;
@@ -3042,7 +3043,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         unselectSelectedTab();
         tab_tfe2.removeAllItems();
-        DAO_TFE tfe_DB = new DAO_TFE();
+        TFEManager tfe_DB = new TFEManager();
         ArrayList<TFE> tfeList = tfe_DB.fetchAll();
         Technologie technologie = (Technologie) cb_tfe_technologie2.getValue();
         int anneeAcademiqueDebut = 0;
@@ -3068,7 +3069,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_stage()
     {
         tab_stage.removeAllItems();
-        DAO_Stage stage_DB = new DAO_Stage();
+        StageManager stage_DB = new StageManager();
         ArrayList<Stage> stageList = stage_DB.fetchAll(null);
         for (Stage stage : stageList)
             tab_stage.addItem(new Object[]{stage.getProposition().getSubject(), stage.getOwner().toString(), stage.getSuperviseur().toString(), DateFormat.getDateInstance().format(stage.getDateDebut()), DateFormat.getDateInstance().format(stage.getDateFin()), stage.getProposition().getPlace().getNom(), stage.getPoints()}, stage.getId());
@@ -3116,7 +3117,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         button_echeanceStage.setEnabled(false);
         button_commenterStage.setEnabled(false);
         tab_stage.removeAllItems();
-        DAO_Stage stage_DB = new DAO_Stage();
+        StageManager stage_DB = new StageManager();
         ArrayList<Stage> stageList = stage_DB.fetchAll(null);
         Technologie technologie = (Technologie) cb_stage_technologie.getValue();
         LieuStage lieuStage = (LieuStage) cb_stage_entreprise.getValue();
@@ -3145,7 +3146,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         unselectSelectedTab();
         tab_stage2.removeAllItems();
-        DAO_Stage stage_DB = new DAO_Stage();
+        StageManager stage_DB = new StageManager();
         ArrayList<Stage> stageList = stage_DB.fetchAll(null);
         Technologie technologie = (Technologie) cb_stage_technologie3.getValue();
         LieuStage lieuStage = (LieuStage) cb_stage_entreprise3.getValue();
@@ -3173,7 +3174,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_propositionStage()
     {
         tab_propositionStage.removeAllItems();
-        DAO_PropositionStage propositionStage_DB = new DAO_PropositionStage();
+        PropositionStageManager propositionStage_DB = new PropositionStageManager();
         ArrayList<PropositionStage> propositionStageList = propositionStage_DB.fetchAll(null, null);
         for (PropositionStage propositionStage : propositionStageList)
             tab_propositionStage.addItem(new Object[]{propositionStage.getSubject(), propositionStage.getOwner().toString(), propositionStage.getPlace().getAdresse(), propositionStage.getPlace().getNom()}, propositionStage.getId());
@@ -3184,7 +3185,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             if (elementSelected != null)
             {
                 boutons = true;
-                DAO_PropositionStage propositionStage_DB1 = new DAO_PropositionStage();
+                PropositionStageManager propositionStage_DB1 = new PropositionStageManager();
                 PropositionStage propositionStage = propositionStage_DB1.find((int) elementSelected);
                 if (propositionStage.getOwner().getRole().getNom().equals("professeur"))
                     button_validerPropositionStage.setEnabled(false);
@@ -3202,7 +3203,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_defense()
     {
         tab_defense.removeAllItems();
-        DAO_Defense defense_DB = new DAO_Defense();
+        DefenseManager defense_DB = new DefenseManager();
         ArrayList<Defense> defenseList = defense_DB.fetchAll(0, null);
         for (Defense defense : defenseList)
         {
@@ -3244,9 +3245,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_evaluationTFE(TFE tfe)
     {
         tab_evaluationTFE.removeAllItems();
-        DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-        ArrayList<Evaluation> evaluationList = evaluation_DB.fetchAll(tfe);
-        for (Evaluation evaluation : evaluationList)
+        EvaluationManager evaluation_DB = new EvaluationManager();
+        ArrayList<beans.Evaluation> evaluationList = evaluation_DB.fetchAll(tfe);
+        for (beans.Evaluation evaluation : evaluationList)
         {
             String critere = evaluation.getCritere().getNom();
             Double note = evaluation.getNote();
@@ -3270,9 +3271,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_evaluationStage(Stage stage)
     {
         tab_evaluationStage.removeAllItems();
-        DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-        ArrayList<Evaluation> evaluationList = evaluation_DB.fetchAll(stage);
-        for (Evaluation evaluation : evaluationList)
+        EvaluationManager evaluation_DB = new EvaluationManager();
+        ArrayList<beans.Evaluation> evaluationList = evaluation_DB.fetchAll(stage);
+        for (beans.Evaluation evaluation : evaluationList)
         {
             String critere = evaluation.getCritere().getNom();
             Double note = evaluation.getNote();
@@ -3296,9 +3297,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_evaluationDefense(Defense defense)
     {
         tab_evaluationDefense.removeAllItems();
-        DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-        ArrayList<Evaluation> evaluationList = evaluation_DB.fetchAll(defense);
-        for (Evaluation evaluation : evaluationList)
+        EvaluationManager evaluation_DB = new EvaluationManager();
+        ArrayList<beans.Evaluation> evaluationList = evaluation_DB.fetchAll(defense);
+        for (beans.Evaluation evaluation : evaluationList)
         {
             String critere = evaluation.getCritere().getNom();
             Double note = evaluation.getNote();
@@ -3322,7 +3323,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_tfe2()
     {
         tab_tfe2.removeAllItems();
-        DAO_TFE tfe_DB = new DAO_TFE();
+        TFEManager tfe_DB = new TFEManager();
         ArrayList<TFE> tfeList = tfe_DB.fetchAll();
         for (TFE tfe : tfeList)
             tab_tfe2.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), tfe.getAnneeDebut(), tfe.getAnneeFin(),}, tfe.getId());
@@ -3332,7 +3333,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_stage2()
     {
         tab_stage2.removeAllItems();
-        DAO_Stage stage_DB = new DAO_Stage();
+        StageManager stage_DB = new StageManager();
         ArrayList<Stage> stageList = stage_DB.fetchAll(null);
         for (Stage stage : stageList)
             tab_stage2.addItem(new Object[]{stage.getProposition().getSubject(), stage.getOwner().toString(), stage.getSuperviseur().toString(), DateFormat.getDateInstance().format(stage.getDateDebut()), DateFormat.getDateInstance().format(stage.getDateFin()), stage.getProposition().getPlace().getNom()}, stage.getId());
@@ -3342,7 +3343,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_propositionStage2()
     {
         tab_propositionStage2.removeAllItems();
-        DAO_PropositionStage propositionStage_DB = new DAO_PropositionStage();
+        PropositionStageManager propositionStage_DB = new PropositionStageManager();
         ArrayList<PropositionStage> propositionStageList = propositionStage_DB.fetchAll(currentUser, "professeur");
         for (PropositionStage propositionStage : propositionStageList)
         {
@@ -3355,7 +3356,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             if (elementSelected == null) button_dupliquerPropositionStage3.setEnabled(false);
             else
             {
-                DAO_PropositionStage propositionStage_DB1 = new DAO_PropositionStage();
+                PropositionStageManager propositionStage_DB1 = new PropositionStageManager();
                 PropositionStage propositionStage = propositionStage_DB1.find((int) elementSelected);
 
                 if (propositionStage.getOwner().getRole().getNom().equals("professeur"))
@@ -3378,7 +3379,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_echeance()
     {
         tab_echeance.removeAllItems();
-        DAO_Echeance echeance_DB = new DAO_Echeance();
+        EcheanceManager echeance_DB = new EcheanceManager();
         ArrayList<Echeance> echeanceList = echeance_DB.fetchAll(currentUser);
         for (Echeance echeance : echeanceList)
         {
@@ -3393,7 +3394,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_echeance2()
     {
         tab_echeance2.removeAllItems();
-        DAO_Echeance echeance_DB = new DAO_Echeance();
+        EcheanceManager echeance_DB = new EcheanceManager();
         ArrayList<Echeance> echeanceList = echeance_DB.fetchAll();
         for (Echeance echeance : echeanceList)
         {
@@ -3407,7 +3408,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             form_echeance_editer.setVisible(false);
             form_echeance_editer2.setVisible(false);
             elementSelected = tab_echeance2.getValue();
-            DAO_Echeance echeance_DB1 = new DAO_Echeance();
+            EcheanceManager echeance_DB1 = new EcheanceManager();
             boolean boutons = false;
             if (elementSelected == null) button_modifierEcheance.setEnabled(false);
             else
@@ -3425,7 +3426,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_echeance3(TFE tfe)
     {
         tab_echeance3.removeAllItems();
-        DAO_Echeance echeance_DB = new DAO_Echeance();
+        EcheanceManager echeance_DB = new EcheanceManager();
         ArrayList<Echeance> echeanceList = echeance_DB.fetchAll(tfe);
         for (Echeance echeance : echeanceList)
             tab_echeance3.addItem(new Object[]{echeance.getOwner().toString(), echeance.getDateCreation(), echeance.getDateEcheance(), echeance.getDescription()}, echeance.getId());
@@ -3442,7 +3443,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_echeance4(Stage stage)
     {
         tab_echeance4.removeAllItems();
-        DAO_Echeance echeance_DB = new DAO_Echeance();
+        EcheanceManager echeance_DB = new EcheanceManager();
         ArrayList<Echeance> echeanceList = echeance_DB.fetchAll(stage);
         for (Echeance echeance : echeanceList)
             tab_echeance4.addItem(new Object[]{echeance.getOwner().toString(), echeance.getDateCreation(), echeance.getDateEcheance(), echeance.getDescription()}, echeance.getId());
@@ -3459,7 +3460,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_defense2()
     {
         tab_defense2.removeAllItems();
-        DAO_Defense defense_DB = new DAO_Defense();
+        DefenseManager defense_DB = new DefenseManager();
         ArrayList<Defense> defenseList = defense_DB.fetchAll(2, currentUser);
         for (Defense defense : defenseList)
         {
@@ -3490,7 +3491,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_stage3()
     {
         tab_stage3.removeAllItems();
-        DAO_Stage stage_DB = new DAO_Stage();
+        StageManager stage_DB = new StageManager();
         ArrayList<Stage> stageList = stage_DB.fetchAll(currentUser);
         for (Stage stage : stageList)
             tab_stage3.addItem(new Object[]{stage.getProposition().getSubject(), stage.getOwner().toString(), stage.getSuperviseur().toString(), DateFormat.getDateInstance().format(stage.getDateDebut()), DateFormat.getDateInstance().format(stage.getDateFin()), stage.getProposition().getPlace().getNom(), stage.getPoints()}, stage.getId());
@@ -3508,7 +3509,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_defense3()
     {
         tab_defense3.removeAllItems();
-        DAO_Defense defense_DB = new DAO_Defense();
+        DefenseManager defense_DB = new DefenseManager();
         ArrayList<Defense> defenseList = defense_DB.fetchAll(1, currentUser);
         for (Defense defense : defenseList)
         {
@@ -3543,9 +3544,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_evaluations_maitreStage(Stage stage)
     {
         tab_evaluations_maitreStage.removeAllItems();
-        DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-        ArrayList<Evaluation> evaluationList = evaluation_DB.fetchAll(currentUser, stage);
-        for (Evaluation evaluation : evaluationList)
+        EvaluationManager evaluation_DB = new EvaluationManager();
+        ArrayList<beans.Evaluation> evaluationList = evaluation_DB.fetchAll(currentUser, stage);
+        for (beans.Evaluation evaluation : evaluationList)
         {
             String critere = evaluation.getCritere().getNom();
             Double note = evaluation.getNote();
@@ -3571,9 +3572,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_evaluations_presidentJury(Defense defense)
     {
         tab_evaluations_presidentJury.removeAllItems();
-        DAO_Evaluation evaluation_DB = new DAO_Evaluation();
-        ArrayList<Evaluation> evaluationList = evaluation_DB.fetchAll(currentUser, defense);
-        for (Evaluation evaluation : evaluationList)
+        EvaluationManager evaluation_DB = new EvaluationManager();
+        ArrayList<beans.Evaluation> evaluationList = evaluation_DB.fetchAll(currentUser, defense);
+        for (beans.Evaluation evaluation : evaluationList)
         {
             String critere = evaluation.getCritere().getNom();
             Double note = evaluation.getNote();
@@ -3611,7 +3612,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_cb_presidentJury()
     {
         defense_evaluer_presidentDeJury_critere.removeAllItems();
-        DAO_CritereEvaluation critereEvaluation_DB = new DAO_CritereEvaluation();
+        CritereEvaluationManager critereEvaluation_DB = new CritereEvaluationManager();
         List<CritereEvaluation> critereEvaluationList;
         critereEvaluationList = critereEvaluation_DB.fetchAll("defense");
         critereEvaluationList.forEach(defense_evaluer_presidentDeJury_critere::addItem);
@@ -3628,7 +3629,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_cb_defense()
     {
         defense_evaluer_critere.removeAllItems();
-        DAO_CritereEvaluation critereEvaluation_DB = new DAO_CritereEvaluation();
+        CritereEvaluationManager critereEvaluation_DB = new CritereEvaluationManager();
         List<CritereEvaluation> critereEvaluationList;
         critereEvaluationList = critereEvaluation_DB.fetchAll("defense");
         critereEvaluationList.forEach(defense_evaluer_critere::addItem);
@@ -3639,8 +3640,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         tc_tfe_ajouter_technologie.removeAllItems();
         tc_tfe_modifier_technologie.removeAllItems();
         cb_tfe_technologie.removeAllItems();
-        DAO_Technologie technologie_DB = new DAO_Technologie();
-        DAO_TFE tfe_DB = new DAO_TFE();
+        TechnologieManager technologie_DB = new TechnologieManager();
+        TFEManager tfe_DB = new TFEManager();
         ArrayList<TFE> tfeList = tfe_DB.fetchAll();
         ArrayList<Technologie> technologieList = technologie_DB.fetchAll();
         for (Technologie technologie : technologieList)
@@ -3670,7 +3671,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         });
         cb_tfe_ajouter_promoteur.removeAllItems();
         cb_tfe_modifier_promoteur.removeAllItems();
-        DAO_Utilisateur user_DB = new DAO_Utilisateur();
+        UtilisateurManager user_DB = new UtilisateurManager();
         ArrayList<Utilisateur> userList = user_DB.fetchAll("professeur");
         for (Utilisateur user : userList)
         {
@@ -3682,7 +3683,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         userEtuList.addAll(user_DB.fetchAll("etudiant_tfe_stage"));
         userEtuList.forEach(cb_tfe_ajouter_etudiant::addItem);
         tfe_evaluer_critere.removeAllItems();
-        DAO_CritereEvaluation critereEvaluation_DB = new DAO_CritereEvaluation();
+        CritereEvaluationManager critereEvaluation_DB = new CritereEvaluationManager();
         List<CritereEvaluation> critereEvaluationList = critereEvaluation_DB.fetchAll("tfe");
         critereEvaluationList.forEach(tfe_evaluer_critere::addItem);
         tfe_defense_presidentJury.removeAllItems();
@@ -3693,7 +3694,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_cb_TFE2()
     {
         cb_tfe_technologie2.removeAllItems();
-        DAO_TFE tfe_DB = new DAO_TFE();
+        TFEManager tfe_DB = new TFEManager();
         ArrayList<TFE> tfeList = tfe_DB.fetchAll();
         ArrayList<Technologie> technologiesUtilisees = new ArrayList<>();
         for (TFE tfe : tfeList)
@@ -3766,8 +3767,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tc_stage_editer_technologies.removeAllItems();
         cb_stage_technologie.removeAllItems();
-        DAO_Technologie technologie_DB = new DAO_Technologie();
-        DAO_Stage stage_DB = new DAO_Stage();
+        TechnologieManager technologie_DB = new TechnologieManager();
+        StageManager stage_DB = new StageManager();
         ArrayList<Stage> stageList = stage_DB.fetchAll(null);
         ArrayList<Technologie> technologieList = technologie_DB.fetchAll();
         technologieList.forEach(tc_stage_editer_technologies::addItem);
@@ -3783,7 +3784,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         cb_stage_entreprise.removeAllItems();
         cb_stage_editer_entreprise.setReadOnly(false);
         cb_stage_editer_entreprise.removeAllItems();
-        DAO_LieuStage lieuStage_DB = new DAO_LieuStage();
+        LieuStageManager lieuStage_DB = new LieuStageManager();
         ArrayList<LieuStage> lieuStageList = lieuStage_DB.fetchAll();
         lieuStageList.forEach(cb_stage_editer_entreprise::addItem);
         ArrayList<LieuStage> lieuxStagesUtilises = new ArrayList<>();
@@ -3807,7 +3808,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         cb_stage_anneeAcademique.addValueChangeListener(event -> load_tab_stage_filtre());
 
         cb_stage_editer_promoteur.removeAllItems();
-        DAO_Utilisateur user_DB = new DAO_Utilisateur();
+        UtilisateurManager user_DB = new UtilisateurManager();
         ArrayList<Utilisateur> promoteurList = user_DB.fetchAll("professeur");
         promoteurList.forEach(cb_stage_editer_promoteur::addItem);
 
@@ -3821,7 +3822,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         etudiantList.forEach(cb_stage_editer_etudiant::addItem);
 
         stage_evaluer_critere.removeAllItems();
-        DAO_CritereEvaluation critereEvaluation_DB = new DAO_CritereEvaluation();
+        CritereEvaluationManager critereEvaluation_DB = new CritereEvaluationManager();
         List<CritereEvaluation> critereEvaluationList = critereEvaluation_DB.fetchAll("stage");
         critereEvaluationList.forEach(stage_evaluer_critere::addItem);
 
@@ -3833,7 +3834,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_cb_stage2()
     {
         cb_stage_technologie3.removeAllItems();
-        DAO_Stage stage_DB = new DAO_Stage();
+        StageManager stage_DB = new StageManager();
         ArrayList<Stage> stageList = stage_DB.fetchAll(null);
         ArrayList<Technologie> technologiesUtilisees = new ArrayList<>();
         for (Stage stage : stageList)
@@ -3867,18 +3868,18 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         cb_PropositionStage_editer_entreprise.setReadOnly(false);
         cb_PropositionStage_editer_entreprise.removeAllItems();
-        DAO_LieuStage lieuStage_DB = new DAO_LieuStage();
+        LieuStageManager lieuStage_DB = new LieuStageManager();
         ArrayList<LieuStage> entrepriseList = lieuStage_DB.fetchAll();
         entrepriseList.forEach(cb_PropositionStage_editer_entreprise::addItem);
         cb_PropositionStage_valider_maitreDeStage.removeAllItems();
-        DAO_Utilisateur user_DB = new DAO_Utilisateur();
+        UtilisateurManager user_DB = new UtilisateurManager();
         ArrayList<Utilisateur> userMaitreStageList = user_DB.fetchAll("maitre_stage");
         userMaitreStageList.forEach(cb_PropositionStage_valider_maitreDeStage::addItem);
         cb_PropositionStage_valider_promoteur.removeAllItems();
         ArrayList<Utilisateur> userPromoteurList = user_DB.fetchAll("professeur");
         userPromoteurList.forEach(cb_PropositionStage_valider_promoteur::addItem);
         tc_PropositionStage_valider_technologies.removeAllItems();
-        DAO_Technologie technologie_DB = new DAO_Technologie();
+        TechnologieManager technologie_DB = new TechnologieManager();
         ArrayList<Technologie> technologieList = technologie_DB.fetchAll();
         technologieList.forEach(tc_PropositionStage_valider_technologies::addItem);
     }
@@ -3887,7 +3888,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         cb_PropositionStage_etudiant_editer_entreprise.setReadOnly(false);
         cb_PropositionStage_etudiant_editer_entreprise.removeAllItems();
-        DAO_LieuStage lieuStage_DB = new DAO_LieuStage();
+        LieuStageManager lieuStage_DB = new LieuStageManager();
         ArrayList<LieuStage> entrepriseList = lieuStage_DB.fetchAll();
         entrepriseList.forEach(cb_PropositionStage_etudiant_editer_entreprise::addItem);
     }
@@ -3895,7 +3896,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_cb_maitreStage()
     {
         stage_evaluer_maitreDeStage_critere.removeAllItems();
-        DAO_CritereEvaluation critereEvaluation_DB = new DAO_CritereEvaluation();
+        CritereEvaluationManager critereEvaluation_DB = new CritereEvaluationManager();
         List<CritereEvaluation> critereEvaluationList = critereEvaluation_DB.fetchAll("stage");
         critereEvaluationList.forEach(stage_evaluer_maitreDeStage_critere::addItem);
     }
@@ -3903,7 +3904,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_cb_echeance()
     {
         tc_echeance_ajouter_utilisateurs.removeAllItems();
-        DAO_Utilisateur user_DB = new DAO_Utilisateur();
+        UtilisateurManager user_DB = new UtilisateurManager();
         ArrayList<Utilisateur> userList = user_DB.fetchAll("etudiant_tfe");
         userList.addAll(user_DB.fetchAll("etudiant_tfe_stage"));
         userList.forEach(tc_echeance_ajouter_utilisateurs::addItem);
@@ -4016,9 +4017,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         double res = 0;
         int total = 0;
 
-        DAO_Evaluation evaluation_DB = new DAO_Evaluation();
+        EvaluationManager evaluation_DB = new EvaluationManager();
 
-        for (Evaluation evaluation : evaluation_DB.fetchAll(tfe))
+        for (beans.Evaluation evaluation : evaluation_DB.fetchAll(tfe))
         {
             res += evaluation.getNote();
             total += evaluation.getCritere().getNote();
@@ -4027,7 +4028,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         if (total != 0) res = (res / total) * 100;
         else res = 0;
 
-        DAO_TFE tfe_DB = new DAO_TFE();
+        TFEManager tfe_DB = new TFEManager();
 
         tfe.update(res);
         tfe_DB.update(tfe);
@@ -4038,9 +4039,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         double res = 0;
         int total = 0;
 
-        DAO_Evaluation evaluation_DB = new DAO_Evaluation();
+        EvaluationManager evaluation_DB = new EvaluationManager();
 
-        for (Evaluation evaluation : evaluation_DB.fetchAll(stage))
+        for (beans.Evaluation evaluation : evaluation_DB.fetchAll(stage))
         {
             res += evaluation.getNote();
             total += evaluation.getCritere().getNote();
@@ -4049,7 +4050,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         if (total != 0) res = (res / total) * 100;
         else res = 0;
 
-        DAO_Stage stage_DB = new DAO_Stage();
+        StageManager stage_DB = new StageManager();
 
         stage.update(res);
         stage_DB.update(stage);

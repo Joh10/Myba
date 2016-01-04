@@ -12,7 +12,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.WrappedSession;
 import com.vaadin.ui.Button.ClickListener;
-import dao.DAO_Defense;
+import managers.DefenseManager;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,7 +55,7 @@ public class PublicDefenses extends PublicDefenses_design implements View
     {
         tab_defenses.removeAllItems();
 
-        DAO_Defense defense_DB = new DAO_Defense();
+        DefenseManager defense_DB = new DefenseManager();
         ArrayList<Defense> defenseList = defense_DB.fetchAll(0, null);
 
         for (Defense defense : defenseList)
@@ -91,7 +91,7 @@ public class PublicDefenses extends PublicDefenses_design implements View
         tab_technologies.removeAllItems();
         if (elementSelected != null)
         {
-            DAO_Defense defense_DB = new DAO_Defense();
+            DefenseManager defense_DB = new DefenseManager();
             Defense defense = defense_DB.find((int) elementSelected);
             Stage stage = defense.getStage();
             TFE tfe = defense.getTFE();
