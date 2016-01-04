@@ -12,6 +12,7 @@ public class Echeance
     @Column(name = "id_Ech")
     private int id;
 
+    //TODO ????
     private Utilisateur owner;
 
     @Column(name = "dateCreation")
@@ -20,7 +21,8 @@ public class Echeance
     @Column(name = "dateEcheance")
     private Date dateEcheance;
 
-    //TODO ????????
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="UTILISATEURXTFE", joinColumns=@JoinColumn(name="ID_UTI"), inverseJoinColumns=@JoinColumn(name="ID_ECH"))
     private TFE tfe;
     private Stage stage;
 

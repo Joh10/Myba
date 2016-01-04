@@ -2853,7 +2853,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_entreprises.removeAllItems();
         LieuStageManager lieuStage_DB = new LieuStageManager();
-        ArrayList<LieuStage> lieuStageList = lieuStage_DB.fetchAll();
+        List<LieuStage> lieuStageList = lieuStage_DB.fetchAll();
         for (LieuStage lieuStage : lieuStageList)
             tab_entreprises.addItem(new Object[]{lieuStage.getNom(), lieuStage.getAdresse(), lieuStage.getContact(), lieuStage.getTelephone()}, lieuStage.getId());
         tab_entreprises.addValueChangeListener(event -> {
@@ -2877,7 +2877,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_entreprises3.removeAllItems();
         LieuStageManager lieuStage_DB = new LieuStageManager();
-        ArrayList<LieuStage> lieuStageList = lieuStage_DB.fetchAll();
+        List<LieuStage> lieuStageList = lieuStage_DB.fetchAll();
         for (LieuStage lieuStage : lieuStageList)
             tab_entreprises3.addItem(new Object[]{lieuStage.getNom(), lieuStage.getAdresse(), lieuStage.getContact(), lieuStage.getTelephone()}, lieuStage.getId());
 
@@ -2892,7 +2892,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_entreprises.removeAllItems();
         LieuStageManager lieuStage_DB = new LieuStageManager();
-        ArrayList<LieuStage> lieuStageList = lieuStage_DB.fetchAll();
+        List<LieuStage> lieuStageList = lieuStage_DB.fetchAll();
         lieuStageList.stream().filter(lieuStage -> tf_entreprise_recherche.isEmpty() || (lieuStage.getNom().toLowerCase().contains(tf_entreprise_recherche.getValue().toLowerCase())) || (lieuStage.getAdresse().toLowerCase().contains(tf_entreprise_recherche.getValue().toLowerCase()))).forEach(lieuStage -> tab_entreprises.addItem(new Object[]{lieuStage.getNom(), lieuStage.getAdresse(), lieuStage.getContact(), lieuStage.getTelephone()}, lieuStage.getId()));
     }
 
@@ -2900,7 +2900,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_entreprises3.removeAllItems();
         LieuStageManager lieuStage_DB = new LieuStageManager();
-        ArrayList<LieuStage> lieuStageList = lieuStage_DB.fetchAll();
+        List<LieuStage> lieuStageList = lieuStage_DB.fetchAll();
         lieuStageList.stream().filter(lieuStage -> tf_entreprise_recherche3.isEmpty() || (lieuStage.getNom().toLowerCase().contains(tf_entreprise_recherche3.getValue().toLowerCase())) || (lieuStage.getAdresse().toLowerCase().contains(tf_entreprise_recherche3.getValue().toLowerCase()))).forEach(lieuStage -> tab_entreprises3.addItem(new Object[]{lieuStage.getNom(), lieuStage.getAdresse(), lieuStage.getContact(), lieuStage.getTelephone()}, lieuStage.getId()));
     }
 
@@ -2940,7 +2940,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_technologies.removeAllItems();
         TechnologieManager technologie_DB = new TechnologieManager();
-        ArrayList<Technologie> technologieList = technologie_DB.fetchAll();
+        List<Technologie> technologieList = technologie_DB.fetchAll();
         for (Technologie technologie : technologieList)
             tab_technologies.addItem(new Object[]{technologie.getNom(), technologie.getVersion()}, technologie.getId());
         tab_technologies.addValueChangeListener(event -> {
@@ -2964,7 +2964,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_technologies.removeAllItems();
         TechnologieManager technologie_DB = new TechnologieManager();
-        ArrayList<Technologie> technologieList = technologie_DB.fetchAll();
+        List<Technologie> technologieList = technologie_DB.fetchAll();
         technologieList.stream().filter(technologie -> tf_technologie_recherche.isEmpty() || (technologie.getNom().toLowerCase().contains(tf_technologie_recherche.getValue().toLowerCase()))).forEach(technologie -> tab_technologies.addItem(new Object[]{technologie.getNom(), technologie.getVersion()}, technologie.getId()));
     }
 
@@ -2972,7 +2972,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_tfe.removeAllItems();
         TFEManager tfe_DB = new TFEManager();
-        ArrayList<TFE> tfeList = tfe_DB.fetchAll();
+        List<TFE> tfeList = tfe_DB.fetchAll();
         for (TFE tfe : tfeList)
             tab_tfe.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), tfe.getPoints(), tfe.getAnneeDebut(), tfe.getAnneeFin(),}, tfe.getId());
         tab_tfe.addValueChangeListener(event -> {
@@ -3017,7 +3017,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         button_echeanceTFE.setEnabled(false);
         tab_tfe.removeAllItems();
         TFEManager tfe_DB = new TFEManager();
-        ArrayList<TFE> tfeList = tfe_DB.fetchAll();
+        List<TFE> tfeList = tfe_DB.fetchAll();
         Technologie technologie = (Technologie) cb_tfe_technologie.getValue();
         int anneeAcademiqueDebut = 0;
         int anneeAcademiqueFin = 0;
@@ -3030,7 +3030,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         String nom = tf_tfe_etudiant.getValue().toLowerCase();
         for (TFE tfe : tfeList)
         {
-            ArrayList<Technologie> technologiesTFE = tfe.getTechnologies();
+            List<Technologie> technologiesTFE = tfe.getTechnologies();
             int anneeDebut = tfe.getAnneeDebut();
             int anneeFin = tfe.getAnneeFin();
             String nomPrenom = (tfe.getOwner().toString()).toLowerCase();
@@ -3044,7 +3044,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         unselectSelectedTab();
         tab_tfe2.removeAllItems();
         TFEManager tfe_DB = new TFEManager();
-        ArrayList<TFE> tfeList = tfe_DB.fetchAll();
+        List<TFE> tfeList = tfe_DB.fetchAll();
         Technologie technologie = (Technologie) cb_tfe_technologie2.getValue();
         int anneeAcademiqueDebut = 0;
         int anneeAcademiqueFin = 0;
@@ -3057,7 +3057,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         String nom = tf_tfe_etudiant2.getValue().toLowerCase();
         for (TFE tfe : tfeList)
         {
-            ArrayList<Technologie> technologiesTFE = tfe.getTechnologies();
+            List<Technologie> technologiesTFE = tfe.getTechnologies();
             int anneeDebut = tfe.getAnneeDebut();
             int anneeFin = tfe.getAnneeFin();
             String nomPrenom = (tfe.getOwner().toString()).toLowerCase();
@@ -3246,7 +3246,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_evaluationTFE.removeAllItems();
         EvaluationManager evaluation_DB = new EvaluationManager();
-        ArrayList<beans.Evaluation> evaluationList = evaluation_DB.fetchAll(tfe);
+        List<beans.Evaluation> evaluationList = evaluation_DB.fetchAll(tfe);
         for (beans.Evaluation evaluation : evaluationList)
         {
             String critere = evaluation.getCritere().getNom();
@@ -3272,7 +3272,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_evaluationStage.removeAllItems();
         EvaluationManager evaluation_DB = new EvaluationManager();
-        ArrayList<beans.Evaluation> evaluationList = evaluation_DB.fetchAll(stage);
+        List<beans.Evaluation> evaluationList = evaluation_DB.fetchAll(stage);
         for (beans.Evaluation evaluation : evaluationList)
         {
             String critere = evaluation.getCritere().getNom();
@@ -3298,7 +3298,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_evaluationDefense.removeAllItems();
         EvaluationManager evaluation_DB = new EvaluationManager();
-        ArrayList<beans.Evaluation> evaluationList = evaluation_DB.fetchAll(defense);
+        List<beans.Evaluation> evaluationList = evaluation_DB.fetchAll(defense);
         for (beans.Evaluation evaluation : evaluationList)
         {
             String critere = evaluation.getCritere().getNom();
@@ -3324,7 +3324,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_tfe2.removeAllItems();
         TFEManager tfe_DB = new TFEManager();
-        ArrayList<TFE> tfeList = tfe_DB.fetchAll();
+        List<TFE> tfeList = tfe_DB.fetchAll();
         for (TFE tfe : tfeList)
             tab_tfe2.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), tfe.getAnneeDebut(), tfe.getAnneeFin(),}, tfe.getId());
         load_cb_TFE2();
@@ -3380,7 +3380,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_echeance.removeAllItems();
         EcheanceManager echeance_DB = new EcheanceManager();
-        ArrayList<Echeance> echeanceList = echeance_DB.fetchAll(currentUser);
+        List<Echeance> echeanceList = echeance_DB.fetchAll(currentUser);
         for (Echeance echeance : echeanceList)
         {
             String type;
@@ -3395,7 +3395,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_echeance2.removeAllItems();
         EcheanceManager echeance_DB = new EcheanceManager();
-        ArrayList<Echeance> echeanceList = echeance_DB.fetchAll();
+        List<Echeance> echeanceList = echeance_DB.fetchAll();
         for (Echeance echeance : echeanceList)
         {
             String type;
@@ -3427,7 +3427,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_echeance3.removeAllItems();
         EcheanceManager echeance_DB = new EcheanceManager();
-        ArrayList<Echeance> echeanceList = echeance_DB.fetchAll(tfe);
+        List<Echeance> echeanceList = echeance_DB.fetchAll(tfe);
         for (Echeance echeance : echeanceList)
             tab_echeance3.addItem(new Object[]{echeance.getOwner().toString(), echeance.getDateCreation(), echeance.getDateEcheance(), echeance.getDescription()}, echeance.getId());
         tab_echeance3.addValueChangeListener(event -> {
@@ -3444,7 +3444,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_echeance4.removeAllItems();
         EcheanceManager echeance_DB = new EcheanceManager();
-        ArrayList<Echeance> echeanceList = echeance_DB.fetchAll(stage);
+        List<Echeance> echeanceList = echeance_DB.fetchAll(stage);
         for (Echeance echeance : echeanceList)
             tab_echeance4.addItem(new Object[]{echeance.getOwner().toString(), echeance.getDateCreation(), echeance.getDateEcheance(), echeance.getDescription()}, echeance.getId());
         tab_echeance4.addValueChangeListener(event -> {
@@ -3545,7 +3545,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_evaluations_maitreStage.removeAllItems();
         EvaluationManager evaluation_DB = new EvaluationManager();
-        ArrayList<beans.Evaluation> evaluationList = evaluation_DB.fetchAll(currentUser, stage);
+        List<beans.Evaluation> evaluationList = evaluation_DB.fetchAll(currentUser, stage);
         for (beans.Evaluation evaluation : evaluationList)
         {
             String critere = evaluation.getCritere().getNom();
@@ -3573,7 +3573,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_evaluations_presidentJury.removeAllItems();
         EvaluationManager evaluation_DB = new EvaluationManager();
-        ArrayList<beans.Evaluation> evaluationList = evaluation_DB.fetchAll(currentUser, defense);
+        List<beans.Evaluation> evaluationList = evaluation_DB.fetchAll(currentUser, defense);
         for (beans.Evaluation evaluation : evaluationList)
         {
             String critere = evaluation.getCritere().getNom();
@@ -3642,8 +3642,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         cb_tfe_technologie.removeAllItems();
         TechnologieManager technologie_DB = new TechnologieManager();
         TFEManager tfe_DB = new TFEManager();
-        ArrayList<TFE> tfeList = tfe_DB.fetchAll();
-        ArrayList<Technologie> technologieList = technologie_DB.fetchAll();
+        List<TFE> tfeList = tfe_DB.fetchAll();
+        List<Technologie> technologieList = technologie_DB.fetchAll();
         for (Technologie technologie : technologieList)
         {
             tc_tfe_ajouter_technologie.addItem(technologie);
@@ -3652,7 +3652,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         ArrayList<Technologie> technologiesUtilisees = new ArrayList<>();
         for (TFE tfe : tfeList)
         {
-            ArrayList<Technologie> technologiesStage = tfe.getTechnologies();
+            List<Technologie> technologiesStage = tfe.getTechnologies();
             technologiesUtilisees.remove(technologiesStage);
             technologiesUtilisees.addAll(technologiesStage);
         }
@@ -3695,11 +3695,11 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         cb_tfe_technologie2.removeAllItems();
         TFEManager tfe_DB = new TFEManager();
-        ArrayList<TFE> tfeList = tfe_DB.fetchAll();
+        List<TFE> tfeList = tfe_DB.fetchAll();
         ArrayList<Technologie> technologiesUtilisees = new ArrayList<>();
         for (TFE tfe : tfeList)
         {
-            ArrayList<Technologie> technologiesStage = tfe.getTechnologies();
+            List<Technologie> technologiesStage = tfe.getTechnologies();
             technologiesUtilisees.remove(technologiesStage);
             technologiesUtilisees.addAll(technologiesStage);
         }
@@ -3715,7 +3715,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         });
     }
 
-    private ArrayList<String> tfe_generer_anneesAcademiques(ArrayList<TFE> listTfe)
+    private ArrayList<String> tfe_generer_anneesAcademiques(List<TFE> listTfe)
     {
         ArrayList<String> retour = new ArrayList<>();
 
@@ -3770,7 +3770,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         TechnologieManager technologie_DB = new TechnologieManager();
         StageManager stage_DB = new StageManager();
         ArrayList<Stage> stageList = stage_DB.fetchAll(null);
-        ArrayList<Technologie> technologieList = technologie_DB.fetchAll();
+        List<Technologie> technologieList = technologie_DB.fetchAll();
         technologieList.forEach(tc_stage_editer_technologies::addItem);
         ArrayList<Technologie> technologiesUtilisees = new ArrayList<>();
         for (Stage stage : stageList)
@@ -3785,7 +3785,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         cb_stage_editer_entreprise.setReadOnly(false);
         cb_stage_editer_entreprise.removeAllItems();
         LieuStageManager lieuStage_DB = new LieuStageManager();
-        ArrayList<LieuStage> lieuStageList = lieuStage_DB.fetchAll();
+        List<LieuStage> lieuStageList = lieuStage_DB.fetchAll();
         lieuStageList.forEach(cb_stage_editer_entreprise::addItem);
         ArrayList<LieuStage> lieuxStagesUtilises = new ArrayList<>();
         for (Stage stage : stageList)
@@ -3869,7 +3869,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         cb_PropositionStage_editer_entreprise.setReadOnly(false);
         cb_PropositionStage_editer_entreprise.removeAllItems();
         LieuStageManager lieuStage_DB = new LieuStageManager();
-        ArrayList<LieuStage> entrepriseList = lieuStage_DB.fetchAll();
+        List<LieuStage> entrepriseList = lieuStage_DB.fetchAll();
         entrepriseList.forEach(cb_PropositionStage_editer_entreprise::addItem);
         cb_PropositionStage_valider_maitreDeStage.removeAllItems();
         UtilisateurManager user_DB = new UtilisateurManager();
@@ -3880,7 +3880,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         userPromoteurList.forEach(cb_PropositionStage_valider_promoteur::addItem);
         tc_PropositionStage_valider_technologies.removeAllItems();
         TechnologieManager technologie_DB = new TechnologieManager();
-        ArrayList<Technologie> technologieList = technologie_DB.fetchAll();
+        List<Technologie> technologieList = technologie_DB.fetchAll();
         technologieList.forEach(tc_PropositionStage_valider_technologies::addItem);
     }
 
@@ -3889,7 +3889,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         cb_PropositionStage_etudiant_editer_entreprise.setReadOnly(false);
         cb_PropositionStage_etudiant_editer_entreprise.removeAllItems();
         LieuStageManager lieuStage_DB = new LieuStageManager();
-        ArrayList<LieuStage> entrepriseList = lieuStage_DB.fetchAll();
+        List<LieuStage> entrepriseList = lieuStage_DB.fetchAll();
         entrepriseList.forEach(cb_PropositionStage_etudiant_editer_entreprise::addItem);
     }
 

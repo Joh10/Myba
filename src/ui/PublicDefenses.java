@@ -16,6 +16,7 @@ import managers.DefenseManager;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class PublicDefenses extends PublicDefenses_design implements View
@@ -95,7 +96,7 @@ public class PublicDefenses extends PublicDefenses_design implements View
             Defense defense = defense_DB.find((int) elementSelected);
             Stage stage = defense.getStage();
             TFE tfe = defense.getTFE();
-            ArrayList<Technologie> technologies = null;
+            List<Technologie> technologies = null;
             if (tfe != null)
             {
                 technologies = tfe.getTechnologies();

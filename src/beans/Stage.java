@@ -3,6 +3,7 @@ package beans;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "STAGE")
@@ -11,11 +12,6 @@ public class Stage
     @Id
     @Column(name = "id_Sta")
     private int id;
-
-    //TODO ?????????
-    private Utilisateur owner;
-    private Utilisateur superviseur;
-    private Utilisateur suiveur;
 
     @OneToOne
     @JoinColumn(name="REF_PROPOSITIONSTAGE")
@@ -37,6 +33,18 @@ public class Stage
     @JoinTable(name="TECHNOLOGIEXSTA", joinColumns=@JoinColumn(name="ID_STA"), inverseJoinColumns=@JoinColumn(name="ID_TEC"))
     private ArrayList<Technologie> technologies;
 
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="UTILISATEURXSTAGE", joinColumns=@JoinColumn(name="ID_STA"), inverseJoinColumns=@JoinColumn(name="ID_UTI"))
+    private List<Utilisateur> owner;
+
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="UTILISATEURXSTAGE", joinColumns=@JoinColumn(name="ID_STA"), inverseJoinColumns=@JoinColumn(name="ID_UTI"))
+    private List<Utilisateur> superviseur;
+
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="UTILISATEURXSTAGE", joinColumns=@JoinColumn(name="ID_STA"), inverseJoinColumns=@JoinColumn(name="ID_UTI"))
+    private List<Utilisateur> suiveur;
+
     /**
      * Constructeur
      *
@@ -53,10 +61,14 @@ public class Stage
      */
     public Stage(int _id, Utilisateur _owner, Utilisateur _superviseur, Utilisateur _suiveur, PropositionStage _proposition, Date _dDebut, Date _dFin, double _ptsTotaux, String _commentaires, ArrayList<Technologie> _technologies)
     {
+        owner = new ArrayList<>();
+        superviseur = new ArrayList<>();
+        suiveur = new ArrayList<>();
+
         id = _id;
-        owner = _owner;
-        superviseur = _superviseur;
-        suiveur = _suiveur;
+        owner.add(_owner);
+        superviseur.add(_superviseur);
+        suiveur.add(_suiveur);
         proposition = _proposition;
         dateDebut = _dDebut;
         dateFin = _dFin;
@@ -67,6 +79,9 @@ public class Stage
 
     public Stage()
     {
+        owner = new ArrayList<>();
+        superviseur = new ArrayList<>();
+        suiveur = new ArrayList<>();
     }
 
     /**
@@ -82,8 +97,8 @@ public class Stage
      */
     public void update(Utilisateur _superviseur, Utilisateur _suiveur, Date _dDebut, Date _dFin, String _commentaires, ArrayList<Technologie> _technologies)
     {
-        superviseur = _superviseur;
-        suiveur = _suiveur;
+        //superviseur = _superviseur;
+        //suiveur = _suiveur;
         dateDebut = _dDebut;
         dateFin = _dFin;
         commentaires = _commentaires;
@@ -125,7 +140,11 @@ public class Stage
      */
     public Utilisateur getOwner()
     {
-        return owner;
+        for(Utilisateur u: owner)
+            if(u.getRole().getNom().equals("etudiant_tfe") || u.getRole().getNom().equals("etudiant_tfe_stage"))
+                return u;
+
+        return null;
     }
 
     /**
@@ -133,7 +152,11 @@ public class Stage
      */
     public Utilisateur getSuperviseur()
     {
-        return superviseur;
+        for(Utilisateur u: owner)
+            if(u.getRole().getNom().equals("professeur"))
+                return u;
+
+        return null;
     }
 
     /**
@@ -141,7 +164,11 @@ public class Stage
      */
     public Utilisateur getSuiveur()
     {
-        return suiveur;
+        for(Utilisateur u: owner)
+            if(u.getRole().getNom().equals("maitre_stage"))
+                return u;
+
+        return null;
     }
 
     /**

@@ -23,9 +23,13 @@ public class TFE
     @Column(name = "ANNEEACADFIN")
     private int anneeFin;
 
-    //TODO ????
-    private Utilisateur owner;
-    private Utilisateur promoteur;
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="UTILISATEURXTFE", joinColumns=@JoinColumn(name="ID_TFE"), inverseJoinColumns=@JoinColumn(name="ID_UTI"))
+    private ArrayList<Utilisateur> owner;
+
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="UTILISATEURXTFE", joinColumns=@JoinColumn(name="ID_TFE"), inverseJoinColumns=@JoinColumn(name="ID_UTI"))
+    private ArrayList<Utilisateur> promoteur;
 
     @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name="TECHNOLOGIEXTFE", joinColumns=@JoinColumn(name="ID_TFE"), inverseJoinColumns=@JoinColumn(name="ID_TEC"))
@@ -45,9 +49,12 @@ public class TFE
      */
     public TFE(int _id, Utilisateur _owner, Utilisateur _promoteur, String _titre, double _pointsTotaux, int _anneeDebut, int _anneeFin, ArrayList<Technologie> _technologies)
     {
+        owner = new ArrayList<>();
+        promoteur = new ArrayList<>();
+
         id = _id;
-        owner = _owner;
-        promoteur = _promoteur;
+        owner.add(_owner);
+        promoteur.add(_promoteur);
         titre = _titre;
         pointsTotaux = _pointsTotaux;
         anneeDebut = _anneeDebut;
@@ -57,6 +64,8 @@ public class TFE
 
     public TFE()
     {
+        owner = new ArrayList<>();
+        promoteur = new ArrayList<>();
     }
 
     /**
@@ -72,7 +81,8 @@ public class TFE
      */
     public void update(Utilisateur _promoteur, String _titre, double _pointsTotaux, int _anneeDebut, int _anneeFin, ArrayList<Technologie> _technologies)
     {
-        promoteur = _promoteur;
+        //TODO CHANGE UPDATE FROM MANAGER
+      //  promoteur = _promoteur;
         titre = _titre;
         pointsTotaux = _pointsTotaux;
         anneeDebut = _anneeDebut;
@@ -115,7 +125,11 @@ public class TFE
      */
     public Utilisateur getOwner()
     {
-        return owner;
+        for(Utilisateur u: owner)
+            if(u.getRole().getNom().equals("etudiant_tfe") || u.getRole().getNom().equals("etudiant_tfe_stage"))
+                return u;
+
+        return null;
     }
 
     /**
@@ -123,7 +137,11 @@ public class TFE
      */
     public Utilisateur getPromoteur()
     {
-        return promoteur;
+        for(Utilisateur u: owner)
+            if(u.getRole().getNom().equals("professeur"))
+                return u;
+
+        return null;
     }
 
     /**
