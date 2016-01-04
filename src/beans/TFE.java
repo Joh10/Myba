@@ -4,9 +4,10 @@ import javax.persistence.*;
 import java.util.ArrayList;
 
 @Entity
-@Table(name = "EMPLOYEE")
+@Table(name = "TFE")
 public class TFE
 {
+    @Id
     @Column(name = "ID_TFE")
     private int id;
 
@@ -52,6 +53,10 @@ public class TFE
         anneeDebut = _anneeDebut;
         anneeFin = _anneeFin;
         technologies = _technologies;
+    }
+
+    public TFE()
+    {
     }
 
     /**

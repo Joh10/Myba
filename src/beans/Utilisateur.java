@@ -1,10 +1,11 @@
 package beans;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.security.MessageDigest;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "UTILISATEUR")
@@ -77,6 +78,10 @@ public class Utilisateur implements Serializable
         telephone = _telephone;
         annee = _annee;
         doublant = _doublant;
+    }
+
+    public Utilisateur()
+    {
     }
 
     /**

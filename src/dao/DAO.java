@@ -1,37 +1,83 @@
 package dao;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import java.util.List;
+
 public abstract class DAO<T>
 {
+    public final T find(int id)
+    {
+        try (Session session = HibernateConnector.getInstance().getSession())
+        {
+            Query query = session.createQuery("from " + getEntityClass() + " s where s.id = :id");
+            query.setParameter("id", id);
 
-    /**
-     * Méthode générique de recherche d'un objet T en base de données par son ID
-     *
-     * @param id L'identifiant de l'objet à rechercher
-     * @return l'objet trouvé pour id, null si aucun objet ne correspond à l'id
-     */
-    public abstract T find(int id);
+            List queryList = query.list();
 
-    /**
-     * Méthode générique de création d'un objet T en base de données
-     *
-     * @param obj L'objet à créer en base de données
-     * @return true si l'opération s'est déroulée correctement, false sinon
-     */
-    public abstract boolean create(T obj);
+            if (queryList != null && queryList.isEmpty())
+                return null;
 
-    /**
-     * Méthode générique de mise à jour d'un objet T en base de données
-     *
-     * @param obj L'objet à mettre à jour en base de données
-     * @return true si l'opération s'est déroulée correctement, false sinon
-     */
-    public abstract boolean update(T obj);
+                return (T) queryList.get(0);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-    /**
-     * Méthode générique de suppression d'un objet T en base de données
-     *
-     * @param obj L'objet à supprimer de la base de données
-     * @return true si l'opération s'est déroulée correctement, false sinon
-     */
-    public abstract boolean delete(T obj);
+    public final boolean create(T obj)
+    {
+        try (Session session = HibernateConnector.getInstance().getSession())
+        {
+            Transaction transaction = session.beginTransaction();
+            session.save(obj);
+            transaction.commit();
+            return true;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public final boolean update(T obj)
+    {
+        try (Session session = HibernateConnector.getInstance().getSession())
+        {
+            session.saveOrUpdate(obj);
+            session.flush();
+            return true;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public final boolean delete(T obj)
+    {
+        try (Session session = HibernateConnector.getInstance().getSession())
+        {
+            Transaction t = session.beginTransaction();
+            session.delete(obj);
+            t.commit();
+            return true;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    protected abstract Class<?> getEntityClass();
 }

@@ -54,6 +54,10 @@ public class LieuStage implements Serializable
         email = _email;
     }
 
+    public LieuStage()
+    {
+    }
+
     /**
      * Pré	:	_nom, _adresse, _pContact, _telephone sont initialisés<br>
      * Post	:	les informations du lieu de stage sont mises à jour.

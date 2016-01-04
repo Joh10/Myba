@@ -44,6 +44,10 @@ public class Role implements Serializable
         nom = _nom;
     }
 
+    public Role()
+    {
+    }
+
     /**
      * @return l'identifiant du rôle
      */

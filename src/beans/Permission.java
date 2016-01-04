@@ -27,6 +27,10 @@ public class Permission
         this.nom = nom;
     }
 
+    public Permission()
+    {
+    }
+
     public int getId()
     {
         return id;

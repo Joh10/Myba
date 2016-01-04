@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Table(name = "PROPOSITIONSTAGE")
 public class PropositionStage
 {
+    @Id
     @Column(name = "id_Pro")
     private int id;
 
@@ -43,6 +44,10 @@ public class PropositionStage
         valide = _valide;
         sujet = _sujet;
         annexe = _annexe;
+    }
+
+    public PropositionStage()
+    {
     }
 
     /**

@@ -30,7 +30,7 @@ public class Stage
     @Column(name = "pointsTotaux")
     private double pointsTotaux;
 
-    @Column(name = "commentaires")
+    @Column(name = "commentaire")
     private String commentaires;
 
     @ManyToMany(cascade= CascadeType.ALL)
@@ -63,6 +63,10 @@ public class Stage
         pointsTotaux = _ptsTotaux;
         commentaires = _commentaires;
         technologies = _technologies;
+    }
+
+    public Stage()
+    {
     }
 
     /**

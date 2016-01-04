@@ -1,6 +1,9 @@
 package beans;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
@@ -13,7 +16,7 @@ public class Technologie implements Serializable
     private static final long serialVersionUID = 3824815621140749028L;
 
     @Id
-    @Column(name = "id_Tech")
+    @Column(name = "id_Tec")
     private int id;
 
     @Column(name = "nom")
@@ -34,6 +37,10 @@ public class Technologie implements Serializable
         id = _id;
         nom = _nom;
         version = _version;
+    }
+
+    public Technologie()
+    {
     }
 
     /**

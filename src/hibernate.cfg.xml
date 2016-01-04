@@ -10,5 +10,18 @@
         <property name="connection.username">SYSTEM</property>
         <property name="connection.password">1234</property>
 
+        <mapping class="beans.CritereEvaluation"/>
+        <mapping class="beans.Defense"/>
+        <mapping class="beans.Echeance"/>
+        <mapping class="beans.Evaluation"/>
+        <mapping class="beans.LieuStage"/>
+        <mapping class="beans.Permission"/>
+        <mapping class="beans.PropositionStage"/>
+        <mapping class="beans.Role"/>
+        <mapping class="beans.Stage"/>
+        <mapping class="beans.Technologie"/>
+        <mapping class="beans.TFE"/>
+        <mapping class="beans.Utilisateur"/>
+
     </session-factory>
 </hibernate-configuration>

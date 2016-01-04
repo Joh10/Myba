@@ -11,7 +11,7 @@ public class Evaluation
     @Column(name = "id_Eva")
     private int id;
 
-    @Column(name = "id_dateDefense")
+    @Column(name = "dateDefense")
     private Date date;
 
     @OneToOne
@@ -127,6 +127,10 @@ public class Evaluation
         defense = _defense;
         note = _note;
         commentaire = _commentaire;
+    }
+
+    public Evaluation()
+    {
     }
 
     /**

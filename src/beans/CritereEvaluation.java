@@ -44,6 +44,10 @@ public class CritereEvaluation implements Serializable
         noteMax = _noteMax;
     }
 
+    public CritereEvaluation()
+    {
+    }
+
     /**
      * Pré	:	_nom, _type, _noteMax sont initialisés <br>
      * Post	:	les informations du critère d'évaluation sont mises à jour.

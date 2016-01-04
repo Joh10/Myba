@@ -20,10 +20,7 @@ import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @SuppressWarnings({"serial", "deprecation"})
 public class Dashboard extends Dashboard_IconsAndTabs implements View
@@ -2910,7 +2907,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_criteresEvaluation.removeAllItems();
         DAO_CritereEvaluation critereEvaluation_DB = new DAO_CritereEvaluation();
-        ArrayList<CritereEvaluation> critereEvaluationList = critereEvaluation_DB.fetchAll(null);
+        List<CritereEvaluation> critereEvaluationList = critereEvaluation_DB.fetchAll(null);
         for (CritereEvaluation critereEvaluation : critereEvaluationList)
             tab_criteresEvaluation.addItem(new Object[]{critereEvaluation.getNom(), critereEvaluation.getType(), critereEvaluation.getNote()}, critereEvaluation.getId());
         tab_criteresEvaluation.addValueChangeListener(event -> {
@@ -2934,7 +2931,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_criteresEvaluation.removeAllItems();
         DAO_CritereEvaluation critereEvaluation_DB = new DAO_CritereEvaluation();
-        ArrayList<CritereEvaluation> critereEvaluationList = critereEvaluation_DB.fetchAll(null);
+        List<CritereEvaluation> critereEvaluationList = critereEvaluation_DB.fetchAll(null);
         critereEvaluationList.stream().filter(critereEvaluation -> tf_evaluation_recherche.isEmpty() || (critereEvaluation.getNom().toLowerCase().contains(tf_evaluation_recherche.getValue().toLowerCase()))).forEach(critereEvaluation -> tab_criteresEvaluation.addItem(new Object[]{critereEvaluation.getNom(), critereEvaluation.getType(), critereEvaluation.getNote()}, critereEvaluation.getId()));
     }
 
@@ -2976,7 +2973,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         DAO_TFE tfe_DB = new DAO_TFE();
         ArrayList<TFE> tfeList = tfe_DB.fetchAll();
         for (TFE tfe : tfeList)
-            tab_tfe.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), (Double) tfe.getPoints(), (Integer) tfe.getAnneeDebut(), (Integer) tfe.getAnneeFin(),}, tfe.getId());
+            tab_tfe.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), tfe.getPoints(), tfe.getAnneeDebut(), tfe.getAnneeFin(),}, tfe.getId());
         tab_tfe.addValueChangeListener(event -> {
             hideForms();
             elementSelected = tab_tfe.getValue();
@@ -3029,7 +3026,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             anneeAcademiqueDebut = Integer.parseInt(anneeAcademique[0]);
             anneeAcademiqueFin = Integer.parseInt(anneeAcademique[1]);
         }
-        String nom = ((String) tf_tfe_etudiant.getValue()).toLowerCase();
+        String nom = tf_tfe_etudiant.getValue().toLowerCase();
         for (TFE tfe : tfeList)
         {
             ArrayList<Technologie> technologiesTFE = tfe.getTechnologies();
@@ -3037,7 +3034,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             int anneeFin = tfe.getAnneeFin();
             String nomPrenom = (tfe.getOwner().toString()).toLowerCase();
             if (((technologie != null && technologiesTFE.contains(technologie)) || technologie == null) && ((cb_tfe_anneeAcademique.getValue() != null && ((anneeDebut >= anneeAcademiqueDebut) && (anneeFin == anneeAcademiqueDebut || anneeFin == anneeAcademiqueFin))) || cb_tfe_anneeAcademique.getValue() == null) && ((!nom.isEmpty() && nomPrenom.contains(nom)) || nom.isEmpty()))
-                tab_tfe.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), (Double) tfe.getPoints(), (Integer) tfe.getAnneeDebut(), (Integer) tfe.getAnneeFin(),}, tfe.getId());
+                tab_tfe.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), tfe.getPoints(), tfe.getAnneeDebut(), tfe.getAnneeFin(),}, tfe.getId());
         }
     }
 
@@ -3056,7 +3053,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             anneeAcademiqueDebut = Integer.parseInt(anneeAcademique[0]);
             anneeAcademiqueFin = Integer.parseInt(anneeAcademique[1]);
         }
-        String nom = ((String) tf_tfe_etudiant2.getValue()).toLowerCase();
+        String nom = tf_tfe_etudiant2.getValue().toLowerCase();
         for (TFE tfe : tfeList)
         {
             ArrayList<Technologie> technologiesTFE = tfe.getTechnologies();
@@ -3064,7 +3061,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             int anneeFin = tfe.getAnneeFin();
             String nomPrenom = (tfe.getOwner().toString()).toLowerCase();
             if (((technologie != null && technologiesTFE.contains(technologie)) || technologie == null) && ((cb_tfe_anneeAcademique2.getValue() != null && ((anneeDebut >= anneeAcademiqueDebut) && (anneeFin == anneeAcademiqueDebut || anneeFin == anneeAcademiqueFin))) || cb_tfe_anneeAcademique2.getValue() == null) && ((nom != null && nomPrenom.contains(nom))))
-                tab_tfe2.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), (Integer) tfe.getAnneeDebut(), (Integer) tfe.getAnneeFin(),}, tfe.getId());
+                tab_tfe2.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), tfe.getAnneeDebut(), tfe.getAnneeFin(),}, tfe.getId());
         }
     }
 
@@ -3328,7 +3325,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         DAO_TFE tfe_DB = new DAO_TFE();
         ArrayList<TFE> tfeList = tfe_DB.fetchAll();
         for (TFE tfe : tfeList)
-            tab_tfe2.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), (Integer) tfe.getAnneeDebut(), (Integer) tfe.getAnneeFin(),}, tfe.getId());
+            tab_tfe2.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), tfe.getAnneeDebut(), tfe.getAnneeFin(),}, tfe.getId());
         load_cb_TFE2();
     }
 
@@ -3615,7 +3612,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         defense_evaluer_presidentDeJury_critere.removeAllItems();
         DAO_CritereEvaluation critereEvaluation_DB = new DAO_CritereEvaluation();
-        ArrayList<CritereEvaluation> critereEvaluationList;
+        List<CritereEvaluation> critereEvaluationList;
         critereEvaluationList = critereEvaluation_DB.fetchAll("defense");
         critereEvaluationList.forEach(defense_evaluer_presidentDeJury_critere::addItem);
     }
@@ -3632,7 +3629,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         defense_evaluer_critere.removeAllItems();
         DAO_CritereEvaluation critereEvaluation_DB = new DAO_CritereEvaluation();
-        ArrayList<CritereEvaluation> critereEvaluationList;
+        List<CritereEvaluation> critereEvaluationList;
         critereEvaluationList = critereEvaluation_DB.fetchAll("defense");
         critereEvaluationList.forEach(defense_evaluer_critere::addItem);
     }
@@ -3686,7 +3683,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         userEtuList.forEach(cb_tfe_ajouter_etudiant::addItem);
         tfe_evaluer_critere.removeAllItems();
         DAO_CritereEvaluation critereEvaluation_DB = new DAO_CritereEvaluation();
-        ArrayList<CritereEvaluation> critereEvaluationList = critereEvaluation_DB.fetchAll("tfe");
+        List<CritereEvaluation> critereEvaluationList = critereEvaluation_DB.fetchAll("tfe");
         critereEvaluationList.forEach(tfe_evaluer_critere::addItem);
         tfe_defense_presidentJury.removeAllItems();
         ArrayList<Utilisateur> userPresJuryList = user_DB.fetchAll("president_jury");
@@ -3825,7 +3822,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
 
         stage_evaluer_critere.removeAllItems();
         DAO_CritereEvaluation critereEvaluation_DB = new DAO_CritereEvaluation();
-        ArrayList<CritereEvaluation> critereEvaluationList = critereEvaluation_DB.fetchAll("stage");
+        List<CritereEvaluation> critereEvaluationList = critereEvaluation_DB.fetchAll("stage");
         critereEvaluationList.forEach(stage_evaluer_critere::addItem);
 
         stage_defense_presidentJury.removeAllItems();
@@ -3899,7 +3896,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         stage_evaluer_maitreDeStage_critere.removeAllItems();
         DAO_CritereEvaluation critereEvaluation_DB = new DAO_CritereEvaluation();
-        ArrayList<CritereEvaluation> critereEvaluationList = critereEvaluation_DB.fetchAll("stage");
+        List<CritereEvaluation> critereEvaluationList = critereEvaluation_DB.fetchAll("stage");
         critereEvaluationList.forEach(stage_evaluer_maitreDeStage_critere::addItem);
     }
 

@@ -6,11 +6,6 @@ import java.util.ArrayList;
 
 public class DAO_Evaluation extends DAO<Evaluation>
 {
-    public boolean create(Evaluation obj)
-    {
-        return true;
-    }
-
     public ArrayList<Evaluation> fetchAll(Stage stage)
     {
         return fetchAllBack(" WHERE `stage_id` = ?", stage.getId(), null);
@@ -41,18 +36,10 @@ public class DAO_Evaluation extends DAO<Evaluation>
         return null;
     }
 
-    public Evaluation find(int id)
-    {
-        return null;
-    }
 
-    public boolean update(Evaluation obj)
+    @Override
+    protected Class<?> getEntityClass()
     {
-        return false;
-    }
-
-    public boolean delete(Evaluation obj)
-    {
-        return false;
+        return Evaluation.class;
     }
 }

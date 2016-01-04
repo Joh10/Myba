@@ -67,6 +67,10 @@ public class Defense
         local = _local;
     }
 
+    public Defense()
+    {
+    }
+
     /**
      * Pré	:	_date, _local sont initialisés<br>
      * Post	:	les informations de cette défense sont mises à jour.

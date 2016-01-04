@@ -1,33 +1,38 @@
 package dao;
 
 import beans.CritereEvaluation;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class DAO_CritereEvaluation extends DAO<CritereEvaluation>
 {
-    public boolean create(CritereEvaluation obj)
+
+    public List<CritereEvaluation> fetchAll(String type)
     {
-        return true;
+        try (Session session = HibernateConnector.getInstance().getSession())
+        {
+            Query query = session.createQuery("from CritereEvaluation s where s.type = :type");
+            query.setParameter("type", type);
+
+            List list = query.list();
+
+            if (list != null && list.isEmpty())
+                return null;
+
+            return (List<CritereEvaluation>) list;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public ArrayList<CritereEvaluation> fetchAll(String type)
+    @Override
+    protected Class<?> getEntityClass()
     {
-        return null;
-    }
-
-    public CritereEvaluation find(int id)
-    {
-        return null;
-    }
-
-    public boolean update(CritereEvaluation obj)
-    {
-        return false;
-    }
-
-    public boolean delete(CritereEvaluation obj)
-    {
-        return false;
+        return CritereEvaluation.class;
     }
 }

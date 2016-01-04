@@ -7,28 +7,14 @@ import java.util.ArrayList;
 
 public class DAO_LieuStage extends DAO<LieuStage>
 {
-    public boolean create(LieuStage obj)
-    {
-        return true;
-    }
-
     public ArrayList<LieuStage> fetchAll()
     {
         return null;
     }
 
-    public LieuStage find(int id)
+    @Override
+    protected Class<?> getEntityClass()
     {
-        return null;
-    }
-
-    public boolean update(LieuStage obj)
-    {
-        return false;
-    }
-
-    public boolean delete(LieuStage obj)
-    {
-        return false;
+        return LieuStage.class;
     }
 }

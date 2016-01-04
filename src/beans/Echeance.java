@@ -106,6 +106,10 @@ public class Echeance
         annexe = _annexe;
     }
 
+    public Echeance()
+    {
+    }
+
     /**
      * Pré	:	_date, _description, _annexe sont initialisés <br>
      * Post	:	les informations de l'échéance sont mises à jour.

@@ -10,26 +10,6 @@ import java.util.ArrayList;
 
 public class DAO_Echeance extends DAO<Echeance>
 {
-    public boolean create(Echeance obj)
-    {
-        return true;
-    }
-
-    private boolean addUser(Echeance obj, Utilisateur obj1)
-    {
-        return true;
-    }
-
-    private ArrayList<Utilisateur> loadUsers(int id)
-    {
-        return null;
-    }
-
-    private boolean clearUsers(Echeance obj)
-    {
-        return true;
-    }
-
     public ArrayList<Echeance> fetchAll(Stage stage)
     {
         return fetchAllBack("SELECT * FROM `echeances` WHERE `stage_id` = ?", stage.getId(), false);
@@ -55,18 +35,9 @@ public class DAO_Echeance extends DAO<Echeance>
         return null;
     }
 
-    public Echeance find(int id)
+    @Override
+    protected Class<?> getEntityClass()
     {
-        return null;
-    }
-
-    public boolean update(Echeance obj)
-    {
-        return false;
-    }
-
-    public boolean delete(Echeance obj)
-    {
-        return false;
+        return Echeance.class;
     }
 }
