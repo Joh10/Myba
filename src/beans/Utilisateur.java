@@ -22,9 +22,8 @@ public class Utilisateur implements Serializable
     @Column(name = "enable")
     private boolean enabled;
 
-    @ManyToMany(cascade= CascadeType.ALL)
-    @JoinTable(name="UTILISATEURXROLETABLE", joinColumns=@JoinColumn(name="ID_UTI"), inverseJoinColumns=@JoinColumn(name="ID_ROL"))
-    private ArrayList<Role> roles;
+    //TODO ?????
+    private Role role;
 
     @Column(name = "email")
     private String email;
@@ -65,11 +64,11 @@ public class Utilisateur implements Serializable
      * @param _annee     L'année dans laquelle se trouve l'utilisateur (uniquement pour les étudiants)
      * @param _doublant  L'utilisateur est doublant ou non (uniquement pour les étudiants)
      */
-    public Utilisateur(int _id, boolean _enabled, ArrayList<Role> _role, String _email, String _password, Integer _matricule, String _nom, String _prenom, String _telephone, Integer _annee, Boolean _doublant)
+    public Utilisateur(int _id, boolean _enabled, Role _role, String _email, String _password, Integer _matricule, String _nom, String _prenom, String _telephone, Integer _annee, Boolean _doublant)
     {
         id = _id;
         enabled = _enabled;
-        roles = _role;
+        role = _role;
         email = _email;
         passwordHash = _password;
         matricule = _matricule;
@@ -163,9 +162,9 @@ public class Utilisateur implements Serializable
     /**
      * @return le rôle de l'utilisateur
      */
-    public ArrayList<Role> getRole()
+    public Role getRole()
     {
-        return roles;
+        return role;
     }
 
 
@@ -175,9 +174,9 @@ public class Utilisateur implements Serializable
      *
      * @param _role Le rôle de l'utilisateur
      */
-    public void setRole(ArrayList<Role> _role)
+    public void setRole(Role _role)
     {
-        roles = _role;
+        role = _role;
     }
 
     /**

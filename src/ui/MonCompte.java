@@ -1,6 +1,6 @@
 package ui;
 
-import Model.Utilisateur;
+import beans.Utilisateur;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
@@ -10,6 +10,7 @@ import com.vaadin.server.VaadinService;
 import com.vaadin.server.WrappedSession;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
+import dao.DAO_Utilisateur;
 
 import java.util.regex.Pattern;
 

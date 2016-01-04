@@ -29,5 +29,6 @@
     <orderEntry type="library" scope="PROVIDED" name="Vaadin Client" level="project" />
     <orderEntry type="library" name="Vaadin Server" level="project" />
     <orderEntry type="library" name="envers" level="project" />
+    <orderEntry type="library" name="confirmdialog-2.1.2-javadoc" level="project" />
   </component>
 </module>

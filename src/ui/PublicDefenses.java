@@ -1,9 +1,9 @@
 package ui;
 
-import Model.Defense;
-import Model.Stage;
-import Model.TFE;
-import Model.Technologie;
+import beans.Defense;
+import beans.Stage;
+import beans.TFE;
+import beans.Technologie;
 import com.vaadin.data.Property;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
@@ -12,6 +12,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.WrappedSession;
 import com.vaadin.ui.Button.ClickListener;
+import dao.DAO_Defense;
 
 import java.util.ArrayList;
 import java.util.Date;
