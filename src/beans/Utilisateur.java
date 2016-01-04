@@ -34,7 +34,6 @@ public class Utilisateur implements Serializable
 
     @Column(name = "matricule")
     private Integer matricule;
-    //TODO Integer??? Fuck the what porlquè (si jms dans la bd c'est numeric (20)
 
     @Column(name = "nom")
     private String nom;

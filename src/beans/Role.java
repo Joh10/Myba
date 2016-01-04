@@ -8,9 +8,6 @@ import java.util.ArrayList;
 @Table(name = "ROLETABLE")
 public class Role implements Serializable
 {
-    /*
-     * Serializable car dépendant de Utilisateur, qui est sérialisé pour les sessions
-     */
     private static final long serialVersionUID = -1900169871483409885L;
 
     @Id

@@ -1,9 +1,6 @@
 package beans;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -14,9 +11,16 @@ public class Defense
     @Column(name = "id_Def")
     private int id;
 
-    //TODO ?????
+    @OneToOne
+    @JoinColumn(name="REF_UTILISATEUR")
     private Utilisateur presidentJury;
+
+    @OneToOne
+    @JoinColumn(name="REF_STAGE")
     private Stage stage;
+
+    @OneToOne
+    @JoinColumn(name="REF_TFE")
     private TFE tfe;
 
     @Column(name = "dateDefense")

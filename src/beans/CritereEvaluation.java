@@ -10,9 +10,6 @@ import java.io.Serializable;
 @Table(name = "CRITERE")
 public class CritereEvaluation implements Serializable
 {
-    /*
-     * Serializable car utilisé dans des combobox
-     */
     private static final long serialVersionUID = 2079767621417345684L;
 
     @Id

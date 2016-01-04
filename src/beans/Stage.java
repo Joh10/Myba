@@ -16,6 +16,9 @@ public class Stage
     private Utilisateur owner;
     private Utilisateur superviseur;
     private Utilisateur suiveur;
+
+    @OneToOne
+    @JoinColumn(name="REF_PROPOSITIONSTAGE")
     private PropositionStage proposition;
 
     @Column(name = "dateDebut")

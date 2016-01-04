@@ -1,19 +1,20 @@
 package beans;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "PROPOSITIONSTAGE")
 public class PropositionStage
 {
-
     @Column(name = "id_Pro")
     private int id;
 
-    //TODO ?????
+    @OneToOne
+    @JoinColumn(name="REF_UTILISATEUR")
     private Utilisateur owner;
+
+    @OneToOne
+    @JoinColumn(name="REF_LIEUSTAGE")
     private LieuStage lieu;
 
     @Column(name = "valide")

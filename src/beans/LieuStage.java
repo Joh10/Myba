@@ -1,25 +1,20 @@
 package beans;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "LIEUSTAGE")
 public class LieuStage implements Serializable
 {
-    /*
-     * Serializable car utilisé dans des comboBox
-     */
     private static final long serialVersionUID = -4714026859138312539L;
 
     @Id
     @Column(name = "id_Lie")
     private int id;
 
-    //TODO ?????
+    @OneToOne
+    @JoinColumn(name="REF_UTILISATEUR")
     private Utilisateur owner;
 
     @Column(name = "entreprise")
