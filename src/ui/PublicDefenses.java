@@ -57,7 +57,7 @@ public class PublicDefenses extends PublicDefenses_design implements View
         tab_defenses.removeAllItems();
 
         DefenseManager defense_DB = new DefenseManager();
-        ArrayList<Defense> defenseList = defense_DB.fetchAll(0, null);
+        List<Defense> defenseList = defense_DB.fetchAll(null);
 
         for (Defense defense : defenseList)
         {

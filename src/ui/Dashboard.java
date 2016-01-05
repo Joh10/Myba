@@ -2735,7 +2735,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_etudiants.removeAllItems();
         UtilisateurManager user_DB = new UtilisateurManager();
-        ArrayList<Utilisateur> userList = user_DB.fetchAll("etudiant_tfe");
+        List<Utilisateur> userList = user_DB.fetchAll("etudiant_tfe");
         userList.addAll(user_DB.fetchAll("etudiant_tfe_stage"));
         for (Utilisateur user : userList)
             tab_etudiants.addItem(new Object[]{user.getNom(), user.getPrenom(), user.getMatricule(), user.getEmail(), user.getTelephone()}, user.getId());
@@ -2762,7 +2762,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_etudiants.removeAllItems();
         UtilisateurManager user_DB = new UtilisateurManager();
-        ArrayList<Utilisateur> userList = user_DB.fetchAll("etudiant_tfe");
+        List<Utilisateur> userList = user_DB.fetchAll("etudiant_tfe");
         userList.addAll(user_DB.fetchAll("etudiant_tfe_stage"));
         userList.stream().filter(etudiant -> tf_etudiant_recherche.isEmpty() || (etudiant.toString().toLowerCase().contains(tf_etudiant_recherche.getValue().toLowerCase()))).forEach(etudiant -> tab_etudiants.addItem(new Object[]{etudiant.getNom(), etudiant.getPrenom(), etudiant.getMatricule(), etudiant.getEmail(), etudiant.getTelephone()}, etudiant.getId()));
     }
@@ -2771,7 +2771,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_professeurs.removeAllItems();
         UtilisateurManager user_DB = new UtilisateurManager();
-        ArrayList<Utilisateur> userList = user_DB.fetchAll("professeur");
+        List<Utilisateur> userList = user_DB.fetchAll("professeur");
         for (Utilisateur user : userList)
             tab_professeurs.addItem(new Object[]{user.getNom(), user.getPrenom(), user.getEmail(), user.getTelephone()}, user.getId());
         tab_professeurs.addValueChangeListener(event -> {
@@ -2795,7 +2795,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_professeurs.removeAllItems();
         UtilisateurManager user_DB = new UtilisateurManager();
-        ArrayList<Utilisateur> userList = user_DB.fetchAll("professeur");
+        List<Utilisateur> userList = user_DB.fetchAll("professeur");
         userList.stream().filter(professeur -> tf_professeur_recherche.isEmpty() || (professeur.toString().toLowerCase().contains(tf_professeur_recherche.getValue().toLowerCase()))).forEach(professeur -> tab_professeurs.addItem(new Object[]{professeur.getNom(), professeur.getPrenom(), professeur.getEmail(), professeur.getTelephone()}, professeur.getId()));
     }
 
@@ -2803,7 +2803,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_maitresDeStage.removeAllItems();
         UtilisateurManager user_DB = new UtilisateurManager();
-        ArrayList<Utilisateur> userList = user_DB.fetchAll("maitre_stage");
+        List<Utilisateur> userList = user_DB.fetchAll("maitre_stage");
         for (Utilisateur user : userList)
             tab_maitresDeStage.addItem(new Object[]{user.getNom(), user.getPrenom(), user.getTelephone(), user.getEmail()}, user.getId());
         tab_maitresDeStage.addValueChangeListener(event -> {
@@ -2827,7 +2827,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_maitresDeStage.removeAllItems();
         UtilisateurManager user_DB = new UtilisateurManager();
-        ArrayList<Utilisateur> userList = user_DB.fetchAll("maitre_stage");
+        List<Utilisateur> userList = user_DB.fetchAll("maitre_stage");
         userList.stream().filter(maitreStage -> tf_maitreDeStage_recherche.isEmpty() || (maitreStage.toString().toLowerCase().contains(tf_maitreDeStage_recherche.getValue().toLowerCase()))).forEach(maitreStage -> tab_maitresDeStage.addItem(new Object[]{maitreStage.getNom(), maitreStage.getPrenom(), maitreStage.getTelephone(), maitreStage.getEmail()}, maitreStage.getId()));
     }
 
@@ -2835,7 +2835,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_presidentsDeJury.removeAllItems();
         UtilisateurManager user_DB = new UtilisateurManager();
-        ArrayList<Utilisateur> userList = user_DB.fetchAll("president_jury");
+        List<Utilisateur> userList = user_DB.fetchAll("president_jury");
         for (Utilisateur user : userList)
             tab_presidentsDeJury.addItem(new Object[]{user.getNom(), user.getPrenom(), user.getTelephone(), user.getEmail()}, user.getId());
         tab_presidentsDeJury.addValueChangeListener(event -> {
@@ -2859,7 +2859,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_presidentsDeJury.removeAllItems();
         UtilisateurManager user_DB = new UtilisateurManager();
-        ArrayList<Utilisateur> userList = user_DB.fetchAll("president_jury");
+        List<Utilisateur> userList = user_DB.fetchAll("president_jury");
         userList.stream().filter(presidentJury -> tf_presidentDeJury_recherche.isEmpty() || (presidentJury.toString().toLowerCase().contains(tf_presidentDeJury_recherche.getValue().toLowerCase()))).forEach(presidentJury -> tab_presidentsDeJury.addItem(new Object[]{presidentJury.getNom(), presidentJury.getPrenom(), presidentJury.getTelephone(), presidentJury.getEmail()}, presidentJury.getId()));
     }
 
@@ -3084,7 +3084,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_stage.removeAllItems();
         StageManager stage_DB = new StageManager();
-        ArrayList<Stage> stageList = stage_DB.fetchAll(null);
+        List<Stage> stageList = stage_DB.fetchAll(null);
         for (Stage stage : stageList)
             tab_stage.addItem(new Object[]{stage.getPropositionStage().getSujet(), stage.getOwner().toString(), stage.getSuperviseur().toString(), DateFormat.getDateInstance().format(stage.getDateDebut()), DateFormat.getDateInstance().format(stage.getDateFin()), stage.getPropositionStage().getLieuStage().getEntreprise(), stage.getPointsTotaux()}, stage.getId());
         tab_stage.addValueChangeListener(event -> {
@@ -3132,7 +3132,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         button_commenterStage.setEnabled(false);
         tab_stage.removeAllItems();
         StageManager stage_DB = new StageManager();
-        ArrayList<Stage> stageList = stage_DB.fetchAll(null);
+        List<Stage> stageList = stage_DB.fetchAll(null);
         Technologie technologie = (Technologie) cb_stage_technologie.getValue();
         LieuStage lieuStage = (LieuStage) cb_stage_entreprise.getValue();
         String adresse = tf_stage_adresse.getValue();
@@ -3161,7 +3161,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         unselectSelectedTab();
         tab_stage2.removeAllItems();
         StageManager stage_DB = new StageManager();
-        ArrayList<Stage> stageList = stage_DB.fetchAll(null);
+        List<Stage> stageList = stage_DB.fetchAll(null);
         Technologie technologie = (Technologie) cb_stage_technologie3.getValue();
         LieuStage lieuStage = (LieuStage) cb_stage_entreprise3.getValue();
         String adresse = tf_stage_adresse3.getValue();
@@ -3189,7 +3189,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_propositionStage.removeAllItems();
         PropositionStageManager propositionStage_DB = new PropositionStageManager();
-        ArrayList<PropositionStage> propositionStageList = propositionStage_DB.fetchAll(null, null);
+        List<PropositionStage> propositionStageList = propositionStage_DB.fetchAll(null, null);
         for (PropositionStage propositionStage : propositionStageList)
             tab_propositionStage.addItem(new Object[]{propositionStage.getSujet(), propositionStage.getOwner().toString(), propositionStage.getLieuStage().getAdresse(), propositionStage.getLieuStage().getEntreprise()}, propositionStage.getId());
         tab_propositionStage.addValueChangeListener(event -> {
@@ -3218,7 +3218,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_defense.removeAllItems();
         DefenseManager defense_DB = new DefenseManager();
-        ArrayList<Defense> defenseList = defense_DB.fetchAll(0, null);
+        List<Defense> defenseList = defense_DB.fetchAll(null);
         for (Defense defense : defenseList)
         {
             Stage stage = defense.getStage();
@@ -3348,7 +3348,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_stage2.removeAllItems();
         StageManager stage_DB = new StageManager();
-        ArrayList<Stage> stageList = stage_DB.fetchAll(null);
+        List<Stage> stageList = stage_DB.fetchAll(null);
         for (Stage stage : stageList)
             tab_stage2.addItem(new Object[]{stage.getPropositionStage().getSujet(), stage.getOwner().toString(), stage.getSuperviseur().toString(), DateFormat.getDateInstance().format(stage.getDateDebut()), DateFormat.getDateInstance().format(stage.getDateFin()), stage.getPropositionStage().getLieuStage().getEntreprise()}, stage.getId());
         load_cb_stage2();
@@ -3358,7 +3358,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_propositionStage2.removeAllItems();
         PropositionStageManager propositionStage_DB = new PropositionStageManager();
-        ArrayList<PropositionStage> propositionStageList = propositionStage_DB.fetchAll(currentUser, "professeur");
+        List<PropositionStage> propositionStageList = propositionStage_DB.fetchAll(currentUser, "professeur");
         for (PropositionStage propositionStage : propositionStageList)
         {
             tab_propositionStage2.addItem(new Object[]{propositionStage.getSujet(), propositionStage.getOwner().toString(), propositionStage.getLieuStage().getAdresse(), propositionStage.getLieuStage().getEntreprise()}, propositionStage.getId());
@@ -3475,7 +3475,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_defense2.removeAllItems();
         DefenseManager defense_DB = new DefenseManager();
-        ArrayList<Defense> defenseList = defense_DB.fetchAll(2, currentUser);
+        List<Defense> defenseList = defense_DB.fetchAll(currentUser);
         for (Defense defense : defenseList)
         {
             Stage stage = defense.getStage();
@@ -3506,7 +3506,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_stage3.removeAllItems();
         StageManager stage_DB = new StageManager();
-        ArrayList<Stage> stageList = stage_DB.fetchAll(currentUser);
+        List<Stage> stageList = stage_DB.fetchAll(currentUser);
         for (Stage stage : stageList)
             tab_stage3.addItem(new Object[]{stage.getPropositionStage().getSujet(), stage.getOwner().toString(), stage.getSuperviseur().toString(), DateFormat.getDateInstance().format(stage.getDateDebut()), DateFormat.getDateInstance().format(stage.getDateFin()), stage.getPropositionStage().getLieuStage().getEntreprise(), stage.getPointsTotaux()}, stage.getId());
         tab_stage3.addValueChangeListener(event -> {
@@ -3524,7 +3524,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_defense3.removeAllItems();
         DefenseManager defense_DB = new DefenseManager();
-        ArrayList<Defense> defenseList = defense_DB.fetchAll(1, currentUser);
+        List<Defense> defenseList = defense_DB.fetchAll(currentUser);
         for (Defense defense : defenseList)
         {
             Stage stage = defense.getStage();
@@ -3686,14 +3686,14 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         cb_tfe_ajouter_promoteur.removeAllItems();
         cb_tfe_modifier_promoteur.removeAllItems();
         UtilisateurManager user_DB = new UtilisateurManager();
-        ArrayList<Utilisateur> userList = user_DB.fetchAll("professeur");
+        List<Utilisateur> userList = user_DB.fetchAll("professeur");
         for (Utilisateur user : userList)
         {
             cb_tfe_ajouter_promoteur.addItem(user);
             cb_tfe_modifier_promoteur.addItem(user);
         }
         cb_tfe_ajouter_etudiant.removeAllItems();
-        ArrayList<Utilisateur> userEtuList = user_DB.fetchAll("etudiant_tfe");
+        List<Utilisateur> userEtuList = user_DB.fetchAll("etudiant_tfe");
         userEtuList.addAll(user_DB.fetchAll("etudiant_tfe_stage"));
         userEtuList.forEach(cb_tfe_ajouter_etudiant::addItem);
         tfe_evaluer_critere.removeAllItems();
@@ -3701,7 +3701,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         List<Critere> critereEvaluationList = critereEvaluation_DB.fetchAll("tfe");
         critereEvaluationList.forEach(tfe_evaluer_critere::addItem);
         tfe_defense_presidentJury.removeAllItems();
-        ArrayList<Utilisateur> userPresJuryList = user_DB.fetchAll("president_jury");
+        List<Utilisateur> userPresJuryList = user_DB.fetchAll("president_jury");
         userPresJuryList.forEach(tfe_defense_presidentJury::addItem);
     }
 
@@ -3748,7 +3748,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         return retour;
     }
 
-    private ArrayList<String> stages_generer_anneesAcademiques(ArrayList<Stage> stages)
+    private ArrayList<String> stages_generer_anneesAcademiques(List<Stage> stages)
     {
         ArrayList<String> retour = new ArrayList<>();
         SimpleDateFormat annee_format = new SimpleDateFormat("yyyy");
@@ -3783,7 +3783,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         cb_stage_technologie.removeAllItems();
         TechnologieManager technologie_DB = new TechnologieManager();
         StageManager stage_DB = new StageManager();
-        ArrayList<Stage> stageList = stage_DB.fetchAll(null);
+        List<Stage> stageList = stage_DB.fetchAll(null);
         List<Technologie> technologieList = technologie_DB.fetchAll();
         technologieList.forEach(tc_stage_editer_technologies::addItem);
         ArrayList<Technologie> technologiesUtilisees = new ArrayList<>();
@@ -3801,7 +3801,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         LieuStageManager lieuStage_DB = new LieuStageManager();
         List<LieuStage> lieuStageList = lieuStage_DB.fetchAll();
         lieuStageList.forEach(cb_stage_editer_entreprise::addItem);
-        ArrayList<LieuStage> lieuxStagesUtilises = new ArrayList<>();
+        List<LieuStage> lieuxStagesUtilises = new ArrayList<>();
         for (Stage stage : stageList)
         {
             LieuStage lieuStageStage = stage.getPropositionStage().getLieuStage();
@@ -3823,16 +3823,16 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
 
         cb_stage_editer_promoteur.removeAllItems();
         UtilisateurManager user_DB = new UtilisateurManager();
-        ArrayList<Utilisateur> promoteurList = user_DB.fetchAll("professeur");
+        List<Utilisateur> promoteurList = user_DB.fetchAll("professeur");
         promoteurList.forEach(cb_stage_editer_promoteur::addItem);
 
         cb_stage_editer_maitreDeStage.removeAllItems();
-        ArrayList<Utilisateur> maitreDeStageList = user_DB.fetchAll("maitre_stage");
+        List<Utilisateur> maitreDeStageList = user_DB.fetchAll("maitre_stage");
         maitreDeStageList.forEach(cb_stage_editer_maitreDeStage::addItem);
         cb_stage_editer_etudiant.setReadOnly(false);
         cb_stage_editer_etudiant.removeAllItems();
 
-        ArrayList<Utilisateur> etudiantList = user_DB.fetchAll("etudiant_tfe_stage");
+        List<Utilisateur> etudiantList = user_DB.fetchAll("etudiant_tfe_stage");
         etudiantList.forEach(cb_stage_editer_etudiant::addItem);
 
         stage_evaluer_critere.removeAllItems();
@@ -3841,7 +3841,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         critereEvaluationList.forEach(stage_evaluer_critere::addItem);
 
         stage_defense_presidentJury.removeAllItems();
-        ArrayList<Utilisateur> presidentJuryList = user_DB.fetchAll("president_jury");
+        List<Utilisateur> presidentJuryList = user_DB.fetchAll("president_jury");
         presidentJuryList.forEach(stage_defense_presidentJury::addItem);
     }
 
@@ -3849,7 +3849,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         cb_stage_technologie3.removeAllItems();
         StageManager stage_DB = new StageManager();
-        ArrayList<Stage> stageList = stage_DB.fetchAll(null);
+        List<Stage> stageList = stage_DB.fetchAll(null);
         ArrayList<Technologie> technologiesUtilisees = new ArrayList<>();
         for (Stage stage : stageList)
         {
@@ -3887,10 +3887,10 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         entrepriseList.forEach(cb_PropositionStage_editer_entreprise::addItem);
         cb_PropositionStage_valider_maitreDeStage.removeAllItems();
         UtilisateurManager user_DB = new UtilisateurManager();
-        ArrayList<Utilisateur> userMaitreStageList = user_DB.fetchAll("maitre_stage");
+        List<Utilisateur> userMaitreStageList = user_DB.fetchAll("maitre_stage");
         userMaitreStageList.forEach(cb_PropositionStage_valider_maitreDeStage::addItem);
         cb_PropositionStage_valider_promoteur.removeAllItems();
-        ArrayList<Utilisateur> userPromoteurList = user_DB.fetchAll("professeur");
+        List<Utilisateur> userPromoteurList = user_DB.fetchAll("professeur");
         userPromoteurList.forEach(cb_PropositionStage_valider_promoteur::addItem);
         tc_PropositionStage_valider_technologies.removeAllItems();
         TechnologieManager technologie_DB = new TechnologieManager();
@@ -3919,7 +3919,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tc_echeance_ajouter_utilisateurs.removeAllItems();
         UtilisateurManager user_DB = new UtilisateurManager();
-        ArrayList<Utilisateur> userList = user_DB.fetchAll("etudiant_tfe");
+        List<Utilisateur> userList = user_DB.fetchAll("etudiant_tfe");
         userList.addAll(user_DB.fetchAll("etudiant_tfe_stage"));
         userList.forEach(tc_echeance_ajouter_utilisateurs::addItem);
     }
@@ -4025,7 +4025,6 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         onglets.setSelectedTab(0);
     }
 
-    // TODO
     void calculPointsTFE(TFE tfe)
     {
         double res = 0;

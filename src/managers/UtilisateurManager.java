@@ -10,10 +10,17 @@ import java.util.List;
 
 public class UtilisateurManager extends HibernateManager<Utilisateur>
 {
-    public ArrayList<Utilisateur> fetchAll(String role_name)
+    public List<Utilisateur> fetchAll(String role_name)
     {
-        //TODO
-        return null;
+        Query q = HibernateConnector.getInstance().getSession().createQuery("from Utilisateur s");
+        List<Utilisateur> queryList = q.list();
+        List<Utilisateur> temp = new ArrayList<>();
+
+        for(Utilisateur u : queryList)
+            if(u.getRole().getNom().equals(role_name))
+                temp.add(u);
+
+        return temp;
     }
 
     public Utilisateur find(String identifiant, String password)

@@ -7,8 +7,6 @@ import org.hibernate.Query;
 
 import java.util.List;
 
-;
-
 public class CritereManager extends HibernateManager<Critere>
 {
     public List<Critere> fetchAll(String type)

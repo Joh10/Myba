@@ -2,59 +2,66 @@ package managers;
 
 
 import beans.Defense;
+import beans.Stage;
+import beans.TFE;
 import beans.Utilisateur;
+import managers.hibernate.HibernateConnector;
 import managers.hibernate.HibernateManager;
+import org.hibernate.Query;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DefenseManager extends HibernateManager<Defense>
 {
-    public ArrayList<Defense> fetchAll(int type, Utilisateur obj)
+    /**
+     * Méthode permettant de récupérer toutes les défenses
+     * @param user l'utilisateur (président de jury/étudiant) de la recherche
+     * @return liste de défense
+     */
+    public List<Defense> fetchAll(Utilisateur user)
     {
-        //TODO WTF
-        /* OLD CODE
+        List<Defense> out = new ArrayList<>();
 
-        ArrayList<Defense> liste = new ArrayList<Defense>();
-        DAO_Utilisateur dao_user = new DAO_Utilisateur();
-        DAO_Stage dao_stage = new DAO_Stage();
-        DAO_TFE dao_tfe = new DAO_TFE();
-        PreparedStatement prepare = null;
-        ResultSet res = null;
-        try
+        if(user.getRole().getNom().equals("president_jury"))
         {
-            String query;
-            switch (type)
-            {
-                case 1: // recherche par président de Jury
-                    query = "SELECT * FROM `defenses` WHERE `user_id` = ?";
-                    break;
-                case 2: // recherche par étudiant
-                    query = "SELECT d.* FROM `defenses` d, `stages` s, `tfe` t WHERE (d.`tfe_id` is not null AND d.`tfe_id` = t.`id` AND t.`owner_id` = ?) OR (d.`stage_id` is not null AND d.`stage_id` = s.`id` AND s.`owner_id` = ?)";
-                    break;
-                default:
-                    query = "SELECT * FROM `defenses`";
-                    break;
-            }
+            Query q = HibernateConnector.getInstance().getSession().createQuery("from Defense s where s.presidentJury.id = :id");
+            q.setParameter("id", user.getId());
+            return fetchAll(q);
+        }
+        else
+        {
+            Query q = HibernateConnector.getInstance().getSession().createQuery("from Defense s");
+            List<Defense> list = q.list();
 
-            prepare = this.connect.prepareStatement(query);
-            if (type > 0) prepare.setInt(1, obj.getId());
-            if (type == 2) prepare.setInt(2, obj.getId());
-
-            res = prepare.executeQuery();
-            while (res.next())
+            for(Defense d : list)
             {
-                res.getInt("tfe_id"); // nécessaire pour faire le wasNull
-                Defense defense = null;
-                if (res.wasNull())
-                    defense = new Defense(res.getInt("id"), dao_user.find(res.getInt("user_id")), dao_stage.find(res.getInt("stage_id")), res.getTimestamp("date"), res.getString("local"));
+                if(d.getTfe() != null)
+                {
+                    Query q2 = HibernateConnector.getInstance().getSession().createQuery("from TFE s where s.id = :id");
+                    q2.setParameter("id", d.getTfe().getId());
+
+                    List<TFE> l = q2.list();
+
+                    for(TFE t : l)
+                        if(t.getOwner().getId() == user.getId())
+                            out.add(d);
+                }
                 else
-                    defense = new Defense(res.getInt("id"), dao_user.find(res.getInt("user_id")), dao_tfe.find(res.getInt("tfe_id")), res.getTimestamp("date"), res.getString("local"));
-                liste.add(defense);
+                {
+                    Query q2 = HibernateConnector.getInstance().getSession().createQuery("from Stage s where s.id = :id");
+                    q2.setParameter("id", d.getStage().getId());
+
+                    List<Stage> l = q2.list();
+
+                    for(Stage t : l)
+                        if(t.getOwner().getId() == user.getId())
+                            out.add(d);
+                }
             }
         }
 
-         */
-        return null;
+        return out;
     }
 
     @Override

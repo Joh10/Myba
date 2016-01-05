@@ -8,6 +8,7 @@ import managers.hibernate.HibernateConnector;
 import managers.hibernate.HibernateManager;
 import org.hibernate.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,11 +28,23 @@ public class EcheanceManager extends HibernateManager<Echeance>
         return fetchAll(q);
     }
 
+    /**
+     * Méthode permettant de récupérer toutes les échéances liées à un utilisateur
+     * @param utilisateur L'utilisateur dont on désire récupérer les échéances
+     * @return une liste d'échéances
+     */
     public List<Echeance> fetchAll(Utilisateur utilisateur)
     {
-        //TODO
-        //return fetchAllBack("SELECT e.* FROM `echeances` e, `echeances_cibles` c WHERE e.`tfe_id` is null AND e.`stage_id` is null AND e.`id` = c.`echeance_id` AND c.`user_id` = ? " + "UNION SELECT e.* FROM `echeances` e, `tfe` t WHERE e.`tfe_id` is not null AND e.`tfe_id` = t.`id` AND t.`owner_id` = ? " + "UNION SELECT e.* FROM `echeances` e, `stages` s WHERE e.`stage_id` is not null AND e.`stage_id` = s.`id` AND s.`owner_id` = ?", utilisateur.getId(), true);
-        return null;
+        Query q = HibernateConnector.getInstance().getSession().createQuery("from Echeance s");
+        List<Echeance> list = q.list();
+        List<Echeance> t = new ArrayList<>();
+
+        for(Echeance e : list)
+            for(Utilisateur u : e.getUtilisateur())
+                    if(u.getId() == utilisateur.getId())
+                        t.add(e);
+
+        return t;
     }
 
     public List<Echeance> fetchAll()
