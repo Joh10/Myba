@@ -3,9 +3,7 @@ package beans;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "ECHEANCE")
@@ -29,22 +27,21 @@ public class Echeance
     @Column(name = "ANNEXE")
     private String annexe;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "STAGEXECHEANCE", joinColumns = @JoinColumn(name = "ID_ECH"), inverseJoinColumns = @JoinColumn(name = "ID_STA"))
-    private List<Stage> stage;
+    private Set<Stage> stage;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "TFEXECHEANCE", joinColumns = @JoinColumn(name = "ID_ECH"), inverseJoinColumns = @JoinColumn(name = "ID_TFE"))
-    private List<TFE> tfe;
+    private Set<TFE> tfe;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "UTILISATEURXECHEANCE", joinColumns = @JoinColumn(name = "ID_ECH"), inverseJoinColumns = @JoinColumn(name = "ID_UTI"))
-    private List<Utilisateur> utilisateur;
+    private Set<Utilisateur> utilisateur;
 
     /**
      * Constructeur (type utilisateurs)
      *
-     * @param _id           ID (identifiant) de l'échéance
      * @param _owner        Utilisateur (professeur) qui a créé l'échéance
      * @param _dateCreation Date de création de l'échéance
      * @param _dateEcheance Date à laquelle l'échéance expire
@@ -52,10 +49,10 @@ public class Echeance
      * @param _description  Description (détails) manuscits de l'échéance
      * @param _annexe       Lien(nom) local vers un fichier (facultatif)
      */
-    public Echeance(Utilisateur _owner, Date _dateCreation, Date _dateEcheance, ArrayList<Utilisateur> _users, String _description, String _annexe)
+    public Echeance(Utilisateur _owner, Date _dateCreation, Date _dateEcheance, HashSet<Utilisateur> _users, String _description, String _annexe)
     {
-        stage = new ArrayList<>();
-        tfe = new ArrayList<>();
+        stage = new HashSet<>();
+        tfe = new HashSet<>();
 
         utilisateur.add(_owner);
         dateCreation = _dateCreation;
@@ -67,7 +64,6 @@ public class Echeance
     /**
      * Constructeur (type TFE)
      *
-     * @param _id           ID (identifiant) de l'échéance
      * @param _owner        Utilisateur (professeur) qui a créé l'échéance
      * @param _dateCreation Date de création de l'échéance
      * @param _dateEcheance Date à laquelle l'échéance expire
@@ -77,8 +73,8 @@ public class Echeance
      */
     public Echeance(Utilisateur _owner, Date _dateCreation, Date _dateEcheance, TFE _tfe, String _description, String _annexe)
     {
-        stage = new ArrayList<>();
-        tfe = new ArrayList<>();
+        stage = new HashSet<>();
+        tfe = new HashSet<>();
 
         utilisateur.add(_owner);
         dateCreation = _dateCreation;
@@ -101,8 +97,8 @@ public class Echeance
      */
     public Echeance(Utilisateur _owner, Date _dateCreation, Date _dateEcheance, Stage _stage, String _description, String _annexe)
     {
-        stage = new ArrayList<>();
-        tfe = new ArrayList<>();
+        stage = new HashSet<>();
+        tfe = new HashSet<>();
 
         utilisateur.add(_owner);
         dateCreation = _dateCreation;
@@ -137,7 +133,7 @@ public class Echeance
      *
      * @param _users La liste des utilisateurs concernés par cette échéance
      */
-    public void update(ArrayList<Utilisateur> _users)
+    public void update(HashSet<Utilisateur> _users)
     {
         utilisateur = _users;
     }
@@ -172,32 +168,32 @@ public class Echeance
         return annexe;
     }
 
-    public List<Stage> getStage()
+    public Set<Stage> getStage()
     {
         return stage;
     }
 
-    public void setStage(List<Stage> stage)
+    public void setStage(Set<Stage> stage)
     {
         this.stage = stage;
     }
 
-    public List<TFE> getTfe()
+    public Set<TFE> getTfe()
     {
         return tfe;
     }
 
-    public void setTfe(List<TFE> tfe)
+    public void setTfe(Set<TFE> tfe)
     {
         this.tfe = tfe;
     }
 
-    public List<Utilisateur> getUtilisateur()
+    public Set<Utilisateur> getUtilisateur()
     {
         return utilisateur;
     }
 
-    public void setUtilisateur(List<Utilisateur> utilisateur)
+    public void setUtilisateur(Set<Utilisateur> utilisateur)
     {
         this.utilisateur = utilisateur;
     }

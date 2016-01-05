@@ -6,7 +6,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "UTILISATEUR")
@@ -47,9 +49,9 @@ public class Utilisateur implements Serializable
     @Column(name = "DOUBLANT")
     private boolean doublant;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "UTILISATEURXROLETABLE", joinColumns = @JoinColumn(name = "ID_UTI"), inverseJoinColumns = @JoinColumn(name = "ID_ROL"))
-    private List<Role> role;
+    private Set<Role> role;
 
     /**
      * Constructeur
@@ -68,7 +70,7 @@ public class Utilisateur implements Serializable
     public Utilisateur(boolean _enabled, Role _role, String _email, String _password, Integer _matricule, String _nom, String _prenom, String _telephone, Integer _annee, Boolean _doublant)
     {
         enabled = _enabled;
-        role = new ArrayList<>();
+        role = new HashSet<>();
         role.add(_role);
         email = _email;
         passwordHash = _password;
@@ -208,7 +210,7 @@ public class Utilisateur implements Serializable
 
     public Role getRole()
     {
-        return role.get(0);
+        return role.stream().findFirst().get();
     }
 
     public void setRole(Role role)

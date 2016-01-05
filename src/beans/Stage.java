@@ -3,9 +3,7 @@ package beans;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "STAGE")
@@ -29,17 +27,17 @@ public class Stage
     @Column(name = "COMMENTAIRE")
     private String commentaires;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "TECHNOLOGIEXSTA", joinColumns = @JoinColumn(name = "ID_STA"), inverseJoinColumns = @JoinColumn(name = "ID_TEC"))
-    private List<Technologie> technologie;
+    private Set<Technologie> technologie;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "REF_PROPOSITIONSTAGE")
     private PropositionStage propositionStage;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "UTILISATEURXSTAGE", joinColumns = @JoinColumn(name = "ID_STA"), inverseJoinColumns = @JoinColumn(name = "ID_UTI"))
-    private List<Utilisateur> utilisateur;
+    private Set<Utilisateur> utilisateur;
 
     /**
      * Constructeur
@@ -54,9 +52,9 @@ public class Stage
      * @param _commentaires Le commentaire professeur effectué par les professeurs
      * @param _technologies La liste des technologies utilisées durant ce stage
      */
-    public Stage(Utilisateur _owner, Utilisateur _superviseur, Utilisateur _suiveur, PropositionStage _proposition, Date _dDebut, Date _dFin, double _ptsTotaux, String _commentaires, ArrayList<Technologie> _technologies)
+    public Stage(Utilisateur _owner, Utilisateur _superviseur, Utilisateur _suiveur, PropositionStage _proposition, Date _dDebut, Date _dFin, double _ptsTotaux, String _commentaires, HashSet<Technologie> _technologies)
     {
-        utilisateur = new ArrayList<>();
+        utilisateur = new HashSet<>();
 
         utilisateur.add(_owner);
         utilisateur.add(_superviseur);
@@ -104,12 +102,12 @@ public class Stage
         return commentaires;
     }
 
-    public List<Technologie> getTechnologies()
+    public Set<Technologie> getTechnologies()
     {
         return technologie;
     }
 
-    public void setTechnologie(List<Technologie> technologie)
+    public void setTechnologie(Set<Technologie> technologie)
     {
         this.technologie = technologie;
     }
@@ -119,12 +117,12 @@ public class Stage
         return propositionStage;
     }
 
-    public List<Utilisateur> getUtilisateur()
+    public Set<Utilisateur> getUtilisateur()
     {
         return utilisateur;
     }
 
-    public void setUtilisateur(List<Utilisateur> utilisateur)
+    public void setUtilisateur(Set<Utilisateur> utilisateur)
     {
         this.utilisateur = utilisateur;
     }
@@ -166,7 +164,7 @@ public class Stage
      * @param _commentaires Le commentaire professeur effectué par les professeurs
      * @param _technologies La liste des technologies utilisées durant ce stage
      */
-    public void update(Utilisateur _superviseur, Utilisateur _suiveur, Date _dDebut, Date _dFin, String _commentaires, List<Technologie> _technologies)
+    public void update(Utilisateur _superviseur, Utilisateur _suiveur, Date _dDebut, Date _dFin, String _commentaires, Set<Technologie> _technologies)
     {
         //Remplace le professeur
         if (!utilisateur.contains(_superviseur))

@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "ROLETABLE")
@@ -21,13 +22,13 @@ public class Role implements Serializable
     @Column(name = "NOM")
     private String nom;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "PERMISSIONTABLEXROLETABLE", joinColumns = @JoinColumn(name = "ID_ROL"), inverseJoinColumns = @JoinColumn(name = "ID_PER"))
-    private List<Permission> permission;
+    private Set<Permission> permission;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "UTILISATEURXROLETABLE", joinColumns = @JoinColumn(name = "ID_ROL"), inverseJoinColumns = @JoinColumn(name = "ID_UTI"))
-    private List<Utilisateur> utilisateur;
+    private Set<Utilisateur> utilisateur;
 
     /**
      * Constructeur (type recherche, sans identifiant)
@@ -63,12 +64,12 @@ public class Role implements Serializable
         this.nom = nom;
     }
 
-    public List<Utilisateur> getUtilisateur()
+    public Set<Utilisateur> getUtilisateur()
     {
         return utilisateur;
     }
 
-    public void setUtilisateur(List<Utilisateur> utilisateur)
+    public void setUtilisateur(Set<Utilisateur> utilisateur)
     {
         this.utilisateur = utilisateur;
     }

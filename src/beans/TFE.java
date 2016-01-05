@@ -4,7 +4,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "TFE")
@@ -28,18 +30,17 @@ public class TFE
     @Column(name = "ANNEEACADFIN")
     private int anneeAcadFin;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "TECHNOLOGIEXTFE", joinColumns = @JoinColumn(name = "ID_TFE"), inverseJoinColumns = @JoinColumn(name = "ID_TEC"))
-    private List<Technologie> technologie;
+    private Set<Technologie> technologie;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "UTILISATEURXTFE", joinColumns = @JoinColumn(name = "ID_TFE"), inverseJoinColumns = @JoinColumn(name = "ID_UTI"))
-    private List<Utilisateur> utilisateur;
+    private Set<Utilisateur> utilisateur;
 
     /**
      * Constructeur
      *
-     * @param _id           ID (identifiant) du TFE
      * @param _owner        L'élève lié au TFE
      * @param _promoteur    Le promoteur (professeur) lié au TFE
      * @param _titre        Le titre du TFE
@@ -48,9 +49,9 @@ public class TFE
      * @param _anneeFin     L'année académique de fin du TFE
      * @param _technologies La liste des technologies liées à ce TFE
      */
-    public TFE(Utilisateur _owner, Utilisateur _promoteur, String _titre, double _pointsTotaux, int _anneeDebut, int _anneeFin, ArrayList<Technologie> _technologies)
+    public TFE(Utilisateur _owner, Utilisateur _promoteur, String _titre, double _pointsTotaux, int _anneeDebut, int _anneeFin, HashSet<Technologie> _technologies)
     {
-        utilisateur = new ArrayList<>();
+        utilisateur = new HashSet<>();
 
         utilisateur.add(_owner);
         utilisateur.add(_promoteur);
@@ -95,27 +96,27 @@ public class TFE
         return anneeAcadFin;
     }
 
-    public List<Technologie> getTechnologies()
+    public Set<Technologie> getTechnologies()
     {
         return technologie;
     }
 
-    public void setTechnologie(List<Technologie> technologie)
+    public void setTechnologie(Set<Technologie> technologie)
     {
         this.technologie = technologie;
     }
 
-    public List<Utilisateur> getUtilisateur()
+    public Set<Utilisateur> getUtilisateur()
     {
         return utilisateur;
     }
 
-    public void setUtilisateur(List<Utilisateur> utilisateur)
+    public void setUtilisateur(Set<Utilisateur> utilisateur)
     {
         this.utilisateur = utilisateur;
     }
 
-    public void update(Utilisateur _promoteur, String _titre, double _pointsTotaux, int _anneeDebut, int _anneeFin, ArrayList<Technologie> _technologies)
+    public void update(Utilisateur _promoteur, String _titre, double _pointsTotaux, int _anneeDebut, int _anneeFin, HashSet<Technologie> _technologies)
     {
         //Remplace le promoteurs
         if (!utilisateur.contains(_promoteur))

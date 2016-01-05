@@ -29,18 +29,15 @@ public class UtilisateurManager extends HibernateManager<Utilisateur>
     {
         return execute(se ->
         {
-            System.err.println(identifiant + "  " + password);
-            Query q = se.createQuery("from Utilisateur s");
-            //q.setParameter("x", identifiant);
-            //q.setParameter("y", password);
+            Query q = se.createQuery("from Utilisateur s where s.email = :x and s.passwordHash = :y");
+            q.setParameter("x", identifiant);
+            q.setParameter("y", password);
 
             List queryList = q.list();
 
-            queryList.forEach(System.err::println);
-
             if (queryList != null && queryList.isEmpty()) return null;
 
-            return null;
+            return (Utilisateur) queryList.get(0);
         });
     }
 

@@ -17,6 +17,7 @@ import managers.DefenseManager;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @SuppressWarnings("serial")
 public class PublicDefenses extends PublicDefenses_design implements View
@@ -59,25 +60,28 @@ public class PublicDefenses extends PublicDefenses_design implements View
         DefenseManager defense_DB = new DefenseManager();
         List<Defense> defenseList = defense_DB.fetchAll(null);
 
-        for (Defense defense : defenseList)
+        if(defenseList!= null)
         {
-            Stage stage = defense.getStage();
-            TFE tfe = defense.getTfe();
-            String etudiant = "";
-            String sujet = "";
-            String type = "";
-            if (tfe != null)
+            for (Defense defense : defenseList)
             {
-                sujet = tfe.getTitre();
-                etudiant = tfe.getOwner().toString();
-                type = "TFE";
-            } else if (stage != null)
-            {
-                sujet = stage.getPropositionStage().getSujet();
-                etudiant = stage.getOwner().toString();
-                type = "Stage";
+                Stage stage = defense.getStage();
+                TFE tfe = defense.getTfe();
+                String etudiant = "";
+                String sujet = "";
+                String type = "";
+                if (tfe != null)
+                {
+                    sujet = tfe.getTitre();
+                    etudiant = tfe.getOwner().toString();
+                    type = "TFE";
+                } else if (stage != null)
+                {
+                    sujet = stage.getPropositionStage().getSujet();
+                    etudiant = stage.getOwner().toString();
+                    type = "Stage";
+                }
+                tab_defenses.addItem(new Object[]{type, etudiant, sujet, defense.getLocal(), defense.getDate()}, defense.getId());
             }
-            tab_defenses.addItem(new Object[]{type, etudiant, sujet, defense.getLocal(), defense.getDate()}, defense.getId());
         }
 
         tab_defenses.addValueChangeListener((Property.ValueChangeListener) event ->
@@ -96,7 +100,7 @@ public class PublicDefenses extends PublicDefenses_design implements View
             Defense defense = defense_DB.find((int) elementSelected);
             Stage stage = defense.getStage();
             TFE tfe = defense.getTfe();
-            List<Technologie> technologies = null;
+            Set<Technologie> technologies = null;
             if (tfe != null)
             {
                 technologies = tfe.getTechnologies();

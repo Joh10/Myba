@@ -946,7 +946,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 int anneeDebut = Integer.parseInt(tf_tfe_ajouter_anneeDebut.getValue());
                 int anneeFin = Integer.parseInt(tf_tfe_ajouter_anneeFin.getValue());
                 @SuppressWarnings("unchecked") Set<Technologie> temp = (Set<Technologie>) tc_tfe_ajouter_technologie.getValue();
-                ArrayList<Technologie> technologies = new ArrayList<>(temp);
+                HashSet<Technologie> technologies = new HashSet<>(temp);
                 if (!titre.isEmpty() && promoteur != null && etudiant != null && anneeDebut > 0 && anneeFin > 0)
                 {
                     TFEManager tfe_DB = new TFEManager();
@@ -975,7 +975,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             int anneeFin = Integer.parseInt(tf_tfe_modifier_anneeFin.getValue());
             Utilisateur promoteur = (Utilisateur) cb_tfe_modifier_promoteur.getValue();
             @SuppressWarnings("unchecked") Set<Technologie> temp = (Set<Technologie>) tc_tfe_modifier_technologie.getValue();
-            ArrayList<Technologie> technologies = new ArrayList<>(temp);
+            HashSet<Technologie> technologies = new HashSet<>(temp);
             if (!titre.isEmpty() && anneeDebut > 0 && anneeFin > 0)
             {
                 TFEManager tfe_DB = new TFEManager();
@@ -1401,7 +1401,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             Utilisateur maitreStage = (Utilisateur) cb_stage_editer_maitreDeStage.getValue();
             Utilisateur promoteur = (Utilisateur) cb_stage_editer_promoteur.getValue();
             @SuppressWarnings("unchecked") Set<Technologie> temp = (Set<Technologie>) tc_stage_editer_technologies.getValue();
-            ArrayList<Technologie> technologies = new ArrayList<>(temp);
+            HashSet<Technologie> technologies = new HashSet<>(temp);
             if (!sujet.isEmpty() && dateDebut != null && dateFin != null && maitreStage != null && promoteur != null)
             {
                 StageManager stage_DB = new StageManager();
@@ -1948,7 +1948,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             Utilisateur maitreStage = (Utilisateur) cb_PropositionStage_valider_maitreDeStage.getValue();
             Utilisateur promoteur = (Utilisateur) cb_PropositionStage_valider_promoteur.getValue();
             @SuppressWarnings("unchecked") Set<Technologie> temp = (Set<Technologie>) tc_PropositionStage_valider_technologies.getValue();
-            ArrayList<Technologie> technologies = new ArrayList<>(temp);
+            HashSet<Technologie> technologies = new HashSet<>(temp);
             PropositionStageManager propositionStage_DB = new PropositionStageManager();
             PropositionStage propositionStage = propositionStage_DB.find((int) elementSelected);
             if (!sujet.isEmpty() && dateDebut != null && dateFin != null && maitreStage != null && promoteur != null)
@@ -2249,7 +2249,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             String description = tf_echeance_ajouter_description.getValue();
             Date date = date_echeance_ajouter_date.getValue();
             @SuppressWarnings("unchecked") Set<Utilisateur> temp = (Set<Utilisateur>) tc_echeance_ajouter_utilisateurs.getValue();
-            ArrayList<Utilisateur> etudiants = new ArrayList<>(temp);
+            HashSet<Utilisateur> etudiants = new HashSet<>(temp);
             String file = "";
             if (fileUploaded != null) file = fileUploaded.getName();
 
@@ -2772,8 +2772,10 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         tab_professeurs.removeAllItems();
         UtilisateurManager user_DB = new UtilisateurManager();
         List<Utilisateur> userList = user_DB.fetchAll("professeur");
+
         for (Utilisateur user : userList)
             tab_professeurs.addItem(new Object[]{user.getNom(), user.getPrenom(), user.getEmail(), user.getTelephone()}, user.getId());
+
         tab_professeurs.addValueChangeListener(event -> {
             form_prof.setVisible(false);
             elementSelected = tab_professeurs.getValue();
@@ -3044,7 +3046,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         String nom = tf_tfe_etudiant.getValue().toLowerCase();
         for (TFE tfe : tfeList)
         {
-            List<Technologie> technologiesTFE = tfe.getTechnologies();
+            HashSet<Technologie> technologiesTFE = new HashSet<>(tfe.getTechnologies());
             int anneeDebut = tfe.getAnneeAcadDebut();
             int anneeFin = tfe.getAnneeAcadFin();
             String nomPrenom = (tfe.getOwner().toString()).toLowerCase();
@@ -3071,7 +3073,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         String nom = tf_tfe_etudiant2.getValue().toLowerCase();
         for (TFE tfe : tfeList)
         {
-            List<Technologie> technologiesTFE = tfe.getTechnologies();
+            HashSet<Technologie> technologiesTFE = new HashSet<>(tfe.getTechnologies());
             int anneeDebut = tfe.getAnneeAcadDebut();
             int anneeFin = tfe.getAnneeAcadFin();
             String nomPrenom = (tfe.getOwner().toString()).toLowerCase();
@@ -3146,7 +3148,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         }
         for (Stage stage : stageList)
         {
-            List<Technologie> technologiesStage = stage.getTechnologies();
+            HashSet<Technologie> technologiesStage = new HashSet<>(stage.getTechnologies());
             LieuStage lieuStageStage = stage.getPropositionStage().getLieuStage();
             String adresseStage = stage.getPropositionStage().getLieuStage().getAdresse();
             int anneeDebut = stage.getDateDebut().getYear() + 1900;
@@ -3175,7 +3177,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         }
         for (Stage stage : stageList)
         {
-            List<Technologie> technologiesStage = stage.getTechnologies();
+            HashSet<Technologie> technologiesStage = new HashSet<>( stage.getTechnologies());
             LieuStage lieuStageStage = stage.getPropositionStage().getLieuStage();
             String adresseStage = stage.getPropositionStage().getLieuStage().getAdresse();
             int anneeDebut = stage.getDateDebut().getYear() + 1900;
@@ -3666,7 +3668,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         ArrayList<Technologie> technologiesUtilisees = new ArrayList<>();
         for (TFE tfe : tfeList)
         {
-            List<Technologie> technologiesStage = tfe.getTechnologies();
+            HashSet<Technologie> technologiesStage = new HashSet<>(tfe.getTechnologies());
             technologiesUtilisees.remove(technologiesStage);
             technologiesUtilisees.addAll(technologiesStage);
         }
@@ -3713,7 +3715,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         ArrayList<Technologie> technologiesUtilisees = new ArrayList<>();
         for (TFE tfe : tfeList)
         {
-            List<Technologie> technologiesStage = tfe.getTechnologies();
+            Set<Technologie> technologiesStage = tfe.getTechnologies();
             technologiesUtilisees.remove(technologiesStage);
             technologiesUtilisees.addAll(technologiesStage);
         }
@@ -3789,7 +3791,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         ArrayList<Technologie> technologiesUtilisees = new ArrayList<>();
         for (Stage stage : stageList)
         {
-            List<Technologie> technologiesStage = stage.getTechnologies();
+            Set<Technologie> technologiesStage = stage.getTechnologies();
             technologiesUtilisees.remove(technologiesStage);
             technologiesUtilisees.addAll(technologiesStage);
         }
@@ -3853,7 +3855,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         ArrayList<Technologie> technologiesUtilisees = new ArrayList<>();
         for (Stage stage : stageList)
         {
-            List<Technologie> technologiesStage = stage.getTechnologies();
+            Set<Technologie> technologiesStage = stage.getTechnologies();
             technologiesUtilisees.remove(technologiesStage);
             technologiesUtilisees.addAll(technologiesStage);
         }

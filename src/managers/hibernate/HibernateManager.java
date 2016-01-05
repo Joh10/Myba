@@ -30,8 +30,11 @@ public abstract class HibernateManager<T>
         }
         finally
         {
-            session.flush();
-            session.close();
+            if (session != null)
+            {
+                session.flush();
+                session.close();
+            }
         }
 
         return null;
