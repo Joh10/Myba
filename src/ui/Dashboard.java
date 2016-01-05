@@ -2992,8 +2992,11 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         tab_tfe.removeAllItems();
         TFEManager tfe_DB = new TFEManager();
         List<TFE> tfeList = tfe_DB.fetchAll();
-        for (TFE tfe : tfeList)
-            tab_tfe.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), tfe.getPointsTotaux(), tfe.getAnneeAcadDebut(), tfe.getAnneeAcadFin(),}, tfe.getId());
+
+        if(tfeList != null)
+            for (TFE tfe : tfeList)
+                tab_tfe.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), tfe.getPointsTotaux(), tfe.getAnneeAcadDebut(), tfe.getAnneeAcadFin(),}, tfe.getId());
+
         tab_tfe.addValueChangeListener(event -> {
             hideForms();
             elementSelected = tab_tfe.getValue();
@@ -3344,8 +3347,11 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         tab_tfe2.removeAllItems();
         TFEManager tfe_DB = new TFEManager();
         List<TFE> tfeList = tfe_DB.fetchAll();
-        for (TFE tfe : tfeList)
-            tab_tfe2.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), tfe.getAnneeAcadDebut(), tfe.getAnneeAcadFin(),}, tfe.getId());
+
+        if(tfeList != null)
+            for (TFE tfe : tfeList)
+                tab_tfe2.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), tfe.getAnneeAcadDebut(), tfe.getAnneeAcadFin(),}, tfe.getId());
+
         load_cb_TFE2();
     }
 
@@ -3634,7 +3640,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         CritereManager critereEvaluation_DB = new CritereManager();
         List<Critere> critereEvaluationList;
         critereEvaluationList = critereEvaluation_DB.fetchAll("defense");
-        critereEvaluationList.forEach(defense_evaluer_presidentDeJury_critere::addItem);
+
+        if(critereEvaluationList != null)
+            critereEvaluationList.forEach(defense_evaluer_presidentDeJury_critere::addItem);
     }
 
     public void load_cb_critereEvaluation()
@@ -3663,19 +3671,29 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         TFEManager tfe_DB = new TFEManager();
         List<TFE> tfeList = tfe_DB.fetchAll();
         List<Technologie> technologieList = technologie_DB.fetchAll();
-        for (Technologie technologie : technologieList)
+
+        if(technologieList != null)
         {
-            tc_tfe_ajouter_technologie.addItem(technologie);
-            tc_tfe_modifier_technologie.addItem(technologie);
+            for (Technologie technologie : technologieList)
+            {
+                tc_tfe_ajouter_technologie.addItem(technologie);
+                tc_tfe_modifier_technologie.addItem(technologie);
+            }
         }
+
         ArrayList<Technologie> technologiesUtilisees = new ArrayList<>();
-        for (TFE tfe : tfeList)
+
+        if(tfeList != null)
         {
-            HashSet<Technologie> technologiesStage = new HashSet<>(tfe.getTechnologies());
-            technologiesUtilisees.remove(technologiesStage);
-            technologiesUtilisees.addAll(technologiesStage);
+            for (TFE tfe : tfeList)
+            {
+                HashSet<Technologie> technologiesStage = new HashSet<>(tfe.getTechnologies());
+                technologiesUtilisees.remove(technologiesStage);
+                technologiesUtilisees.addAll(technologiesStage);
+            }
+            technologiesUtilisees.forEach(cb_tfe_technologie::addItem);
         }
-        technologiesUtilisees.forEach(cb_tfe_technologie::addItem);
+
         cb_tfe_technologie.addValueChangeListener(event -> load_tab_tfe_filtre());
 
         cb_tfe_anneeAcademique.removeAllItems();
@@ -3704,7 +3722,10 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         tfe_evaluer_critere.removeAllItems();
         CritereManager critereEvaluation_DB = new CritereManager();
         List<Critere> critereEvaluationList = critereEvaluation_DB.fetchAll("tfe");
-        critereEvaluationList.forEach(tfe_evaluer_critere::addItem);
+
+        if(critereEvaluationList != null)
+            critereEvaluationList.forEach(tfe_evaluer_critere::addItem);
+
         tfe_defense_presidentJury.removeAllItems();
         List<Utilisateur> userPresJuryList = user_DB.fetchAll("president_jury");
         userPresJuryList.forEach(tfe_defense_presidentJury::addItem);
@@ -3716,13 +3737,18 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         TFEManager tfe_DB = new TFEManager();
         List<TFE> tfeList = tfe_DB.fetchAll();
         ArrayList<Technologie> technologiesUtilisees = new ArrayList<>();
-        for (TFE tfe : tfeList)
+
+        if(tfeList != null)
         {
-            Set<Technologie> technologiesStage = tfe.getTechnologies();
-            technologiesUtilisees.remove(technologiesStage);
-            technologiesUtilisees.addAll(technologiesStage);
+            for (TFE tfe : tfeList)
+            {
+                Set<Technologie> technologiesStage = tfe.getTechnologies();
+                technologiesUtilisees.remove(technologiesStage);
+                technologiesUtilisees.addAll(technologiesStage);
+            }
+            technologiesUtilisees.forEach(cb_tfe_technologie2::addItem);
         }
-        technologiesUtilisees.forEach(cb_tfe_technologie2::addItem);
+
         cb_tfe_technologie2.addValueChangeListener(event -> load_tab_tfe2_filtre());
         cb_tfe_anneeAcademique2.removeAllItems();
         tfe_generer_anneesAcademiques(tfeList).forEach(cb_tfe_anneeAcademique2::addItem);
@@ -3738,16 +3764,19 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         ArrayList<String> retour = new ArrayList<>();
 
-        for (TFE tfe : listTfe)
+        if(listTfe != null)
         {
-            int annee_debut = tfe.getAnneeAcadDebut();
-            int annee_fin = tfe.getAnneeAcadFin();
-            int action = 0;
+            for (TFE tfe : listTfe)
+            {
+                int annee_debut = tfe.getAnneeAcadDebut();
+                int annee_fin = tfe.getAnneeAcadFin();
+                int action = 0;
 
-            if (annee_debut == annee_fin) action = -1;
+                if (annee_debut == annee_fin) action = -1;
 
-            String proposition = (annee_debut + action) + "-" + (annee_fin);
-            if (!retour.contains(proposition)) retour.add(proposition);
+                String proposition = (annee_debut + action) + "-" + (annee_fin);
+                if (!retour.contains(proposition)) retour.add(proposition);
+            }
         }
 
         return retour;
@@ -3917,7 +3946,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         stage_evaluer_maitreDeStage_critere.removeAllItems();
         CritereManager critereEvaluation_DB = new CritereManager();
         List<Critere> critereEvaluationList = critereEvaluation_DB.fetchAll("stage");
-        critereEvaluationList.forEach(stage_evaluer_maitreDeStage_critere::addItem);
+
+        if(critereEvaluationList != null)
+            critereEvaluationList.forEach(stage_evaluer_maitreDeStage_critere::addItem);
     }
 
     public void load_cb_echeance()

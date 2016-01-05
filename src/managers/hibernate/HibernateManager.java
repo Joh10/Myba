@@ -12,19 +12,21 @@ public abstract class HibernateManager<T>
 {
     public <U> U execute(IFunction<U> i)
     {
+        U t = null;
+
         try
         {
             Session session = HibernateUtil.getInstance().getSession();
             session.beginTransaction();
-            U t = i.execute(session);
+            t = i.execute(session);
             session.getTransaction().commit();
-            return t;
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            return null;
         }
+
+        return t;
     }
 
     protected final List<T> fetchAll(Query q)
