@@ -1,7 +1,6 @@
 package managers;
 
 import beans.Utilisateur;
-import managers.hibernate.HibernateConnector;
 import managers.hibernate.HibernateManager;
 import org.hibernate.Query;
 
@@ -12,28 +11,37 @@ public class UtilisateurManager extends HibernateManager<Utilisateur>
 {
     public List<Utilisateur> fetchAll(String role_name)
     {
-        Query q = HibernateConnector.getInstance().getSession().createQuery("from Utilisateur s");
-        List<Utilisateur> queryList = q.list();
-        List<Utilisateur> temp = new ArrayList<>();
+        return execute(se ->
+        {
+            Query q = se.createQuery("from Utilisateur s");
+            List<Utilisateur> queryList = q.list();
+            List<Utilisateur> temp = new ArrayList<>();
 
-        for(Utilisateur u : queryList)
-            if(u.getRole().getNom().equals(role_name))
-                temp.add(u);
+            for(Utilisateur u : queryList)
+                if(u.getRole().getNom().equals(role_name))
+                    temp.add(u);
 
-        return temp;
+            return temp;
+        });
     }
 
     public Utilisateur find(String identifiant, String password)
     {
-        Query q = HibernateConnector.getInstance().getSession().createQuery("from Utilisateur s where s.email = :x and s.passwordHash = :y");
-        q.setParameter("x", identifiant);
-        q.setParameter("y", password);
+        return execute(se ->
+        {
+            System.err.println(identifiant + "  " + password);
+            Query q = se.createQuery("from Utilisateur s");
+            //q.setParameter("x", identifiant);
+            //q.setParameter("y", password);
 
-        List queryList = q.list();
+            List queryList = q.list();
 
-        if (queryList != null && queryList.isEmpty()) return null;
+            queryList.forEach(System.err::println);
 
-        return (Utilisateur) queryList.get(0);
+            if (queryList != null && queryList.isEmpty()) return null;
+
+            return null;
+        });
     }
 
     @Override

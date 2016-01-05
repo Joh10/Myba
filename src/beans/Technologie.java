@@ -1,9 +1,8 @@
 package beans;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -13,8 +12,10 @@ public class Technologie implements Serializable
     private static final long serialVersionUID = 3824815621140749028L;
 
     @Id
+    @GenericGenerator(name="gen" , strategy="increment")
+    @GeneratedValue(generator="gen")
     @Column(name = "ID_TEC")
-    private int id;
+    private Integer id=null;
 
     @Column(name = "NOM")
     private String nom;
@@ -25,13 +26,11 @@ public class Technologie implements Serializable
     /**
      * Constructeur
      *
-     * @param _id      ID (identifiant) de la technologie
      * @param _nom     Le nom de la technologie
      * @param _version La version de la technologie
      */
-    public Technologie(int _id, String _nom, String _version)
+    public Technologie(String _nom, String _version)
     {
-        id = _id;
         nom = _nom;
         version = _version;
     }

@@ -2,7 +2,6 @@ package managers;
 
 
 import beans.Technologie;
-import managers.hibernate.HibernateConnector;
 import managers.hibernate.HibernateManager;
 import org.hibernate.Query;
 
@@ -12,8 +11,11 @@ public class TechnologieManager extends HibernateManager<Technologie>
 {
     public List<Technologie> fetchAll()
     {
-        Query q = HibernateConnector.getInstance().getSession().createQuery("from Technologie s");
-        return fetchAll(q);
+        return execute(se ->
+        {
+            Query q = se.createQuery("from Technologie s");
+            return fetchAll(q);
+        });
     }
 
     @Override

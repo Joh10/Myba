@@ -2,7 +2,6 @@ package managers;
 
 import beans.PropositionStage;
 import beans.Utilisateur;
-import managers.hibernate.HibernateConnector;
 import managers.hibernate.HibernateManager;
 import org.hibernate.Query;
 
@@ -19,31 +18,34 @@ public class PropositionStageManager extends HibernateManager<PropositionStage>
 	 */
     public List<PropositionStage> fetchAll(Utilisateur user, String passrole)
     {
-        if(user == null && passrole == null)
+        return execute(s ->
         {
-            Query q = HibernateConnector.getInstance().getSession().createQuery("from PropositionStage s");
-            return (List<PropositionStage>) q.list();
-        }
-        else if(passrole == null)
-        {
-            Query q = HibernateConnector.getInstance().getSession().createQuery("from PropositionStage s where s.owner.id = :id");
-            q.setParameter("id", user.getId());
-            return (List<PropositionStage>) q.list();
-        }
-        else if(user == null)
-        {
-            Query q = HibernateConnector.getInstance().getSession().createQuery("from PropositionStage s");
-            List<PropositionStage> list = q.list();
-            List<PropositionStage> t = new ArrayList<>();
+            if(user == null && passrole == null)
+            {
+                Query q = s.createQuery("from PropositionStage s");
+                return (List<PropositionStage>) q.list();
+            }
+            else if(passrole == null)
+            {
+                Query q = s.createQuery("from PropositionStage s where s.owner.id = :id");
+                q.setParameter("id", user.getId());
+                return (List<PropositionStage>) q.list();
+            }
+            else if(user == null)
+            {
+                Query q = s.createQuery("from PropositionStage s");
+                List<PropositionStage> list = q.list();
+                List<PropositionStage> t = new ArrayList<>();
 
-            for(PropositionStage s : list)
-                if(s.getOwner().getRole().getNom().equals(passrole))
-                    t.add(s);
+                for(PropositionStage sp : list)
+                    if(sp.getOwner().getRole().getNom().equals(passrole))
+                        t.add(sp);
 
-            return t;
-        }
+                return t;
+            }
 
-        return null;
+            return null;
+        });
     }
 
     @Override

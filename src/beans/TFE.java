@@ -1,5 +1,7 @@
 package beans;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +11,10 @@ import java.util.List;
 public class TFE
 {
     @Id
+    @GenericGenerator(name="gen" , strategy="increment")
+    @GeneratedValue(generator="gen")
     @Column(name = "ID_TFE")
-    private int id;
+    private Integer id=null;
 
     @Column(name = "TITRE")
     private String titre;
@@ -44,11 +48,10 @@ public class TFE
      * @param _anneeFin     L'année académique de fin du TFE
      * @param _technologies La liste des technologies liées à ce TFE
      */
-    public TFE(int _id, Utilisateur _owner, Utilisateur _promoteur, String _titre, double _pointsTotaux, int _anneeDebut, int _anneeFin, ArrayList<Technologie> _technologies)
+    public TFE(Utilisateur _owner, Utilisateur _promoteur, String _titre, double _pointsTotaux, int _anneeDebut, int _anneeFin, ArrayList<Technologie> _technologies)
     {
         utilisateur = new ArrayList<>();
 
-        id = _id;
         utilisateur.add(_owner);
         utilisateur.add(_promoteur);
         titre = _titre;

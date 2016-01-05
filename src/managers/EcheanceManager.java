@@ -4,7 +4,6 @@ import beans.Echeance;
 import beans.Stage;
 import beans.TFE;
 import beans.Utilisateur;
-import managers.hibernate.HibernateConnector;
 import managers.hibernate.HibernateManager;
 import org.hibernate.Query;
 
@@ -16,16 +15,32 @@ public class EcheanceManager extends HibernateManager<Echeance>
 {
     public List<Echeance> fetchAll(Stage stage)
     {
-        Query q = HibernateConnector.getInstance().getSession().createQuery("from Echeance s where s.stage.id = :stage");
-        q.setParameter("stage", stage.getId());
-        return fetchAll(q);
+        return execute(s ->
+        {
+            Query q = s.createQuery("from Echeance s");
+            List<Echeance> t = new ArrayList<>();
+
+            for(Object e : q.list())
+                if(((Echeance)e).getStage().contains(stage))
+                    t.add((Echeance) e);
+
+            return t;
+        });
     }
 
     public List<Echeance> fetchAll(TFE tfe)
     {
-        Query q = HibernateConnector.getInstance().getSession().createQuery("from Echeance s where s.tfe.id = :tfe");
-        q.setParameter("tfe", tfe.getId());
-        return fetchAll(q);
+        return execute(s ->
+        {
+            Query q = s.createQuery("from Echeance s");
+            List<Echeance> t = new ArrayList<>();
+
+            for(Object e : q.list())
+                if(((Echeance)e).getTfe().contains(tfe))
+                    t.add((Echeance) e);
+
+            return t;
+        });
     }
 
     /**
@@ -35,22 +50,28 @@ public class EcheanceManager extends HibernateManager<Echeance>
      */
     public List<Echeance> fetchAll(Utilisateur utilisateur)
     {
-        Query q = HibernateConnector.getInstance().getSession().createQuery("from Echeance s");
-        List<Echeance> list = q.list();
-        List<Echeance> t = new ArrayList<>();
+        return execute(s ->
+        {
+            Query q = s.createQuery("from Echeance s");
+            List<Echeance> list = q.list();
+            List<Echeance> t = new ArrayList<>();
 
-        for(Echeance e : list)
-            for(Utilisateur u : e.getUtilisateur())
+            for(Echeance e : list)
+                for(Utilisateur u : e.getUtilisateur())
                     if(u.getId() == utilisateur.getId())
                         t.add(e);
 
-        return t;
+            return t;
+        });
     }
 
     public List<Echeance> fetchAll()
     {
-        Query q = HibernateConnector.getInstance().getSession().createQuery("from Echeance s");
-        return fetchAll(q);
+        return execute(s ->
+        {
+            Query q = s.createQuery("from Echeance s");
+            return fetchAll(q);
+        });
     }
 
     @Override

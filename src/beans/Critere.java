@@ -1,9 +1,8 @@
 package beans;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -13,8 +12,10 @@ public class Critere implements Serializable
     private static final long serialVersionUID = 2079767621417345684L;
 
     @Id
+    @GenericGenerator(name="gen" , strategy="increment")
+    @GeneratedValue(generator="gen")
     @Column(name = "ID_CRI")
-    private int id;
+    private Integer id = null;
 
     @Column(name = "TYPE")
     private String type;
@@ -27,18 +28,15 @@ public class Critere implements Serializable
 
     /**
      * Constructeur
-     *
-     * @param _id      ID (identifiant) du critère d'évaluation
      * @param _nom     Nom du critère d'évaluation
      * @param _type    Type du critère (enum "tfe", "stage" or "defense")
      * @param _noteMax Note maximale de ce critère d'évaluation
      * @throws IllegalArgumentException si le type n'est ni un stage, ni un tfe, ni une défense.
      */
-    public Critere(int _id, String _nom, String _type, int _noteMax)
+    public Critere(String _nom, String _type, int _noteMax)
     {
         if (!_type.equals("tfe") && !_type.equals("stage") && !_type.equals("defense"))
             throw new IllegalArgumentException();
-        id = _id;
         nom = _nom;
         type = _type;
         noteMax = _noteMax;

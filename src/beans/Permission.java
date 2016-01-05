@@ -1,9 +1,8 @@
 package beans;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 
 /**
  * Created by Mixmania on 04-01-16 at 14:41.
@@ -14,15 +13,16 @@ import javax.persistence.Table;
 public class Permission
 {
     @Id
+    @GenericGenerator(name="gen" , strategy="increment")
+    @GeneratedValue(generator="gen")
     @Column(name = "ID_PER")
-    private int id;
+    private Integer id=null;
 
     @Column(name = "NOM")
     private String nom;
 
-    public Permission(int id, String nom)
+    public Permission(String nom)
     {
-        this.id = id;
         this.nom = nom;
     }
 

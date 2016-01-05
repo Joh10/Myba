@@ -1,7 +1,6 @@
 package managers;
 
 import beans.LieuStage;
-import managers.hibernate.HibernateConnector;
 import managers.hibernate.HibernateManager;
 import org.hibernate.Query;
 
@@ -12,8 +11,11 @@ public class LieuStageManager extends HibernateManager<LieuStage>
 {
     public List<LieuStage> fetchAll()
     {
-        Query q = HibernateConnector.getInstance().getSession().createQuery("from LieuStage s");
-        return fetchAll(q);
+        return execute(s ->
+        {
+            Query q = s.createQuery("from LieuStage s");
+            return fetchAll(q);
+        });
     }
 
     @Override

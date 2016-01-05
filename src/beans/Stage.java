@@ -1,5 +1,7 @@
 package beans;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,8 +12,10 @@ import java.util.List;
 public class Stage
 {
     @Id
+    @GenericGenerator(name="gen" , strategy="increment")
+    @GeneratedValue(generator="gen")
     @Column(name = "ID_STA")
-    private int id;
+    private Integer id=null;
 
     @Column(name = "DATEDEBUT")
     private Date dateDebut;
@@ -40,7 +44,6 @@ public class Stage
     /**
      * Constructeur
      *
-     * @param _id           ID (identifiant) du stage
      * @param _owner        L'étudiant concerné par ce stage
      * @param _superviseur  Le professeur promoteur de ce stage
      * @param _suiveur      Le maitre de stage assigné à ce stage
@@ -51,11 +54,10 @@ public class Stage
      * @param _commentaires Le commentaire professeur effectué par les professeurs
      * @param _technologies La liste des technologies utilisées durant ce stage
      */
-    public Stage(int _id, Utilisateur _owner, Utilisateur _superviseur, Utilisateur _suiveur, PropositionStage _proposition, Date _dDebut, Date _dFin, double _ptsTotaux, String _commentaires, ArrayList<Technologie> _technologies)
+    public Stage(Utilisateur _owner, Utilisateur _superviseur, Utilisateur _suiveur, PropositionStage _proposition, Date _dDebut, Date _dFin, double _ptsTotaux, String _commentaires, ArrayList<Technologie> _technologies)
     {
         utilisateur = new ArrayList<>();
 
-        id = _id;
         utilisateur.add(_owner);
         utilisateur.add(_superviseur);
         utilisateur.add(_suiveur);

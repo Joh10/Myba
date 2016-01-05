@@ -1,7 +1,6 @@
 package managers;
 
 import beans.Critere;
-import managers.hibernate.HibernateConnector;
 import managers.hibernate.HibernateManager;
 import org.hibernate.Query;
 
@@ -11,9 +10,12 @@ public class CritereManager extends HibernateManager<Critere>
 {
     public List<Critere> fetchAll(String type)
     {
-        Query q = HibernateConnector.getInstance().getSession().createQuery("from Critere s where s.type = :type");
-        q.setParameter("type", type);
-        return fetchAll(q);
+        return execute(s ->
+        {
+            Query q = s.createQuery("from Critere s where s.type = :type");
+            q.setParameter("type", type);
+            return fetchAll(q);
+        });
     }
 
     @Override

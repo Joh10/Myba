@@ -1,26 +1,21 @@
 package ui;
 
-import com.vaadin.annotations.Theme;
-import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.UI;
+import com.vaadin.ui.*;
+import ui.Connexion;
+import ui.Dashboard;
+import ui.MonCompte;
+import ui.PublicDefenses;
 
-import javax.servlet.annotation.WebServlet;
-
-@SuppressWarnings("serial")
-@Theme("valo")
+/**
+ * Created by Mixmania on 05-01-16 at 13:34.
+ *
+ */
 public class Pi_webUI extends UI
 {
-
-    @WebServlet(value = "/*", asyncSupported = true)
-    @VaadinServletConfiguration(productionMode = false, ui = Pi_webUI.class)
-    public static class Servlet extends VaadinServlet
-    {
-    }
-
-    protected void init(VaadinRequest request)
+    @Override
+    public void init(VaadinRequest request)
     {
         getPage().setTitle("HERS - Gestion des stages et TFE");
 
@@ -31,5 +26,4 @@ public class Pi_webUI extends UI
         navigator.addView("Dashboard", new Dashboard());
         navigator.addView("Account", new MonCompte());
     }
-
 }

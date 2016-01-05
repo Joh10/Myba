@@ -2,91 +2,117 @@ package managers.hibernate;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 import java.util.List;
 
 public abstract class HibernateManager<T>
 {
+    public <U> U execute(IFunction<U> i)
+    {
+        Session session = null;
+        Transaction txn;
+        try
+        {
+            SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+            session = sessionFactory.openSession();
+            txn = session.beginTransaction();
+
+            U t = i.execute(session);
+            txn.commit();
+            return t;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+        finally
+        {
+            session.flush();
+            session.close();
+        }
+
+        return null;
+    }
+
     protected final List<T> fetchAll(Query q)
     {
-        List list = q.list();
+       /* return execute(s ->
+        {*/
+            List list = q.list();
 
-        if (list != null && list.isEmpty()) return null;
+            if (list != null && list.isEmpty())
+                return null;
 
-        return (List<T>) list;
+            return (List<T>) list;
+       /* });*/
+
     }
 
     public final T find(int id)
     {
-        try (Session session = HibernateConnector.getInstance().getSession())
+        return execute(s ->
         {
-            Query query = session.createQuery("from " + getEntityClass() + " s where s.id = :id");
+            Query query = s.createQuery("from " + HibernateManager.this.getEntityClass() + " s where s.id = :id");
             query.setParameter("id", id);
 
             List queryList = query.list();
 
-            if (queryList != null && queryList.isEmpty()) return null;
+            if (queryList != null && queryList.isEmpty())
+                return null;
 
             return (T) queryList.get(0);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            return null;
-        }
+        });
     }
 
-    public final boolean create(T obj)
+    public final boolean insert(T obj)
     {
-        try (Session session = HibernateConnector.getInstance().getSession())
+        return execute(s ->
         {
-            Transaction transaction = session.beginTransaction();
-            session.save(obj);
-            transaction.commit();
-            return true;
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-        return false;
+            try
+            {
+                s.save(obj);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        });
     }
 
     public final boolean update(T obj)
     {
-        try (Session session = HibernateConnector.getInstance().getSession())
+        return execute(s ->
         {
-            session.beginTransaction();
-            session.saveOrUpdate(obj);
-            session.getTransaction().commit();
-            session.close();
-            return true;
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-        return false;
+            try
+            {
+                s.saveOrUpdate(obj);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        });
     }
 
     public final boolean delete(T obj)
     {
-        try (Session session = HibernateConnector.getInstance().getSession())
+        return execute(s ->
         {
-            Transaction t = session.beginTransaction();
-            session.delete(obj);
-            t.commit();
-            return true;
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-        return false;
+            try
+            {
+                s.delete(obj);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        });
     }
 
     protected abstract Class<?> getEntityClass();

@@ -1,5 +1,7 @@
 package beans;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.security.MessageDigest;
@@ -13,8 +15,10 @@ public class Utilisateur implements Serializable
     private static final long serialVersionUID = -2505999672679566044L;
 
     @Id
-    @Column(name = "ID_UTI")
-    private int id;
+    @GenericGenerator(name="gen" , strategy="increment")
+    @GeneratedValue(generator="gen")
+    @Column(name="ID_UTI")
+    private Integer id=null;
 
     @Column(name = "ENABLE")
     private boolean enabled;
@@ -50,7 +54,6 @@ public class Utilisateur implements Serializable
     /**
      * Constructeur
      *
-     * @param _id        ID (identifiant) de l'utilisateur
      * @param _enabled   L'état d'activation de l'utilisateur
      * @param _role      Le rôle de l'utilisateur
      * @param _email     L'adresse email de l'utilisateur
@@ -62,9 +65,8 @@ public class Utilisateur implements Serializable
      * @param _annee     L'année dans laquelle se trouve l'utilisateur (uniquement pour les étudiants)
      * @param _doublant  L'utilisateur est doublant ou non (uniquement pour les étudiants)
      */
-    public Utilisateur(int _id, boolean _enabled, Role _role, String _email, String _password, Integer _matricule, String _nom, String _prenom, String _telephone, Integer _annee, Boolean _doublant)
+    public Utilisateur(boolean _enabled, Role _role, String _email, String _password, Integer _matricule, String _nom, String _prenom, String _telephone, Integer _annee, Boolean _doublant)
     {
-        id = _id;
         enabled = _enabled;
         role = new ArrayList<>();
         role.add(_role);

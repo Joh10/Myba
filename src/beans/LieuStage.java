@@ -1,5 +1,7 @@
 package beans;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -10,8 +12,10 @@ public class LieuStage implements Serializable
     private static final long serialVersionUID = -4714026859138312539L;
 
     @Id
+    @GenericGenerator(name="gen" , strategy="increment")
+    @GeneratedValue(generator="gen")
     @Column(name = "ID_LIE")
-    private int id;
+    private Integer id=null;
 
     @Column(name = "ENTREPRISE")
     private String entreprise;

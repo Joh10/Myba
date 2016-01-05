@@ -281,9 +281,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                             Notification.show("Une erreur est survenue lors de la modification du professeur", Notification.TYPE_ERROR_MESSAGE);
                     } else
                     {
-                        Utilisateur userCreate = new Utilisateur(0, compteActif, new Role("professeur"), email, password, null, nom, prenom, tel, null, null);
+                        Utilisateur userCreate = new Utilisateur(compteActif, new Role("professeur"), email, password, null, nom, prenom, tel, null, null);
 
-                        if (user_DB.create(userCreate))
+                        if (user_DB.insert(userCreate))
                         {
                             Notification.show("Le professeur a bien été ajouté", Notification.TYPE_TRAY_NOTIFICATION);
                             form_prof.setVisible(false);
@@ -408,9 +408,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                             Notification.show("Une erreur est survenue lors de la modification de l'étudiant", Notification.TYPE_ERROR_MESSAGE);
                     } else
                     {
-                        Utilisateur userCreate = new Utilisateur(0, compteActif, role, email, password, matricule, nom, prenom, tel, annee, doublant);
+                        Utilisateur userCreate = new Utilisateur(compteActif, role, email, password, matricule, nom, prenom, tel, annee, doublant);
 
-                        if (user_DB.create(userCreate))
+                        if (user_DB.insert(userCreate))
                         {
                             Notification.show("L'étudiant a bien été ajouté", Notification.TYPE_TRAY_NOTIFICATION);
                             form_etudiant.setVisible(false);
@@ -511,9 +511,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                         Notification.show("Une erreur est survenue lors de la modification du maitre de stage", Notification.TYPE_ERROR_MESSAGE);
                 } else
                 {
-                    Utilisateur userCreate = new Utilisateur(0, compteActif, new Role("maitre_stage"), email, password, null, nom, prenom, tel, null, null);
+                    Utilisateur userCreate = new Utilisateur(compteActif, new Role("maitre_stage"), email, password, null, nom, prenom, tel, null, null);
 
-                    if (user_DB.create(userCreate))
+                    if (user_DB.insert(userCreate))
                     {
                         Notification.show("Le maitre a bien été ajouté", Notification.TYPE_TRAY_NOTIFICATION);
                         form_maitreDeStage.setVisible(false);
@@ -604,9 +604,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                         Notification.show("Une erreur est survenue lors de la modification du président de jury", Notification.TYPE_ERROR_MESSAGE);
                 } else
                 {
-                    Utilisateur userCreate = new Utilisateur(0, compteActif, new Role("president_jury"), email, password, null, nom, prenom, tel, null, null);
+                    Utilisateur userCreate = new Utilisateur(compteActif, new Role("president_jury"), email, password, null, nom, prenom, tel, null, null);
 
-                    if (user_DB.create(userCreate))
+                    if (user_DB.insert(userCreate))
                     {
                         Notification.show("Le président de jury a bien été ajouté", Notification.TYPE_TRAY_NOTIFICATION);
                         form_presidentDeJury.setVisible(false);
@@ -706,7 +706,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 {
                     LieuStage lieuStage = new LieuStage(0, currentUser, nomEntreprise, adresse, contact, tel, mail);
 
-                    if (lieuStage_DB.create(lieuStage))
+                    if (lieuStage_DB.insert(lieuStage))
                     {
                         Notification.show("Le lieu de stage a bien été ajouté", Notification.TYPE_TRAY_NOTIFICATION);
                         form_entreprise.setVisible(false);
@@ -791,9 +791,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                             Notification.show("Une erreur est survenue lors de la modification du critère d'évaluation", Notification.TYPE_ERROR_MESSAGE);
                     } else
                     {
-                        Critere critereEvaluation = new Critere(0, nom, type, Integer.parseInt(noteMax));
+                        Critere critereEvaluation = new Critere(nom, type, Integer.parseInt(noteMax));
 
-                        if (critereEvaluation_DB.create(critereEvaluation))
+                        if (critereEvaluation_DB.insert(critereEvaluation))
                         {
                             Notification.show("Le critère d'évaluation a bien été ajouté", Notification.TYPE_TRAY_NOTIFICATION);
                             form_critereEvaluation_editer.setVisible(false);
@@ -879,9 +879,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                         Notification.show("Une erreur est survenue lors de la modification de la technologie", Notification.TYPE_ERROR_MESSAGE);
                 } else
                 {
-                    Technologie technologie = new Technologie(0, nomTechnologie, versionTechnologie);
+                    Technologie technologie = new Technologie(nomTechnologie, versionTechnologie);
 
-                    if (technologie_DB.create(technologie))
+                    if (technologie_DB.insert(technologie))
                     {
                         Notification.show("La technologie a bien été ajoutée", Notification.TYPE_TRAY_NOTIFICATION);
                         form_technologie.setVisible(false);
@@ -950,8 +950,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 if (!titre.isEmpty() && promoteur != null && etudiant != null && anneeDebut > 0 && anneeFin > 0)
                 {
                     TFEManager tfe_DB = new TFEManager();
-                    TFE tfe = new TFE(0, etudiant, promoteur, titre, (double) 0, anneeDebut, anneeFin, technologies);
-                    if (tfe_DB.create(tfe))
+                    TFE tfe = new TFE(etudiant, promoteur, titre, (double) 0, anneeDebut, anneeFin, technologies);
+                    if (tfe_DB.insert(tfe))
                     {
                         Notification.show("Le TFE a bien été ajouté", Notification.TYPE_TRAY_NOTIFICATION);
                         form_TFE_ajouter.setVisible(false);
@@ -1190,8 +1190,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                     {
                         EvaluationManager evaluation_DB = new EvaluationManager();
 
-                        Evaluation evaluation = new Evaluation(0, date, currentUser, critere, tfeSelected, note, commentaire);
-                        if (evaluation_DB.create(evaluation))
+                        Evaluation evaluation = new Evaluation(date, currentUser, critere, tfeSelected, note, commentaire);
+                        if (evaluation_DB.insert(evaluation))
                         {
                             // Mise à jour de la note du TFE
                             calculPointsTFE(tfeSelected);
@@ -1242,8 +1242,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             if (presidentJury != null && date != null && !local.isEmpty())
             {
                 DefenseManager defense_DB = new DefenseManager();
-                Defense defense = new Defense(0, presidentJury, tfe, date, local);
-                if (defense_DB.create(defense))
+                Defense defense = new Defense(presidentJury, tfe, date, local);
+                if (defense_DB.insert(defense))
                 {
                     Notification.show("La défense a bien été ajoutée", Notification.TYPE_TRAY_NOTIFICATION);
                     form_TFE_defense.setVisible(false);
@@ -1374,8 +1374,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                         Notification.show("Une erreur est survenue lors de la modification de l'échéance", Notification.TYPE_ERROR_MESSAGE);
                 } else
                 {
-                    Echeance ech = new Echeance(0, currentUser, Date.from(Instant.now()), date, tfeSelected, description, null);
-                    if (echeance_DB.create(ech))
+                    Echeance ech = new Echeance(currentUser, Date.from(Instant.now()), date, tfeSelected, description, null);
+                    if (echeance_DB.insert(ech))
                     {
                         Notification.show("L'échéance a bien été ajoutée", Notification.TYPE_TRAY_NOTIFICATION);
                         form_TFE_echeance.setVisible(false);
@@ -1610,8 +1610,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                         if (note >= 0 && note <= critere.getNoteMax())
                         {
                             EvaluationManager evaluation_DB = new EvaluationManager();
-                            Evaluation evaluation = new Evaluation(0, date, currentUser, critere, stageSelected, note, commentaire);
-                            if (evaluation_DB.create(evaluation))
+                            Evaluation evaluation = new Evaluation(date, currentUser, critere, stageSelected, note, commentaire);
+                            if (evaluation_DB.insert(evaluation))
                             {
                                 // Mise à jour des points du stage
                                 calculPointsStage(stageSelected);
@@ -1665,8 +1665,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             if (presidentJury != null && date != null && !local.isEmpty())
             {
                 DefenseManager defense_DB = new DefenseManager();
-                Defense defense = new Defense(0, presidentJury, stage, date, local);
-                if (defense_DB.create(defense))
+                Defense defense = new Defense(presidentJury, stage, date, local);
+                if (defense_DB.insert(defense))
                 {
                     Notification.show("La défense a bien été ajoutée", Notification.TYPE_TRAY_NOTIFICATION);
                     form_stage_defense.setVisible(false);
@@ -1775,8 +1775,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             if (!description.isEmpty() && date != null)
             {
                 EcheanceManager echeance_DB = new EcheanceManager();
-                Echeance echeance = new Echeance(0, currentUser, Date.from(Instant.now()), date, stage, description, null);
-                if (echeance_DB.create(echeance))
+                Echeance echeance = new Echeance(currentUser, Date.from(Instant.now()), date, stage, description, null);
+                if (echeance_DB.insert(echeance))
                 {
                     Notification.show("L'échéance a bien été ajoutée", Notification.TYPE_TRAY_NOTIFICATION);
                     form_stage_echeance.setVisible(false);
@@ -1853,8 +1853,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                     LieuStage entreprise = (LieuStage) cb_PropositionStage_editer_entreprise.getValue();
                     if (entreprise != null)
                     {
-                        PropositionStage propositionStage = new PropositionStage(0, currentUser, entreprise, false, sujet, file);
-                        if (propositionStage_DB.create(propositionStage))
+                        PropositionStage propositionStage = new PropositionStage(currentUser, entreprise, false, sujet, file);
+                        if (propositionStage_DB.insert(propositionStage))
                         {
                             Notification.show("La proposition de stage a bien été ajoutée", Notification.TYPE_TRAY_NOTIFICATION);
                             form_propositionStage_editer.setVisible(false);
@@ -1956,10 +1956,10 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 if (dateDebut.before(dateFin))
                 {
                     StageManager stage_DB = new StageManager();
-                    Stage stage = new Stage(0, propositionStage.getOwner(), promoteur, maitreStage, propositionStage, dateDebut, dateFin, 0, "", technologies);
+                    Stage stage = new Stage(propositionStage.getOwner(), promoteur, maitreStage, propositionStage, dateDebut, dateFin, 0, "", technologies);
                     propositionStage.update(sujet, propositionStage.getAnnexe());
                     propositionStage.update(true);
-                    if (stage_DB.create(stage) && propositionStage_DB.update(propositionStage))
+                    if (stage_DB.insert(stage) && propositionStage_DB.update(propositionStage))
                         Notification.show("Stage validé", Notification.TYPE_TRAY_NOTIFICATION);
                     else
                         Notification.show("Une erreur est survenue lors de la validation de la proposition de stage", Notification.TYPE_ERROR_MESSAGE);
@@ -2165,8 +2165,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                     if (critere != null && note != null && note > 0 && note <= critere.getNoteMax())
                     {
                         EvaluationManager evaluation_DB = new EvaluationManager();
-                        Evaluation evaluation = new Evaluation(0, date, currentUser, critere, defenseSelected, note, commentaire);
-                        if (evaluation_DB.create(evaluation))
+                        Evaluation evaluation = new Evaluation(date, currentUser, critere, defenseSelected, note, commentaire);
+                        if (evaluation_DB.insert(evaluation))
                         {
                             // Mise à jour des points de la défense
                             if (evaluation.getStage() != null) calculPointsStage(evaluation.getStage());
@@ -2275,8 +2275,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                         Notification.show("Une erreur est survenue lors de la modification de l'échéance", Notification.TYPE_ERROR_MESSAGE);
                 } else
                 {
-                    Echeance echeance = new Echeance(0, currentUser, Date.from(Instant.now()), date, etudiants, description, file);
-                    if (echeance_DB.create(echeance))
+                    Echeance echeance = new Echeance(currentUser, Date.from(Instant.now()), date, etudiants, description, file);
+                    if (echeance_DB.insert(echeance))
                     {
                         Notification.show("L'échéance a bien été ajoutée", Notification.TYPE_TRAY_NOTIFICATION);
                         form_echeance_editer.setVisible(false);
@@ -2315,7 +2315,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             {
                 LieuStageManager lieuStage_DB = new LieuStageManager();
                 LieuStage lieuStage = new LieuStage(0, currentUser, nomEntreprise, adresse, contact, tel, mail);
-                if (lieuStage_DB.create(lieuStage))
+                if (lieuStage_DB.insert(lieuStage))
                 {
                     Notification.show("Le lieu de stage a bien été ajouté", Notification.TYPE_TRAY_NOTIFICATION);
                     form_propositionStage_etudiant_editer.setVisible(true);
@@ -2391,8 +2391,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 } else
                 {
                     LieuStage entreprise = (LieuStage) cb_PropositionStage_etudiant_editer_entreprise.getValue();
-                    PropositionStage propositionStage = new PropositionStage(0, currentUser, entreprise, false, sujet, file);
-                    if (propositionStage_DB.create(propositionStage))
+                    PropositionStage propositionStage = new PropositionStage(currentUser, entreprise, false, sujet, file);
+                    if (propositionStage_DB.insert(propositionStage))
                     {
                         Notification.show("La proposition de stage a bien été ajoutée", Notification.TYPE_TRAY_NOTIFICATION);
                         form_propositionStage_etudiant_editer.setVisible(false);
@@ -2556,8 +2556,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                         EvaluationManager evaluation_DB = new EvaluationManager();
                         StageManager stage_DB = new StageManager();
                         Stage stage = stage_DB.find((int) elementSelected);
-                        Evaluation evaluation = new Evaluation(0, date, currentUser, critere, stage, note, commentaire);
-                        if (evaluation_DB.create(evaluation))
+                        Evaluation evaluation = new Evaluation(date, currentUser, critere, stage, note, commentaire);
+                        if (evaluation_DB.insert(evaluation))
                         {
                             // Mise à jour des points de la défense
                             calculPointsStage(stage);
@@ -2700,8 +2700,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                         EvaluationManager evaluation_DB = new EvaluationManager();
                         DefenseManager defense_DB = new DefenseManager();
                         Defense defense = defense_DB.find((int) elementSelected);
-                        Evaluation evaluation = new Evaluation(0, date, currentUser, critere, defense, note, commentaire);
-                        if (evaluation_DB.create(evaluation))
+                        Evaluation evaluation = new Evaluation(date, currentUser, critere, defense, note, commentaire);
+                        if (evaluation_DB.insert(evaluation))
                         {
                             // Mise à jour des points de la défense
                             if (evaluation.getStage() != null) calculPointsStage(evaluation.getStage());

@@ -1,5 +1,7 @@
 package beans;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,8 +10,10 @@ import java.util.Date;
 public class Evaluation
 {
     @Id
+    @GenericGenerator(name="gen" , strategy="increment")
+    @GeneratedValue(generator="gen")
     @Column(name = "ID_EVA")
-    private int id;
+    private Integer id=null;
 
     @Column(name = "DATEDEFENSE")
     private Date date;
@@ -43,7 +47,6 @@ public class Evaluation
     /**
      * Constructeur (évaluation TFE)
      *
-     * @param _id          ID (identifiant) de l'évaluation
      * @param _date        La date effective de l'évaluation
      * @param _owner       L'évaluateur de cette évaluation
      * @param _critere     Le critère sur lequel se base cette évaluation
@@ -53,12 +56,12 @@ public class Evaluation
      * @throws IllegalArgumentException si le critère n'est pas de type TFE
      * @throws IllegalArgumentException si la note attribuée est supérieure à la note maximale du critère
      */
-    public Evaluation(int _id, Date _date, Utilisateur _owner, Critere _critere, TFE _tfe, double _note, String _commentaire)
+    public Evaluation(Date _date, Utilisateur _owner, Critere _critere, TFE _tfe, double _note, String _commentaire)
     {
         if (!_critere.getType().equals("tfe")) throw new IllegalArgumentException("Le critère doit concerner un TFE");
         else if (_critere.getNoteMax() < _note)
             throw new IllegalArgumentException("La note ne peut être supérieure à la note maximale du critère");
-        id = _id;
+
         date = _date;
         owner = _owner;
         critere = _critere;
@@ -82,13 +85,12 @@ public class Evaluation
      * @throws IllegalArgumentException si le critère n'est pas de type stage
      * @throws IllegalArgumentException si la note attribuée est supérieure à la note maximale du critère
      */
-    public Evaluation(int _id, Date _date, Utilisateur _owner, Critere _critere, Stage _stage, double _note, String _commentaire)
+    public Evaluation( Date _date, Utilisateur _owner, Critere _critere, Stage _stage, double _note, String _commentaire)
     {
         if (!_critere.getType().equals("stage"))
             throw new IllegalArgumentException("Le critère doit concerner un stage");
         else if (_critere.getNoteMax() < _note)
             throw new IllegalArgumentException("La note ne peut être supérieure à la note maximale du critère");
-        id = _id;
         date = _date;
         owner = _owner;
         critere = _critere;
@@ -112,13 +114,13 @@ public class Evaluation
      * @throws IllegalArgumentException si le critère n'est pas de type stage
      * @throws IllegalArgumentException si la note attribuée est supérieure à la note maximale du critère
      */
-    public Evaluation(int _id, Date _date, Utilisateur _owner, Critere _critere, Defense _defense, double _note, String _commentaire)
+    public Evaluation( Date _date, Utilisateur _owner, Critere _critere, Defense _defense, double _note, String _commentaire)
     {
         if (!_critere.getType().equals("defense"))
             throw new IllegalArgumentException("Le critère doit concerner une défense");
         else if (_critere.getNoteMax() < _note)
             throw new IllegalArgumentException("La note ne peut être supérieure à la note maximale du critère");
-        id = _id;
+
         date = _date;
         owner = _owner;
         critere = _critere;

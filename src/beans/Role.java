@@ -1,5 +1,7 @@
 package beans;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -11,8 +13,10 @@ public class Role implements Serializable
     private static final long serialVersionUID = -1900169871483409885L;
 
     @Id
+    @GenericGenerator(name="gen" , strategy="increment")
+    @GeneratedValue(generator="gen")
     @Column(name = "ID_ROL")
-    private int id;
+    private Integer id=null;
 
     @Column(name = "NOM")
     private String nom;

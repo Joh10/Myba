@@ -1,5 +1,7 @@
 package beans;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,8 +9,10 @@ import javax.persistence.*;
 public class PropositionStage
 {
     @Id
+    @GenericGenerator(name="gen" , strategy="increment")
+    @GeneratedValue(generator="gen")
     @Column(name = "ID_PRO")
-    private int id;
+    private Integer id=null;
 
     @Column(name = "VALIDE")
     private boolean valide;
@@ -39,9 +43,8 @@ public class PropositionStage
      * @param _sujet  Le sujet (temporaire) de la proposition de stage
      * @param _annexe L'adresse interne du fichier annexe
      */
-    public PropositionStage(int _id, Utilisateur _owner, LieuStage _lieu, boolean _valide, String _sujet, String _annexe)
+    public PropositionStage(Utilisateur _owner, LieuStage _lieu, boolean _valide, String _sujet, String _annexe)
     {
-        id = _id;
         owner = _owner;
         lieuStage = _lieu;
         valide = _valide;

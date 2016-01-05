@@ -1,5 +1,7 @@
 package beans;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,8 +12,10 @@ import java.util.List;
 public class Echeance
 {
     @Id
+    @GenericGenerator(name="gen" , strategy="increment")
+    @GeneratedValue(generator="gen")
     @Column(name = "ID_ECH")
-    private int id;
+    private Integer id=null;
 
     @Column(name = "DATECREATION")
     private Date dateCreation;
@@ -48,12 +52,11 @@ public class Echeance
      * @param _description  Description (détails) manuscits de l'échéance
      * @param _annexe       Lien(nom) local vers un fichier (facultatif)
      */
-    public Echeance(int _id, Utilisateur _owner, Date _dateCreation, Date _dateEcheance, ArrayList<Utilisateur> _users, String _description, String _annexe)
+    public Echeance(Utilisateur _owner, Date _dateCreation, Date _dateEcheance, ArrayList<Utilisateur> _users, String _description, String _annexe)
     {
         stage = new ArrayList<>();
         tfe = new ArrayList<>();
 
-        id = _id;
         utilisateur.add(_owner);
         dateCreation = _dateCreation;
         dateEcheance = _dateEcheance;
@@ -72,12 +75,11 @@ public class Echeance
      * @param _description  Description (détails) manuscits de l'échéance
      * @param _annexe       Lien(nom) local vers un fichier (facultatif)
      */
-    public Echeance(int _id, Utilisateur _owner, Date _dateCreation, Date _dateEcheance, TFE _tfe, String _description, String _annexe)
+    public Echeance(Utilisateur _owner, Date _dateCreation, Date _dateEcheance, TFE _tfe, String _description, String _annexe)
     {
         stage = new ArrayList<>();
         tfe = new ArrayList<>();
 
-        id = _id;
         utilisateur.add(_owner);
         dateCreation = _dateCreation;
         dateEcheance = _dateEcheance;
@@ -97,12 +99,11 @@ public class Echeance
      * @param _description  Description (détails) manuscits de l'échéance
      * @param _annexe       Lien(nom) local vers un fichier (facultatif)
      */
-    public Echeance(int _id, Utilisateur _owner, Date _dateCreation, Date _dateEcheance, Stage _stage, String _description, String _annexe)
+    public Echeance(Utilisateur _owner, Date _dateCreation, Date _dateEcheance, Stage _stage, String _description, String _annexe)
     {
         stage = new ArrayList<>();
         tfe = new ArrayList<>();
 
-        id = _id;
         utilisateur.add(_owner);
         dateCreation = _dateCreation;
         dateEcheance = _dateEcheance;

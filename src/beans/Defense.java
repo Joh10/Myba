@@ -1,5 +1,7 @@
 package beans;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,8 +10,10 @@ import java.util.Date;
 public class Defense
 {
     @Id
+    @GenericGenerator(name="gen" , strategy="increment")
+    @GeneratedValue(generator="gen")
     @Column(name = "ID_DEF")
-    private int id;
+    private Integer id=null;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "REF_UTILISATEUR")
@@ -32,15 +36,13 @@ public class Defense
     /**
      * Constructeur (type TFE)
      *
-     * @param _id            ID (identifiant) de la défense
      * @param _presidentJury Le président du jury qui est assigné à cette défense
      * @param _tfe           Le TFE dont est objet de cette défense
      * @param _date          La date à laquelle se déroule cette défense
      * @param _local         Le nom du local ou est organisée cette défense
      */
-    public Defense(int _id, Utilisateur _presidentJury, TFE _tfe, Date _date, String _local)
+    public Defense(Utilisateur _presidentJury, TFE _tfe, Date _date, String _local)
     {
-        id = _id;
         presidentJury = _presidentJury;
         stage = null;
         tfe = _tfe;
@@ -57,9 +59,8 @@ public class Defense
      * @param _date          La date à laquelle se déroule cette défense
      * @param _local         Le nom du local ou est organisée cette défense
      */
-    public Defense(int _id, Utilisateur _presidentJury, Stage _stage, Date _date, String _local)
+    public Defense(Utilisateur _presidentJury, Stage _stage, Date _date, String _local)
     {
-        id = _id;
         presidentJury = _presidentJury;
         stage = _stage;
         tfe = null;
