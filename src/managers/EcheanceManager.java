@@ -1,6 +1,9 @@
 package managers;
 
-import beans.*;
+import beans.Echeance;
+import beans.Stage;
+import beans.TFE;
+import beans.Utilisateur;
 import managers.hibernate.HibernateConnector;
 import managers.hibernate.HibernateManager;
 import org.hibernate.Query;

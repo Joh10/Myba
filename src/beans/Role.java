@@ -1,31 +1,29 @@
 package beans;
 
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "ROLETABLE")
 public class Role implements Serializable
 {
     private static final long serialVersionUID = -1900169871483409885L;
 
+    @Id
+    @Column(name = "ID_ROL")
     private int id;
-    private String nom;
-    private List<Permission> permission;
-    private List<Utilisateur> utilisateur;
 
-    /**
-     * Constructeur
-     *
-     * @param _id  ID (identifiant) du rôle
-     * @param _nom Nom du rôle
-     */
-    public Role(int _id, String _nom)
-    {
-        id = _id;
-        nom = _nom;
-        permission = new ArrayList<>();
-        utilisateur = new ArrayList<>();
-    }
+    @Column(name = "NOM")
+    private String nom;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "PERMISSIONTABLEXROLETABLE", joinColumns = @JoinColumn(name = "ID_ROL"), inverseJoinColumns = @JoinColumn(name = "ID_PER"))
+    private List<Permission> permission;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "UTILISATEURXROLETABLE", joinColumns = @JoinColumn(name = "ID_ROL"), inverseJoinColumns = @JoinColumn(name = "ID_UTI"))
+    private List<Utilisateur> utilisateur;
 
     /**
      * Constructeur (type recherche, sans identifiant)
@@ -35,6 +33,10 @@ public class Role implements Serializable
     public Role(String _nom)
     {
         nom = _nom;
+    }
+
+    public Role()
+    {
     }
 
     public int getId()
@@ -57,16 +59,6 @@ public class Role implements Serializable
         this.nom = nom;
     }
 
-    public List<Permission> getPermission()
-    {
-        return permission;
-    }
-
-    public void setPermission(List<Permission> permission)
-    {
-        this.permission = permission;
-    }
-
     public List<Utilisateur> getUtilisateur()
     {
         return utilisateur;
@@ -84,14 +76,6 @@ public class Role implements Serializable
     public boolean isAllowed(String name)
     {
         return permission.contains(name);
-    }
-
-    /**
-     * @param name nom de la permission à ajouter
-     */
-    public void addPermission(Permission name)
-    {
-        permission.add(name);
     }
 
     @Override

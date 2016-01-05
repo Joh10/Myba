@@ -1,17 +1,35 @@
 package beans;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "LIEUSTAGE")
 public class LieuStage implements Serializable
 {
     private static final long serialVersionUID = -4714026859138312539L;
 
+    @Id
+    @Column(name = "ID_LIE")
     private int id;
+
+    @Column(name = "ENTREPRISE")
     private String entreprise;
+
+    @Column(name = "ADRESSE")
     private String adresse;
+
+    @Column(name = "PERSONNECONTACT")
     private String personneContact;
+
+    @Column(name = "TELEPHONE")
     private String telephone;
+
+    @Column(name = "EMAIL")
     private String email;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "REF_UTILISATEUR")
     private Utilisateur owner;
 
     /**
@@ -36,6 +54,10 @@ public class LieuStage implements Serializable
         email = _email;
     }
 
+    public LieuStage()
+    {
+    }
+
     public int getId()
     {
         return id;
@@ -51,19 +73,9 @@ public class LieuStage implements Serializable
         return entreprise;
     }
 
-    public void setEntreprise(String entreprise)
-    {
-        this.entreprise = entreprise;
-    }
-
     public String getAdresse()
     {
         return adresse;
-    }
-
-    public void setAdresse(String adresse)
-    {
-        this.adresse = adresse;
     }
 
     public String getPersonneContact()
@@ -71,19 +83,9 @@ public class LieuStage implements Serializable
         return personneContact;
     }
 
-    public void setPersonneContact(String personneContact)
-    {
-        this.personneContact = personneContact;
-    }
-
     public String getTelephone()
     {
         return telephone;
-    }
-
-    public void setTelephone(String telephone)
-    {
-        this.telephone = telephone;
     }
 
     public String getEmail()
@@ -91,20 +93,11 @@ public class LieuStage implements Serializable
         return email;
     }
 
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
-
     public Utilisateur getOwner()
     {
         return owner;
     }
 
-    public void setOwner(Utilisateur owner)
-    {
-        this.owner = owner;
-    }
 
     public void update(String _nom, String _adresse, String _pContact, String _telephone, String _email)
     {

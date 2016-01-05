@@ -1,17 +1,43 @@
 package beans;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "EVALUATION")
 public class Evaluation
 {
+    @Id
+    @Column(name = "ID_EVA")
     private int id;
+
+    @Column(name = "DATEDEFENSE")
     private Date date;
+
+    @Column(name = "NOTE")
     private double note;
+
+    @Column(name = "COMMENTAIRE")
     private String commentaire;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "REF_TFE")
     private TFE tfe;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "REF_STAGE")
     private Stage stage;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "REF_CRITERE")
     private Critere critere;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "REF_DEFENSE")
     private Defense defense;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "REF_UTILISATEUR")
     private Utilisateur owner;
 
     /**
@@ -103,6 +129,10 @@ public class Evaluation
         commentaire = _commentaire;
     }
 
+    public Evaluation()
+    {
+    }
+
     public void update(double _note, String _commentaire)
     {
         if (critere.getNoteMax() < _note)
@@ -126,19 +156,9 @@ public class Evaluation
         return date;
     }
 
-    public void setDate(Date date)
-    {
-        this.date = date;
-    }
-
     public double getNote()
     {
         return note;
-    }
-
-    public void setNote(double note)
-    {
-        this.note = note;
     }
 
     public String getCommentaire()
@@ -146,19 +166,9 @@ public class Evaluation
         return commentaire;
     }
 
-    public void setCommentaire(String commentaire)
-    {
-        this.commentaire = commentaire;
-    }
-
     public TFE getTFE()
     {
         return tfe;
-    }
-
-    public void settFE(TFE tFE)
-    {
-        this.tfe = tFE;
     }
 
     public Stage getStage()
@@ -176,29 +186,14 @@ public class Evaluation
         return critere;
     }
 
-    public void setCritere(Critere critere)
-    {
-        this.critere = critere;
-    }
-
     public Defense getDefense()
     {
         return defense;
     }
 
-    public void setDefense(Defense defense)
-    {
-        this.defense = defense;
-    }
-
     public Utilisateur getOwner()
     {
         return owner;
-    }
-
-    public void setOwner(Utilisateur owner)
-    {
-        this.owner = owner;
     }
 
     @Override

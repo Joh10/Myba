@@ -12,8 +12,7 @@ public abstract class HibernateManager<T>
     {
         List list = q.list();
 
-        if (list != null && list.isEmpty())
-            return null;
+        if (list != null && list.isEmpty()) return null;
 
         return (List<T>) list;
     }

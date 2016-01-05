@@ -1,11 +1,13 @@
 package managers;
 
-import beans.Critere;;
+import beans.Critere;
 import managers.hibernate.HibernateConnector;
 import managers.hibernate.HibernateManager;
 import org.hibernate.Query;
 
 import java.util.List;
+
+;
 
 public class CritereManager extends HibernateManager<Critere>
 {

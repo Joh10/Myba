@@ -1,20 +1,40 @@
 package beans;
 
+import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-
+@Entity
+@Table(name = "STAGE")
 public class Stage
 {
+    @Id
+    @Column(name = "ID_STA")
     private int id;
+
+    @Column(name = "DATEDEBUT")
     private Date dateDebut;
+
+    @Column(name = "DATEFIN")
     private Date dateFin;
+
+    @Column(name = "POINTSTOTAUX")
     private double pointsTotaux;
+
+    @Column(name = "COMMENTAIRE")
     private String commentaires;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "TECHNOLOGIEXSTA", joinColumns = @JoinColumn(name = "ID_STA"), inverseJoinColumns = @JoinColumn(name = "ID_TEC"))
     private List<Technologie> technologie;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "REF_PROPOSITIONSTAGE")
     private PropositionStage propositionStage;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "UTILISATEURXSTAGE", joinColumns = @JoinColumn(name = "ID_STA"), inverseJoinColumns = @JoinColumn(name = "ID_UTI"))
     private List<Utilisateur> utilisateur;
 
     /**
@@ -47,6 +67,10 @@ public class Stage
         technologie = _technologies;
     }
 
+    public Stage()
+    {
+    }
+
     public int getId()
     {
         return id;
@@ -62,19 +86,9 @@ public class Stage
         return dateDebut;
     }
 
-    public void setDateDebut(Date dateDebut)
-    {
-        this.dateDebut = dateDebut;
-    }
-
     public Date getDateFin()
     {
         return dateFin;
-    }
-
-    public void setDateFin(Date dateFin)
-    {
-        this.dateFin = dateFin;
     }
 
     public double getPointsTotaux()
@@ -82,19 +96,10 @@ public class Stage
         return pointsTotaux;
     }
 
-    public void setPointsTotaux(double pointsTotaux)
-    {
-        this.pointsTotaux = pointsTotaux;
-    }
 
     public String getCommentaire()
     {
         return commentaires;
-    }
-
-    public void setCommentaires(String commentaires)
-    {
-        this.commentaires = commentaires;
     }
 
     public List<Technologie> getTechnologies()
@@ -112,11 +117,6 @@ public class Stage
         return propositionStage;
     }
 
-    public void setPropositionStage(PropositionStage propositionStage)
-    {
-        this.propositionStage = propositionStage;
-    }
-
     public List<Utilisateur> getUtilisateur()
     {
         return utilisateur;
@@ -129,8 +129,8 @@ public class Stage
 
     public Utilisateur getOwner()
     {
-        for(Utilisateur u : utilisateur)
-            if(u.getRole().getNom().equals("etudiant_tfe") || u.getRole().getNom().equals("etudiant_tfe_stage"))
+        for (Utilisateur u : utilisateur)
+            if (u.getRole().getNom().equals("etudiant_tfe") || u.getRole().getNom().equals("etudiant_tfe_stage"))
                 return u;
 
         return null;
@@ -138,18 +138,16 @@ public class Stage
 
     public Utilisateur getSuiveur()
     {
-        for(Utilisateur u : utilisateur)
-            if(u.getRole().getNom().equals("maitre_stage"))
-                return u;
+        for (Utilisateur u : utilisateur)
+            if (u.getRole().getNom().equals("maitre_stage")) return u;
 
         return null;
     }
 
     public Utilisateur getSuperviseur()
     {
-        for(Utilisateur u : utilisateur)
-            if(u.getRole().getNom().equals("professeur"))
-                return u;
+        for (Utilisateur u : utilisateur)
+            if (u.getRole().getNom().equals("professeur")) return u;
 
         return null;
     }
@@ -159,39 +157,35 @@ public class Stage
      * Pré	:	_superviseur, _suiveur, _dDebut, _dFin, _commentaires, _technologies sont initialisés<br>
      * Post	:	les informations de ce stage sont mises à jour.
      *
-     * @param    _superviseur    Le professeur promoteur de ce stage
-     * @param    _suiveur        Le maitre de stage assigné à ce stage
-     * @param    _dDebut            La date de début du stage
-     * @param    _dFin            La date de fin du stage
-     * @param    _commentaires    Le commentaire professeur effectué par les professeurs
-     * @param    _technologies    La liste des technologies utilisées durant ce stage
+     * @param _superviseur  Le professeur promoteur de ce stage
+     * @param _suiveur      Le maitre de stage assigné à ce stage
+     * @param _dDebut       La date de début du stage
+     * @param _dFin         La date de fin du stage
+     * @param _commentaires Le commentaire professeur effectué par les professeurs
+     * @param _technologies La liste des technologies utilisées durant ce stage
      */
     public void update(Utilisateur _superviseur, Utilisateur _suiveur, Date _dDebut, Date _dFin, String _commentaires, List<Technologie> _technologies)
     {
         //Remplace le professeur
-        if(!utilisateur.contains(_superviseur))
+        if (!utilisateur.contains(_superviseur))
         {
             Utilisateur x = null;
-            for(Utilisateur u : utilisateur)
-                if(u.getRole().getNom().equals("professeur"))
-                    x = u;
+            for (Utilisateur u : utilisateur)
+                if (u.getRole().getNom().equals("professeur")) x = u;
 
-            if(x != null)
-                utilisateur.remove(x);
+            if (x != null) utilisateur.remove(x);
 
             utilisateur.add(_superviseur);
         }
 
         //Remplace le maitre de stage
-        if(!utilisateur.contains(_suiveur))
+        if (!utilisateur.contains(_suiveur))
         {
             Utilisateur x = null;
-            for(Utilisateur u : utilisateur)
-                if(u.getRole().getNom().equals("maitre_stage"))
-                    x = u;
+            for (Utilisateur u : utilisateur)
+                if (u.getRole().getNom().equals("maitre_stage")) x = u;
 
-            if(x != null)
-                utilisateur.remove(x);
+            if (x != null) utilisateur.remove(x);
 
             utilisateur.add(_suiveur);
         }

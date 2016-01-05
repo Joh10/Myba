@@ -1,14 +1,33 @@
 package beans;
 
+import javax.persistence.*;
 
+@Entity
+@Table(name = "PROPOSITIONSTAGE")
 public class PropositionStage
 {
+    @Id
+    @Column(name = "ID_PRO")
     private int id;
+
+    @Column(name = "VALIDE")
     private boolean valide;
+
+    @Column(name = "SUJET")
     private String sujet;
+
+    @Column(name = "ANNEXE")
     private String annexe;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "REF_LIEUSTAGE")
     private LieuStage lieuStage;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "propositionStage")
     private Stage stage;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "REF_UTILISATEUR")
     private Utilisateur owner;
 
     /**
@@ -30,12 +49,16 @@ public class PropositionStage
         annexe = _annexe;
     }
 
+    public PropositionStage()
+    {
+    }
+
     /**
      * Pré	:	_sujet, _annexe sont initialisés<br>
      * Post	:	les informations de la proposition de stage sont mises à jour.
      *
-     * @param    _sujet        Le sujet (temporaire) de la proposition de stage
-     * @param    _annexe        L'adresse interne du fichier annexe
+     * @param _sujet  Le sujet (temporaire) de la proposition de stage
+     * @param _annexe L'adresse interne du fichier annexe
      */
     public void update(String _sujet, String _annexe)
     {
@@ -47,13 +70,12 @@ public class PropositionStage
      * Pré	:	_valide est initialisé<br>
      * Post	:	le statut "validé" de la proposition de stage est mis à jour.
      *
-     * @param    _valide    Si cette proposition de stage est validée ou non (transformée en stage)
+     * @param _valide Si cette proposition de stage est validée ou non (transformée en stage)
      */
     public void update(boolean _valide)
     {
         valide = _valide;
     }
-
 
     public int getId()
     {
@@ -65,24 +87,9 @@ public class PropositionStage
         this.id = id;
     }
 
-    public boolean isValide()
-    {
-        return valide;
-    }
-
-    public void setValide(boolean valide)
-    {
-        this.valide = valide;
-    }
-
     public String getSujet()
     {
         return sujet;
-    }
-
-    public void setSujet(String sujet)
-    {
-        this.sujet = sujet;
     }
 
     public String getAnnexe()
@@ -90,19 +97,9 @@ public class PropositionStage
         return annexe;
     }
 
-    public void setAnnexe(String annexe)
-    {
-        this.annexe = annexe;
-    }
-
     public LieuStage getLieuStage()
     {
         return lieuStage;
-    }
-
-    public void setLieuStage(LieuStage lieuStage)
-    {
-        this.lieuStage = lieuStage;
     }
 
     public Stage getStage()
@@ -118,11 +115,6 @@ public class PropositionStage
     public Utilisateur getOwner()
     {
         return owner;
-    }
-
-    public void setOwner(Utilisateur owner)
-    {
-        this.owner = owner;
     }
 
     @Override

@@ -1,20 +1,40 @@
 package beans;
 
+import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-
+@Entity
+@Table(name = "ECHEANCE")
 public class Echeance
 {
+    @Id
+    @Column(name = "ID_ECH")
     private int id;
+
+    @Column(name = "DATECREATION")
     private Date dateCreation;
+
+    @Column(name = "DATEECHEANCE")
     private Date dateEcheance;
+
+    @Column(name = "DESCRIPTION")
     private String description;
+
+    @Column(name = "ANNEXE")
     private String annexe;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "STAGEXECHEANCE", joinColumns = @JoinColumn(name = "ID_ECH"), inverseJoinColumns = @JoinColumn(name = "ID_STA"))
     private List<Stage> stage;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "TFEXECHEANCE", joinColumns = @JoinColumn(name = "ID_ECH"), inverseJoinColumns = @JoinColumn(name = "ID_TFE"))
     private List<TFE> tfe;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "UTILISATEURXECHEANCE", joinColumns = @JoinColumn(name = "ID_ECH"), inverseJoinColumns = @JoinColumn(name = "ID_UTI"))
     private List<Utilisateur> utilisateur;
 
     /**
@@ -91,13 +111,17 @@ public class Echeance
         annexe = _annexe;
     }
 
+    public Echeance()
+    {
+    }
+
     /**
      * Pré	:	_date, _description, _annexe sont initialisés <br>
      * Post	:	les informations de l'échéance sont mises à jour.
      *
-     * @param    _date            Date à laquelle l'échéance expire
-     * @param    _description    Description (détails) manuscits de l'échéance
-     * @param    _annexe    Note Lien(nom) local vers un fichier (facultatif)
+     * @param _date        Date à laquelle l'échéance expire
+     * @param _description Description (détails) manuscits de l'échéance
+     * @param _annexe      Note Lien(nom) local vers un fichier (facultatif)
      */
     public void update(Date _date, String _description, String _annexe)
     {
@@ -110,7 +134,7 @@ public class Echeance
      * Pré	:	_user est initialisé <br>
      * Post	:	la liste des utilisateurs concernés par cette écheance est mise à jour.
      *
-     * @param    _users        La liste des utilisateurs concernés par cette échéance
+     * @param _users La liste des utilisateurs concernés par cette échéance
      */
     public void update(ArrayList<Utilisateur> _users)
     {
@@ -132,19 +156,9 @@ public class Echeance
         return dateCreation;
     }
 
-    public void setDateCreation(Date dateCreation)
-    {
-        this.dateCreation = dateCreation;
-    }
-
     public Date getDateEcheance()
     {
         return dateEcheance;
-    }
-
-    public void setDateEcheance(Date dateEcheance)
-    {
-        this.dateEcheance = dateEcheance;
     }
 
     public String getDescription()
@@ -152,19 +166,9 @@ public class Echeance
         return description;
     }
 
-    public void setDescription(String description)
-    {
-        this.description = description;
-    }
-
     public String getAnnexe()
     {
         return annexe;
-    }
-
-    public void setAnnexe(String annexe)
-    {
-        this.annexe = annexe;
     }
 
     public List<Stage> getStage()
@@ -200,8 +204,8 @@ public class Echeance
 
     public Utilisateur getOwner()
     {
-        for(Utilisateur u : utilisateur)
-            if(!u.getRole().getNom().equals("etudiant_tfe") &&  !u.getRole().getNom().equals("etudiant_tfe_stage"))
+        for (Utilisateur u : utilisateur)
+            if (!u.getRole().getNom().equals("etudiant_tfe") && !u.getRole().getNom().equals("etudiant_tfe_stage"))
                 return u;
 
         return null;
@@ -226,7 +230,6 @@ public class Echeance
         if (stage != null ? !stage.equals(echeance.stage) : echeance.stage != null) return false;
         if (tfe != null ? !tfe.equals(echeance.tfe) : echeance.tfe != null) return false;
         return !(utilisateur != null ? !utilisateur.equals(echeance.utilisateur) : echeance.utilisateur != null);
-
     }
 
     @Override

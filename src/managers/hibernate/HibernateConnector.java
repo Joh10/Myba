@@ -6,9 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 /**
- *
  * Created by Mixmania on 04-01-16 at 16:13.
- *
  */
 
 public class HibernateConnector
@@ -25,8 +23,7 @@ public class HibernateConnector
 
     public static synchronized HibernateConnector getInstance() throws HibernateException
     {
-        if (me == null)
-            me = new HibernateConnector();
+        if (me == null) me = new HibernateConnector();
 
         return me;
     }

@@ -12,7 +12,6 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Upload.Receiver;
 import managers.*;
-import managers.EvaluationManager;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import java.io.File;

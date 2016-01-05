@@ -1,13 +1,25 @@
 package beans;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "TECHNOLOGIE")
 public class Technologie implements Serializable
 {
     private static final long serialVersionUID = 3824815621140749028L;
 
+    @Id
+    @Column(name = "ID_TEC")
     private int id;
+
+    @Column(name = "NOM")
     private String nom;
+
+    @Column(name = "VERSION")
     private String version;
 
     /**
@@ -22,6 +34,10 @@ public class Technologie implements Serializable
         id = _id;
         nom = _nom;
         version = _version;
+    }
+
+    public Technologie()
+    {
     }
 
     public void update(String _nom, String _version)
@@ -53,11 +69,6 @@ public class Technologie implements Serializable
     public String getVersion()
     {
         return version;
-    }
-
-    public void setVersion(String version)
-    {
-        this.version = version;
     }
 
     @Override

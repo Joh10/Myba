@@ -1,17 +1,29 @@
 package beans;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.List;
 
+@Entity
+@Table(name = "CRITERE")
 public class Critere implements Serializable
 {
     private static final long serialVersionUID = 2079767621417345684L;
 
+    @Id
+    @Column(name = "ID_CRI")
     private int id;
+
+    @Column(name = "TYPE")
     private String type;
+
+    @Column(name = "NOM")
     private String nom;
+
+    @Column(name = "NOTEMAX")
     private int noteMax;
-    private List<Evaluation> evaluation;
 
     /**
      * Constructeur
@@ -30,6 +42,10 @@ public class Critere implements Serializable
         nom = _nom;
         type = _type;
         noteMax = _noteMax;
+    }
+
+    public Critere()
+    {
     }
 
     public int getId()
@@ -67,21 +83,6 @@ public class Critere implements Serializable
         return noteMax;
     }
 
-    public void setNoteMax(int noteMax)
-    {
-        this.noteMax = noteMax;
-    }
-
-    public List<Evaluation> getEvaluation()
-    {
-        return evaluation;
-    }
-
-    public void setEvaluation(List<Evaluation> evaluation)
-    {
-        this.evaluation = evaluation;
-    }
-
     public void update(String _nom, String _type, int _noteMax)
     {
         if (!_type.equals("tfe") && !_type.equals("stage") && !_type.equals("defense"))
@@ -102,8 +103,7 @@ public class Critere implements Serializable
         if (id != critere.id) return false;
         if (noteMax != critere.noteMax) return false;
         if (type != null ? !type.equals(critere.type) : critere.type != null) return false;
-        if (nom != null ? !nom.equals(critere.nom) : critere.nom != null) return false;
-        return !(evaluation != null ? !evaluation.equals(critere.evaluation) : critere.evaluation != null);
+        return !(nom != null ? !nom.equals(critere.nom) : critere.nom != null);
 
     }
 
@@ -114,7 +114,6 @@ public class Critere implements Serializable
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (nom != null ? nom.hashCode() : 0);
         result = 31 * result + noteMax;
-        result = 31 * result + (evaluation != null ? evaluation.hashCode() : 0);
         return result;
     }
 

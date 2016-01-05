@@ -10,7 +10,7 @@
         <property name="connection.username">SYSTEM</property>
         <property name="connection.password">1234</property>
 
-        <mapping class="beans.CritereEvaluation"/>
+        <mapping class="beans.Critere"/>
         <mapping class="beans.Defense"/>
         <mapping class="beans.Echeance"/>
         <mapping class="beans.Evaluation"/>

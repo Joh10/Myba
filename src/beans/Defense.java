@@ -1,16 +1,32 @@
 package beans;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
-import java.util.List;
 
+@Entity
+@Table(name = "DEFENSE")
 public class Defense
 {
+    @Id
+    @Column(name = "ID_DEF")
     private int id;
+
+    @Column(name = "REF_UTILISATEUR")
     private Utilisateur presidentJury;
-    private List<Evaluation> evaluation;
+
+    @Column(name = "REF_STAGE")
     private Stage stage;
+
+    @Column(name = "REF_TFE")
     private TFE tfe;
+
+    @Column(name = "DATEDEFENSE")
     private Date date;
+
+    @Column(name = "LOCAL")
     private String local;
 
     /**
@@ -51,6 +67,10 @@ public class Defense
         local = _local;
     }
 
+    public Defense()
+    {
+    }
+
     public void update(Date _date, String _local)
     {
         date = _date;
@@ -71,21 +91,6 @@ public class Defense
     public Utilisateur getPresidentJury()
     {
         return presidentJury;
-    }
-
-    public void setPresidentJury(Utilisateur presidentJury)
-    {
-        this.presidentJury = presidentJury;
-    }
-
-    public List<Evaluation> getEvaluation()
-    {
-        return evaluation;
-    }
-
-    public void setEvaluation(List<Evaluation> evaluation)
-    {
-        this.evaluation = evaluation;
     }
 
     public Stage getStage()
@@ -113,19 +118,9 @@ public class Defense
         return date;
     }
 
-    public void setDate(Date date)
-    {
-        this.date = date;
-    }
-
     public String getLocal()
     {
         return local;
-    }
-
-    public void setLocal(String local)
-    {
-        this.local = local;
     }
 
     @Override
@@ -139,7 +134,6 @@ public class Defense
         if (id != defense.id) return false;
         if (presidentJury != null ? !presidentJury.equals(defense.presidentJury) : defense.presidentJury != null)
             return false;
-        if (evaluation != null ? !evaluation.equals(defense.evaluation) : defense.evaluation != null) return false;
         if (stage != null ? !stage.equals(defense.stage) : defense.stage != null) return false;
         if (tfe != null ? !tfe.equals(defense.tfe) : defense.tfe != null) return false;
         if (date != null ? !date.equals(defense.date) : defense.date != null) return false;
@@ -152,7 +146,6 @@ public class Defense
     {
         int result = id;
         result = 31 * result + (presidentJury != null ? presidentJury.hashCode() : 0);
-        result = 31 * result + (evaluation != null ? evaluation.hashCode() : 0);
         result = 31 * result + (stage != null ? stage.hashCode() : 0);
         result = 31 * result + (tfe != null ? tfe.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);

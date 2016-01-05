@@ -1,25 +1,50 @@
 package beans;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Entity
+@Table(name = "UTILISATEUR")
 public class Utilisateur implements Serializable
 {
     private static final long serialVersionUID = -2505999672679566044L;
 
+    @Id
+    @Column(name = "ID_UTI")
     private int id;
+
+    @Column(name = "ENABLE")
     private boolean enabled;
+
+    @Column(name = "EMAIL")
     private String email;
+
+    @Column(name = "PASSWORD")
     private String passwordHash;
+
+    @Column(name = "NOM")
     private String nom;
+
+    @Column(name = "PRENOM")
     private String prenom;
+
+    @Column(name = "TELEPHONE")
     private String telephone;
+
+    @Column(name = "MATRICULE")
     private int matricule;
+
+    @Column(name = "ANNEE")
     private int annee;
+
+    @Column(name = "DOUBLANT")
     private boolean doublant;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "UTILISATEURXROLETABLE", joinColumns = @JoinColumn(name = "ID_UTI"), inverseJoinColumns = @JoinColumn(name = "ID_ROL"))
     private List<Role> role;
 
     /**
@@ -53,6 +78,10 @@ public class Utilisateur implements Serializable
         doublant = _doublant;
     }
 
+    public Utilisateur()
+    {
+    }
+
     public int getId()
     {
         return id;
@@ -81,11 +110,6 @@ public class Utilisateur implements Serializable
     public void setEmail(String email)
     {
         this.email = email;
-    }
-
-    public String getPasswordHash()
-    {
-        return passwordHash;
     }
 
     public void setPassword(String passwordHash)

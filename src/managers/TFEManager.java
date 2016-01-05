@@ -5,7 +5,6 @@ import managers.hibernate.HibernateConnector;
 import managers.hibernate.HibernateManager;
 import org.hibernate.Query;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TFEManager extends HibernateManager<TFE>
