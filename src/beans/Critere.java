@@ -105,16 +105,6 @@ public class Critere implements Serializable
 
     }
 
-    @Override
-    public int hashCode()
-    {
-        int result = id;
-        result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + (nom != null ? nom.hashCode() : 0);
-        result = 31 * result + noteMax;
-        return result;
-    }
-
     public String toString()
     {
         return nom + " (" + noteMax + ")";

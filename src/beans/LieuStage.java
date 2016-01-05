@@ -131,19 +131,6 @@ public class LieuStage implements Serializable
 
     }
 
-    @Override
-    public int hashCode()
-    {
-        int result = id;
-        result = 31 * result + (entreprise != null ? entreprise.hashCode() : 0);
-        result = 31 * result + (adresse != null ? adresse.hashCode() : 0);
-        result = 31 * result + (personneContact != null ? personneContact.hashCode() : 0);
-        result = 31 * result + (telephone != null ? telephone.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (owner != null ? owner.hashCode() : 0);
-        return result;
-    }
-
     public String toString()
     {
         return entreprise;

@@ -30,11 +30,11 @@ public class TFE
     @Column(name = "ANNEEACADFIN")
     private int anneeAcadFin;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Technologie.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "TECHNOLOGIEXTFE", joinColumns = @JoinColumn(name = "ID_TFE"), inverseJoinColumns = @JoinColumn(name = "ID_TEC"))
     private Set<Technologie> technologie;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Utilisateur.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "UTILISATEURXTFE", joinColumns = @JoinColumn(name = "ID_TFE"), inverseJoinColumns = @JoinColumn(name = "ID_UTI"))
     private Set<Utilisateur> utilisateur;
 
@@ -183,19 +183,4 @@ public class TFE
 
     }
 
-    @Override
-    public int hashCode()
-    {
-        int result;
-        long temp;
-        result = id;
-        result = 31 * result + (titre != null ? titre.hashCode() : 0);
-        temp = Double.doubleToLongBits(pointsTotaux);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + anneeAcadDebut;
-        result = 31 * result + anneeAcadFin;
-        result = 31 * result + (technologie != null ? technologie.hashCode() : 0);
-        result = 31 * result + (utilisateur != null ? utilisateur.hashCode() : 0);
-        return result;
-    }
 }

@@ -12,32 +12,19 @@ public abstract class HibernateManager<T>
 {
     public <U> U execute(IFunction<U> i)
     {
-        Session session = null;
-        Transaction txn;
         try
         {
-            SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-            session = sessionFactory.openSession();
-            txn = session.beginTransaction();
-
+            Session session = HibernateUtil.getInstance().getSession();
+            session.beginTransaction();
             U t = i.execute(session);
-            txn.commit();
+            session.getTransaction().commit();
             return t;
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return null;
         }
-        finally
-        {
-            if (session != null)
-            {
-                session.flush();
-                session.close();
-            }
-        }
-
-        return null;
     }
 
     protected final List<T> fetchAll(Query q)

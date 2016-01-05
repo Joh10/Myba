@@ -2773,8 +2773,11 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         UtilisateurManager user_DB = new UtilisateurManager();
         List<Utilisateur> userList = user_DB.fetchAll("professeur");
 
-        for (Utilisateur user : userList)
-            tab_professeurs.addItem(new Object[]{user.getNom(), user.getPrenom(), user.getEmail(), user.getTelephone()}, user.getId());
+        if(userList != null)
+        {
+            for (Utilisateur user : userList)
+                tab_professeurs.addItem(new Object[]{user.getNom(), user.getPrenom(), user.getEmail(), user.getTelephone()}, user.getId());
+        }
 
         tab_professeurs.addValueChangeListener(event -> {
             form_prof.setVisible(false);
@@ -3981,7 +3984,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
 
                 onglets_administration.setSelectedTab(1);
                 onglets_administration.setSelectedTab(0);
-            } else onglets.getTab(onglet_administration).setVisible(false);
+            } else
+                onglets.getTab(onglet_administration).setVisible(false);
             if (currentUser.getRole().isAllowed("professor_management"))
             {
                 for (int i = 0; i < onglets_prof.getComponentCount(); i++)

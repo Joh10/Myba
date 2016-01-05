@@ -217,22 +217,4 @@ public class Evaluation
         return !(owner != null ? !owner.equals(that.owner) : that.owner != null);
 
     }
-
-    @Override
-    public int hashCode()
-    {
-        int result;
-        long temp;
-        result = id;
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        temp = Double.doubleToLongBits(note);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (commentaire != null ? commentaire.hashCode() : 0);
-        result = 31 * result + (tfe != null ? tfe.hashCode() : 0);
-        result = 31 * result + (stage != null ? stage.hashCode() : 0);
-        result = 31 * result + (critere != null ? critere.hashCode() : 0);
-        result = 31 * result + (defense != null ? defense.hashCode() : 0);
-        result = 31 * result + (owner != null ? owner.hashCode() : 0);
-        return result;
-    }
 }

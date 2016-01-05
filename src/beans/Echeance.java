@@ -27,15 +27,15 @@ public class Echeance
     @Column(name = "ANNEXE")
     private String annexe;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Stage.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "STAGEXECHEANCE", joinColumns = @JoinColumn(name = "ID_ECH"), inverseJoinColumns = @JoinColumn(name = "ID_STA"))
     private Set<Stage> stage;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = TFE.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "TFEXECHEANCE", joinColumns = @JoinColumn(name = "ID_ECH"), inverseJoinColumns = @JoinColumn(name = "ID_TFE"))
     private Set<TFE> tfe;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Utilisateur.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "UTILISATEURXECHEANCE", joinColumns = @JoinColumn(name = "ID_ECH"), inverseJoinColumns = @JoinColumn(name = "ID_UTI"))
     private Set<Utilisateur> utilisateur;
 
@@ -228,19 +228,4 @@ public class Echeance
         if (tfe != null ? !tfe.equals(echeance.tfe) : echeance.tfe != null) return false;
         return !(utilisateur != null ? !utilisateur.equals(echeance.utilisateur) : echeance.utilisateur != null);
     }
-
-    @Override
-    public int hashCode()
-    {
-        int result = id;
-        result = 31 * result + (dateCreation != null ? dateCreation.hashCode() : 0);
-        result = 31 * result + (dateEcheance != null ? dateEcheance.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (annexe != null ? annexe.hashCode() : 0);
-        result = 31 * result + (stage != null ? stage.hashCode() : 0);
-        result = 31 * result + (tfe != null ? tfe.hashCode() : 0);
-        result = 31 * result + (utilisateur != null ? utilisateur.hashCode() : 0);
-        return result;
-    }
-
 }

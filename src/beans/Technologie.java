@@ -84,15 +84,6 @@ public class Technologie implements Serializable
 
     }
 
-    @Override
-    public int hashCode()
-    {
-        int result = id;
-        result = 31 * result + (nom != null ? nom.hashCode() : 0);
-        result = 31 * result + (version != null ? version.hashCode() : 0);
-        return result;
-    }
-
     public String toString()
     {
         if (version.length() > 0) return nom + " (" + version + ")";

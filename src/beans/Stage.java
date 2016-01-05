@@ -27,7 +27,7 @@ public class Stage
     @Column(name = "COMMENTAIRE")
     private String commentaires;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Technologie.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "TECHNOLOGIEXSTA", joinColumns = @JoinColumn(name = "ID_STA"), inverseJoinColumns = @JoinColumn(name = "ID_TEC"))
     private Set<Technologie> technologie;
 
@@ -35,7 +35,7 @@ public class Stage
     @JoinColumn(name = "REF_PROPOSITIONSTAGE")
     private PropositionStage propositionStage;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Utilisateur.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "UTILISATEURXSTAGE", joinColumns = @JoinColumn(name = "ID_STA"), inverseJoinColumns = @JoinColumn(name = "ID_UTI"))
     private Set<Utilisateur> utilisateur;
 
@@ -225,22 +225,5 @@ public class Stage
             return false;
         return !(utilisateur != null ? !utilisateur.equals(stage.utilisateur) : stage.utilisateur != null);
 
-    }
-
-    @Override
-    public int hashCode()
-    {
-        int result;
-        long temp;
-        result = id;
-        result = 31 * result + (dateDebut != null ? dateDebut.hashCode() : 0);
-        result = 31 * result + (dateFin != null ? dateFin.hashCode() : 0);
-        temp = Double.doubleToLongBits(pointsTotaux);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (commentaires != null ? commentaires.hashCode() : 0);
-        result = 31 * result + (technologie != null ? technologie.hashCode() : 0);
-        result = 31 * result + (propositionStage != null ? propositionStage.hashCode() : 0);
-        result = 31 * result + (utilisateur != null ? utilisateur.hashCode() : 0);
-        return result;
     }
 }

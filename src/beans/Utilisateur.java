@@ -1,5 +1,6 @@
 package beans;
 
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -49,7 +50,7 @@ public class Utilisateur implements Serializable
     @Column(name = "DOUBLANT")
     private boolean doublant;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "UTILISATEURXROLETABLE", joinColumns = @JoinColumn(name = "ID_UTI"), inverseJoinColumns = @JoinColumn(name = "ID_ROL"))
     private Set<Role> role;
 
@@ -210,6 +211,7 @@ public class Utilisateur implements Serializable
 
     public Role getRole()
     {
+        Hibernate.initialize(this.role);
         return role.stream().findFirst().get();
     }
 
@@ -250,22 +252,6 @@ public class Utilisateur implements Serializable
         if (telephone != null ? !telephone.equals(that.telephone) : that.telephone != null) return false;
         return !(role != null ? !role.equals(that.role) : that.role != null);
 
-    }
-
-    @Override
-    public int hashCode()
-    {
-        int result = id;
-        result = 31 * result + (enabled ? 1 : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (passwordHash != null ? passwordHash.hashCode() : 0);
-        result = 31 * result + (nom != null ? nom.hashCode() : 0);
-        result = 31 * result + (prenom != null ? prenom.hashCode() : 0);
-        result = 31 * result + (telephone != null ? telephone.hashCode() : 0);
-        result = 31 * result + annee;
-        result = 31 * result + (doublant ? 1 : 0);
-        result = 31 * result + (role != null ? role.hashCode() : 0);
-        return result;
     }
 
     public String toString()

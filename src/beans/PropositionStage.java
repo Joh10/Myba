@@ -137,17 +137,4 @@ public class PropositionStage
         return !(owner != null ? !owner.equals(that.owner) : that.owner != null);
 
     }
-
-    @Override
-    public int hashCode()
-    {
-        int result = id;
-        result = 31 * result + (valide ? 1 : 0);
-        result = 31 * result + (sujet != null ? sujet.hashCode() : 0);
-        result = 31 * result + (annexe != null ? annexe.hashCode() : 0);
-        result = 31 * result + (lieuStage != null ? lieuStage.hashCode() : 0);
-        result = 31 * result + (stage != null ? stage.hashCode() : 0);
-        result = 31 * result + (owner != null ? owner.hashCode() : 0);
-        return result;
-    }
 }

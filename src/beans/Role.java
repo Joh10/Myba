@@ -22,11 +22,11 @@ public class Role implements Serializable
     @Column(name = "NOM")
     private String nom;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Permission.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "PERMISSIONTABLEXROLETABLE", joinColumns = @JoinColumn(name = "ID_ROL"), inverseJoinColumns = @JoinColumn(name = "ID_PER"))
     private Set<Permission> permission;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Utilisateur.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "UTILISATEURXROLETABLE", joinColumns = @JoinColumn(name = "ID_ROL"), inverseJoinColumns = @JoinColumn(name = "ID_UTI"))
     private Set<Utilisateur> utilisateur;
 
@@ -96,15 +96,5 @@ public class Role implements Serializable
         if (permission != null ? !permission.equals(role.permission) : role.permission != null) return false;
         return !(utilisateur != null ? !utilisateur.equals(role.utilisateur) : role.utilisateur != null);
 
-    }
-
-    @Override
-    public int hashCode()
-    {
-        int result = id;
-        result = 31 * result + (nom != null ? nom.hashCode() : 0);
-        result = 31 * result + (permission != null ? permission.hashCode() : 0);
-        result = 31 * result + (utilisateur != null ? utilisateur.hashCode() : 0);
-        return result;
     }
 }

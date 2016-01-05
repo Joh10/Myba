@@ -141,16 +141,4 @@ public class Defense
         return !(local != null ? !local.equals(defense.local) : defense.local != null);
 
     }
-
-    @Override
-    public int hashCode()
-    {
-        int result = id;
-        result = 31 * result + (presidentJury != null ? presidentJury.hashCode() : 0);
-        result = 31 * result + (stage != null ? stage.hashCode() : 0);
-        result = 31 * result + (tfe != null ? tfe.hashCode() : 0);
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + (local != null ? local.hashCode() : 0);
-        return result;
-    }
 }
