@@ -59,8 +59,10 @@ public abstract class HibernateManager<T>
     {
         try (Session session = HibernateConnector.getInstance().getSession())
         {
+            session.beginTransaction();
             session.saveOrUpdate(obj);
-            session.flush();
+            session.getTransaction().commit();
+            session.close();
             return true;
         }
         catch (Exception e)

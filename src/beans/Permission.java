@@ -7,7 +7,6 @@ import javax.persistence.Table;
 
 /**
  * Created by Mixmania on 04-01-16 at 14:41.
- *
  */
 
 @Entity
@@ -18,7 +17,7 @@ public class Permission
     @Column(name = "ID_PER")
     private int id;
 
-    @Column(name ="NOM")
+    @Column(name = "NOM")
     private String nom;
 
     public Permission(int id, String nom)

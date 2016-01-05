@@ -78,7 +78,16 @@ public class MonCompte extends MonCompte_design implements View
                 {
                     UtilisateurManager user_DB = new UtilisateurManager();
                     Utilisateur user = user_DB.find(currentUser.getId());
-                    user.update(true, mail, user.getMatricule(), user.getNom(), user.getPrenom(), tel, user.getAnnee(), user.isDoublant());
+
+                    user.setEnabled(true);
+                    user.setEmail(mail);
+                    user.setMatricule(user.getMatricule());
+                    user.setNom(user.getNom());
+                    user.setPrenom(user.getPrenom());
+                    user.setTelephone(tel);
+                    user.setAnnee(user.getAnnee());
+                    user.setDoublant(user.isDoublant());
+
                     if (mdpNouveau.length() > 0) user.setPassword(mdpNouveau);
                     if (user_DB.update(user))
                     {

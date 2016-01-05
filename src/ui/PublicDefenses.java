@@ -62,7 +62,7 @@ public class PublicDefenses extends PublicDefenses_design implements View
         for (Defense defense : defenseList)
         {
             Stage stage = defense.getStage();
-            TFE tfe = defense.getTFE();
+            TFE tfe = defense.getTfe();
             String etudiant = "";
             String sujet = "";
             String type = "";
@@ -73,7 +73,7 @@ public class PublicDefenses extends PublicDefenses_design implements View
                 type = "TFE";
             } else if (stage != null)
             {
-                sujet = stage.getProposition().getSubject();
+                sujet = stage.getPropositionStage().getSujet();
                 etudiant = stage.getOwner().toString();
                 type = "Stage";
             }
@@ -95,7 +95,7 @@ public class PublicDefenses extends PublicDefenses_design implements View
             DefenseManager defense_DB = new DefenseManager();
             Defense defense = defense_DB.find((int) elementSelected);
             Stage stage = defense.getStage();
-            TFE tfe = defense.getTFE();
+            TFE tfe = defense.getTfe();
             List<Technologie> technologies = null;
             if (tfe != null)
             {

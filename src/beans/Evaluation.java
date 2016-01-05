@@ -1,62 +1,36 @@
 package beans;
 
-import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table(name = "EVALUATION")
 public class Evaluation
 {
-    @Id
-    @Column(name = "id_Eva")
     private int id;
-
-    @Column(name = "dateDefense")
     private Date date;
-
-    @OneToOne
-    @JoinColumn(name="REF_UTILISATEUR")
-    private Utilisateur owner;
-
-    @OneToOne
-    @JoinColumn(name="REF_CRITERE")
-    private CritereEvaluation critere;
-
-    @OneToOne
-    @JoinColumn(name="REF_TFE")
-    private TFE tfe;
-
-    @OneToOne
-    @JoinColumn(name="REF_STAGE")
-    private Stage stage;
-
-    @OneToOne
-    @JoinColumn(name="REF_DEFENSE")
-    private Defense defense;
-
-    @Column(name = "note")
     private double note;
-
-    @Column(name = "commentaire")
     private String commentaire;
+    private TFE tfe;
+    private Stage stage;
+    private Critere critere;
+    private Defense defense;
+    private Utilisateur owner;
 
     /**
      * Constructeur (évaluation TFE)
      *
+     * @param _id          ID (identifiant) de l'évaluation
+     * @param _date        La date effective de l'évaluation
+     * @param _owner       L'évaluateur de cette évaluation
+     * @param _critere     Le critère sur lequel se base cette évaluation
+     * @param _tfe         Le TFE évalué
+     * @param _note        La note attribuée à cette évaluation
+     * @param _commentaire Le commentaire assigné à cette évaluation
      * @throws IllegalArgumentException si le critère n'est pas de type TFE
      * @throws IllegalArgumentException si la note attribuée est supérieure à la note maximale du critère
-     * @param    _id            ID (identifiant) de l'évaluation
-     * @param    _date        La date effective de l'évaluation
-     * @param    _owner        L'évaluateur de cette évaluation
-     * @param    _critere    Le critère sur lequel se base cette évaluation
-     * @param    _tfe        Le TFE évalué
-     * @param    _note        La note attribuée à cette évaluation
-     * @param    _commentaire    Le commentaire assigné à cette évaluation
      */
-    public Evaluation(int _id, Date _date, Utilisateur _owner, CritereEvaluation _critere, TFE _tfe, double _note, String _commentaire)
+    public Evaluation(int _id, Date _date, Utilisateur _owner, Critere _critere, TFE _tfe, double _note, String _commentaire)
     {
         if (!_critere.getType().equals("tfe")) throw new IllegalArgumentException("Le critère doit concerner un TFE");
-        else if (_critere.getNote() < _note)
+        else if (_critere.getNoteMax() < _note)
             throw new IllegalArgumentException("La note ne peut être supérieure à la note maximale du critère");
         id = _id;
         date = _date;
@@ -72,21 +46,21 @@ public class Evaluation
     /**
      * Constructeur (évaluation stage)
      *
+     * @param _id          ID (identifiant) de l'évaluation
+     * @param _date        La date effective de l'évaluation
+     * @param _owner       L'évaluateur de cette évaluation
+     * @param _critere     Le critère sur lequel se base cette évaluation
+     * @param _stage       Le stage évalué
+     * @param _note        La note attribuée à cette évaluation
+     * @param _commentaire Le commentaire assigné à cette évaluation
      * @throws IllegalArgumentException si le critère n'est pas de type stage
      * @throws IllegalArgumentException si la note attribuée est supérieure à la note maximale du critère
-     * @param    _id            ID (identifiant) de l'évaluation
-     * @param    _date        La date effective de l'évaluation
-     * @param    _owner        L'évaluateur de cette évaluation
-     * @param    _critere    Le critère sur lequel se base cette évaluation
-     * @param    _stage        Le stage évalué
-     * @param    _note        La note attribuée à cette évaluation
-     * @param    _commentaire    Le commentaire assigné à cette évaluation
      */
-    public Evaluation(int _id, Date _date, Utilisateur _owner, CritereEvaluation _critere, Stage _stage, double _note, String _commentaire)
+    public Evaluation(int _id, Date _date, Utilisateur _owner, Critere _critere, Stage _stage, double _note, String _commentaire)
     {
         if (!_critere.getType().equals("stage"))
             throw new IllegalArgumentException("Le critère doit concerner un stage");
-        else if (_critere.getNote() < _note)
+        else if (_critere.getNoteMax() < _note)
             throw new IllegalArgumentException("La note ne peut être supérieure à la note maximale du critère");
         id = _id;
         date = _date;
@@ -102,21 +76,21 @@ public class Evaluation
     /**
      * Constructeur (évaluation défense)
      *
+     * @param _id          ID (identifiant) de l'évaluation
+     * @param _date        La date effective de l'évaluation
+     * @param _owner       L'évaluateur de cette évaluation
+     * @param _critere     Le critère sur lequel se base cette évaluation
+     * @param _defense     La défense qui a menée à cette évaluation
+     * @param _note        La note attribuée à cette évaluation
+     * @param _commentaire Le commentaire assigné à cette évaluation
      * @throws IllegalArgumentException si le critère n'est pas de type stage
      * @throws IllegalArgumentException si la note attribuée est supérieure à la note maximale du critère
-     * @param    _id            ID (identifiant) de l'évaluation
-     * @param    _date        La date effective de l'évaluation
-     * @param    _owner        L'évaluateur de cette évaluation
-     * @param    _critere    Le critère sur lequel se base cette évaluation
-     * @param    _defense    La défense qui a menée à cette évaluation
-     * @param    _note        La note attribuée à cette évaluation
-     * @param    _commentaire    Le commentaire assigné à cette évaluation
      */
-    public Evaluation(int _id, Date _date, Utilisateur _owner, CritereEvaluation _critere, Defense _defense, double _note, String _commentaire)
+    public Evaluation(int _id, Date _date, Utilisateur _owner, Critere _critere, Defense _defense, double _note, String _commentaire)
     {
         if (!_critere.getType().equals("defense"))
             throw new IllegalArgumentException("Le critère doit concerner une défense");
-        else if (_critere.getNote() < _note)
+        else if (_critere.getNoteMax() < _note)
             throw new IllegalArgumentException("La note ne peut être supérieure à la note maximale du critère");
         id = _id;
         date = _date;
@@ -129,106 +103,139 @@ public class Evaluation
         commentaire = _commentaire;
     }
 
-    public Evaluation()
-    {
-    }
-
-    /**
-     * Pré	:	_note, _commentaire sont initialisés <br>
-     * Post	:	les informations de l'évaluation sont mises à jour.
-     *
-     * @throws IllegalArgumentException si la note attribuée est supérieure à la note maximale du critère
-     * @param    _note            La note attribuée à cette évaluation
-     * @param    _commentaire    Le commentaire assigné à cette évaluation
-     */
     public void update(double _note, String _commentaire)
     {
-        if (critere.getNote() < _note)
+        if (critere.getNoteMax() < _note)
             throw new IllegalArgumentException("La note ne peut être supérieure à la note maximale de son critère");
         note = _note;
         commentaire = _commentaire;
     }
 
-    /**
-     * @return l'identifiant de l'évaluation
-     */
     public int getId()
     {
         return id;
     }
 
-    /**
-     * Pré	:	_id est initialisé<br>
-     * Post :	l'ID du critère d'évaluation est modifié par _id
-     *
-     * @param    _id    L'identifiant du critère d'évaluation
-     */
-    public void setId(int _id)
+    public void setId(int id)
     {
-        id = _id;
+        this.id = id;
     }
 
-    /**
-     * @return la date laquelle l'évaluation a été effectuée
-     */
     public Date getDate()
     {
         return date;
     }
 
-    /**
-     * @return l'évaluateur qui a enregistré cette évaluation
-     */
-    public Utilisateur getOwner()
+    public void setDate(Date date)
     {
-        return owner;
+        this.date = date;
     }
 
-    /**
-     * @return le TFE concerné par cette évaluation, s'il s'agit d'un TFE. Sinon, null
-     */
-    public TFE getTFE()
-    {
-        return tfe;
-    }
-
-    /**
-     * @return le stage concerné par cette évaluation, s'il s'agit d'un stage. Sinon, null
-     */
-    public Stage getStage()
-    {
-        return stage;
-    }
-
-    /**
-     * @return la défense ayant mené à cette évaluation. Si aucune défense n'a été associée, null
-     */
-    public Defense getDefense()
-    {
-        return defense;
-    }
-
-    /**
-     * @return le critère sur laquelle cette évaluation repose
-     */
-    public CritereEvaluation getCritere()
-    {
-        return critere;
-    }
-
-    /**
-     * @return la note attribuée à cette évaluation
-     */
     public double getNote()
     {
         return note;
     }
 
-    /**
-     * @return le commentaire attribué à cette évaluation
-     */
+    public void setNote(double note)
+    {
+        this.note = note;
+    }
+
     public String getCommentaire()
     {
         return commentaire;
+    }
+
+    public void setCommentaire(String commentaire)
+    {
+        this.commentaire = commentaire;
+    }
+
+    public TFE getTFE()
+    {
+        return tfe;
+    }
+
+    public void settFE(TFE tFE)
+    {
+        this.tfe = tFE;
+    }
+
+    public Stage getStage()
+    {
+        return stage;
+    }
+
+    public void setStage(Stage stage)
+    {
+        this.stage = stage;
+    }
+
+    public Critere getCritere()
+    {
+        return critere;
+    }
+
+    public void setCritere(Critere critere)
+    {
+        this.critere = critere;
+    }
+
+    public Defense getDefense()
+    {
+        return defense;
+    }
+
+    public void setDefense(Defense defense)
+    {
+        this.defense = defense;
+    }
+
+    public Utilisateur getOwner()
+    {
+        return owner;
+    }
+
+    public void setOwner(Utilisateur owner)
+    {
+        this.owner = owner;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (!(o instanceof Evaluation)) return false;
+
+        Evaluation that = (Evaluation) o;
+
+        if (id != that.id) return false;
+        if (Double.compare(that.note, note) != 0) return false;
+        if (date != null ? !date.equals(that.date) : that.date != null) return false;
+        if (commentaire != null ? !commentaire.equals(that.commentaire) : that.commentaire != null) return false;
+        if (tfe != null ? !tfe.equals(that.tfe) : that.tfe != null) return false;
+        if (stage != null ? !stage.equals(that.stage) : that.stage != null) return false;
+        if (critere != null ? !critere.equals(that.critere) : that.critere != null) return false;
+        if (defense != null ? !defense.equals(that.defense) : that.defense != null) return false;
+        return !(owner != null ? !owner.equals(that.owner) : that.owner != null);
+
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result;
+        long temp;
+        result = id;
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        temp = Double.doubleToLongBits(note);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (commentaire != null ? commentaire.hashCode() : 0);
+        result = 31 * result + (tfe != null ? tfe.hashCode() : 0);
+        result = 31 * result + (stage != null ? stage.hashCode() : 0);
+        result = 31 * result + (critere != null ? critere.hashCode() : 0);
+        result = 31 * result + (defense != null ? defense.hashCode() : 0);
+        result = 31 * result + (owner != null ? owner.hashCode() : 0);
+        return result;
     }
 }

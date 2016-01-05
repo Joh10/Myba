@@ -263,7 +263,13 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                     if (modification)
                     {
                         Utilisateur user = user_DB.find((int) elementSelected);
-                        user.update(compteActif, email, null, nom, prenom, tel, null, null);
+
+                        user.setEnabled(compteActif);
+                        user.setEmail(email);
+                        user.setNom(nom);
+                        user.setPrenom(prenom);
+                        user.setTelephone(tel);
+
                         if (!password.isEmpty()) user.setPassword(password);
 
                         if (user_DB.update(user))
@@ -381,7 +387,16 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                     if (modification)
                     {
                         Utilisateur user = user_DB.find((int) elementSelected);
-                        user.update(compteActif, email, matricule, nom, prenom, tel, annee, doublant);
+
+                        user.setEnabled(compteActif);
+                        user.setEmail(email);
+                        user.setMatricule(matricule);
+                        user.setNom(nom);
+                        user.setPrenom(prenom);
+                        user.setTelephone(tel);
+                        user.setAnnee(annee);
+                        user.setDoublant(doublant);
+
                         if (!password.isEmpty()) user.setPassword(password);
                         user.setRole(role);
                         if (user_DB.update(user))
@@ -656,9 +671,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             modification = true;
             LieuStageManager lieuStage_DB = new LieuStageManager();
             LieuStage lieuStage = lieuStage_DB.find(Integer.parseInt(elementSelected.toString()));
-            tf_entreprise_nom.setValue(lieuStage.getNom());
+            tf_entreprise_nom.setValue(lieuStage.getEntreprise());
             ta_entreprise_adresse.setValue(lieuStage.getAdresse());
-            tf_entreprise_personneDeContact.setValue(lieuStage.getContact());
+            tf_entreprise_personneDeContact.setValue(lieuStage.getPersonneContact());
             tf_entreprise_telephone.setValue(lieuStage.getTelephone());
             tf_entreprise_adresseMail.setValue(lieuStage.getEmail());
             button_entreprise_valider.setClickShortcut(KeyCode.ENTER);
@@ -743,10 +758,10 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         // Modifier un critère d'évaluation
         modifier6.addClickListener(event -> {
             modification = true;
-            CritereEvaluationManager critereEvaluation_DB = new CritereEvaluationManager();
-            CritereEvaluation critereEvaluation = critereEvaluation_DB.find(Integer.parseInt(elementSelected.toString()));
+            CritereManager critereEvaluation_DB = new CritereManager();
+            Critere critereEvaluation = critereEvaluation_DB.find(Integer.parseInt(elementSelected.toString()));
             tf_critereEvaluation_nom.setValue(critereEvaluation.getNom());
-            tf_critereEvaluation_noteMax.setValue(((Integer) critereEvaluation.getNote()).toString());
+            tf_critereEvaluation_noteMax.setValue(((Integer) critereEvaluation.getNoteMax()).toString());
             cb_critereEvaluation_type.select(critereEvaluation.getType());
             button_critereEvaluation_valider.setClickShortcut(KeyCode.ENTER);
             form_critereEvaluation_editer.setVisible(true);
@@ -761,10 +776,10 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 String type = typeCB.toString();
                 if (!nom.isEmpty() && !noteMax.isEmpty() && !type.isEmpty())
                 {
-                    CritereEvaluationManager critereEvaluation_DB = new CritereEvaluationManager();
+                    CritereManager critereEvaluation_DB = new CritereManager();
                     if (modification)
                     {
-                        CritereEvaluation critereEvaluation = critereEvaluation_DB.find((int) elementSelected);
+                        Critere critereEvaluation = critereEvaluation_DB.find((int) elementSelected);
                         critereEvaluation.update(nom, type, Integer.parseInt(noteMax));
 
                         if (critereEvaluation_DB.update(critereEvaluation))
@@ -777,7 +792,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                             Notification.show("Une erreur est survenue lors de la modification du critère d'évaluation", Notification.TYPE_ERROR_MESSAGE);
                     } else
                     {
-                        CritereEvaluation critereEvaluation = new CritereEvaluation(0, nom, type, Integer.parseInt(noteMax));
+                        Critere critereEvaluation = new Critere(0, nom, type, Integer.parseInt(noteMax));
 
                         if (critereEvaluation_DB.create(critereEvaluation))
                         {
@@ -809,8 +824,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             ConfirmDialog.show((UI) getParent(), "Veuillez confirmer:", "Etes-vous certain de vouloir supprimer ?", "Oui", "Non", dialog -> {
                 if (dialog.isConfirmed())
                 {
-                    CritereEvaluationManager critereEvaluation_DB = new CritereEvaluationManager();
-                    CritereEvaluation critereEvaluation = critereEvaluation_DB.find((int) elementSelected);
+                    CritereManager critereEvaluation_DB = new CritereManager();
+                    Critere critereEvaluation = critereEvaluation_DB.find((int) elementSelected);
                     if (critereEvaluation_DB.delete(critereEvaluation))
                     {
                         elementSelected = null;
@@ -966,7 +981,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             {
                 TFEManager tfe_DB = new TFEManager();
                 TFE tfe = tfe_DB.find((int) elementSelected);
-                tfe.update(promoteur, titre, tfe.getPoints(), anneeDebut, anneeFin, technologies);
+                tfe.update(promoteur, titre, tfe.getPointsTotaux(), anneeDebut, anneeFin, technologies);
                 if (tfe_DB.update(tfe))
                 {
                     Notification.show("Le TFE a bien été modifié", Notification.TYPE_TRAY_NOTIFICATION);
@@ -998,8 +1013,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             TFEManager tfe_DB = new TFEManager();
             TFE tfe = tfe_DB.find(Integer.parseInt(elementSelected.toString()));
             tf_tfe_modifier_titre.setValue(tfe.getTitre());
-            tf_tfe_modifier_anneeDebut.setValue(Integer.toString(tfe.getAnneeDebut()));
-            tf_tfe_modifier_anneeFin.setValue(Integer.toString(tfe.getAnneeFin()));
+            tf_tfe_modifier_anneeDebut.setValue(Integer.toString(tfe.getAnneeAcadDebut()));
+            tf_tfe_modifier_anneeFin.setValue(Integer.toString(tfe.getAnneeAcadFin()));
             cb_tfe_modifier_promoteur.setValue(tfe.getPromoteur());
             HashSet<Technologie> preselected = new HashSet<>(tfe.getTechnologies());
             tc_tfe_modifier_technologie.setValue(preselected);
@@ -1100,7 +1115,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         button_modifier_evaluationTFE.addClickListener(event -> {
             modification = true;
             EvaluationManager evaluation_DB = new EvaluationManager();
-            beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+            Evaluation evaluation = evaluation_DB.find((int) elementSelected);
             tfe_evaluer_critere.clear();
             tfe_evaluer_critere.setVisible(false);
             tfe_evaluer_note.setValue(((Double) evaluation.getNote()).toString());
@@ -1115,7 +1130,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 if (dialog.isConfirmed())
                 {
                     EvaluationManager evaluation_DB = new EvaluationManager();
-                    beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+                    Evaluation evaluation = evaluation_DB.find((int) elementSelected);
                     if (evaluation_DB.delete(evaluation))
                     {
                         // Mise à jour des points du TFE
@@ -1136,7 +1151,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         button_tfe_evaluer_valider.addClickListener(event -> {
             try
             {
-                CritereEvaluation critere = (CritereEvaluation) tfe_evaluer_critere.getValue();
+                Critere critere = (Critere) tfe_evaluer_critere.getValue();
                 Double note = Double.parseDouble(tfe_evaluer_note.getValue());
                 String commentaire = "";
                 commentaire += tfe_evaluer_commentaire.getValue();
@@ -1145,9 +1160,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 {
                     EvaluationManager evaluation_DB = new EvaluationManager();
 
-                    beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+                    Evaluation evaluation = evaluation_DB.find((int) elementSelected);
 
-                    if (note > 0 && note <= evaluation.getCritere().getNote())
+                    if (note > 0 && note <= evaluation.getCritere().getNoteMax())
                     {
                         evaluation.update(note, commentaire);
                         if (evaluation_DB.update(evaluation))
@@ -1163,7 +1178,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                             Notification.show("Une erreur est survenue lors de la modification de l'évaluation", Notification.TYPE_ERROR_MESSAGE);
                     } else
                     {
-                        if (note > critere.getNote())
+                        if (note > critere.getNoteMax())
                             Notification.show("La note ne peut pas dépasser la note maximale du critère", Notification.TYPE_WARNING_MESSAGE);
                         else if (note < 0)
                             Notification.show("La note ne peut pas être nulle", Notification.TYPE_WARNING_MESSAGE);
@@ -1172,11 +1187,11 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                     }
                 } else
                 {
-                    if (critere != null && note != null && note > 0 && note <= critere.getNote())
+                    if (critere != null && note != null && note > 0 && note <= critere.getNoteMax())
                     {
                         EvaluationManager evaluation_DB = new EvaluationManager();
 
-                        beans.Evaluation evaluation = new beans.Evaluation(0, date, currentUser, critere, tfeSelected, note, commentaire);
+                        Evaluation evaluation = new Evaluation(0, date, currentUser, critere, tfeSelected, note, commentaire);
                         if (evaluation_DB.create(evaluation))
                         {
                             // Mise à jour de la note du TFE
@@ -1188,7 +1203,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                             button_tfe_evaluer_valider.removeClickShortcut();
                         } else
                             Notification.show("Une erreur est survenue lors de l'ajout de l'évaluation", Notification.TYPE_ERROR_MESSAGE);
-                    } else if (note > critere.getNote())
+                    } else if (note > critere.getNoteMax())
                         Notification.show("La note ne peut pas dépasser la note maximale du critère", Notification.TYPE_WARNING_MESSAGE);
                     else
                         Notification.show("Veuillez compléter les champs obligatoires (*)", Notification.TYPE_WARNING_MESSAGE);
@@ -1394,7 +1409,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 PropositionStageManager propositionStage_DB = new PropositionStageManager();
                 Stage stage = stage_DB.find((int) elementSelected);
                 stage.update(promoteur, maitreStage, dateDebut, dateFin, "", technologies);
-                PropositionStage propStage = stage.getProposition();
+                PropositionStage propStage = stage.getPropositionStage();
                 propStage.update(sujet, propStage.getAnnexe());
                 if (stage_DB.update(stage) && propositionStage_DB.update(propStage))
                 {
@@ -1419,14 +1434,14 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             modification = true;
             StageManager stage_DB = new StageManager();
             Stage stage = stage_DB.find(Integer.parseInt(elementSelected.toString()));
-            tf_stage_editer_sujet.setValue(stage.getProposition().getSubject());
+            tf_stage_editer_sujet.setValue(stage.getPropositionStage().getSujet());
             cb_stage_editer_etudiant.setReadOnly(false);
             cb_stage_editer_etudiant.setValue(stage.getOwner());
             cb_stage_editer_etudiant.setReadOnly(true);
             date_stage_editer_dateDebut.setValue(stage.getDateDebut());
             date_stage_editer_dateFin.setValue(stage.getDateFin());
             cb_stage_editer_entreprise.setReadOnly(false);
-            cb_stage_editer_entreprise.setValue(stage.getProposition().getPlace());
+            cb_stage_editer_entreprise.setValue(stage.getPropositionStage().getLieuStage());
             cb_stage_editer_entreprise.setReadOnly(true);
             cb_stage_editer_maitreDeStage.setValue(stage.getSuiveur());
             cb_stage_editer_promoteur.setValue(stage.getSuperviseur());
@@ -1501,7 +1516,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 StageManager stage_DB = new StageManager();
                 Stage stage = stage_DB.find((int) elementSelected);
                 stageSelected = stage;
-                label_evaluationStage.setValue("Evaluations du stage de " + stage.getOwner() + " (" + stage.getProposition().getSubject() + ")");
+                label_evaluationStage.setValue("Evaluations du stage de " + stage.getOwner() + " (" + stage.getPropositionStage().getSujet() + ")");
                 hideForms();
                 load_tab_evaluationStage(stage);
             } else button_evaluerStage.setEnabled(false);
@@ -1521,7 +1536,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         button_modifier_evaluationStage.addClickListener(event -> {
             modification = true;
             EvaluationManager evaluation_DB = new EvaluationManager();
-            beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+            Evaluation evaluation = evaluation_DB.find((int) elementSelected);
             stage_evaluer_critere.clear();
             stage_evaluer_note.setValue(((Double) evaluation.getNote()).toString());
             stage_evaluer_commentaire.setValue(evaluation.getCommentaire());
@@ -1536,7 +1551,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 if (dialog.isConfirmed())
                 {
                     EvaluationManager evaluation_DB = new EvaluationManager();
-                    beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+                    Evaluation evaluation = evaluation_DB.find((int) elementSelected);
 
                     if (evaluation_DB.delete(evaluation))
                     {
@@ -1558,15 +1573,15 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         button_stage_evaluer_valider.addClickListener(event -> {
             try
             {
-                CritereEvaluation critere = (CritereEvaluation) stage_evaluer_critere.getValue();
+                Critere critere = (Critere) stage_evaluer_critere.getValue();
                 Double note = Double.parseDouble(stage_evaluer_note.getValue());
                 String commentaire = stage_evaluer_commentaire.getValue();
                 Date date = Date.from(Instant.now());
                 if (modification)
                 {
                     EvaluationManager evaluation_DB = new EvaluationManager();
-                    beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
-                    if (note > 0 && note <= evaluation.getCritere().getNote())
+                    Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+                    if (note > 0 && note <= evaluation.getCritere().getNoteMax())
                     {
                         evaluation.update(note, commentaire);
                         if (evaluation_DB.update(evaluation))
@@ -1582,7 +1597,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                             Notification.show("Une erreur est survenue lors de la modification de l'évaluation", Notification.TYPE_ERROR_MESSAGE);
                     } else
                     {
-                        if (note > critere.getNote())
+                        if (note > critere.getNoteMax())
                             Notification.show("La note ne peut pas dépasser la note maximale du critère", Notification.TYPE_WARNING_MESSAGE);
                         else if (note < 0)
                             Notification.show("La note ne peut pas être nulle", Notification.TYPE_WARNING_MESSAGE);
@@ -1593,10 +1608,10 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 {
                     if (critere != null)
                     {
-                        if (note >= 0 && note <= critere.getNote())
+                        if (note >= 0 && note <= critere.getNoteMax())
                         {
                             EvaluationManager evaluation_DB = new EvaluationManager();
-                            beans.Evaluation evaluation = new beans.Evaluation(0, date, currentUser, critere, stageSelected, note, commentaire);
+                            Evaluation evaluation = new Evaluation(0, date, currentUser, critere, stageSelected, note, commentaire);
                             if (evaluation_DB.create(evaluation))
                             {
                                 // Mise à jour des points du stage
@@ -1610,7 +1625,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                                 Notification.show("Une erreur est survenue lors de l'ajout de l'évaluation", Notification.TYPE_ERROR_MESSAGE);
                         } else
                         {
-                            if (note > critere.getNote())
+                            if (note > critere.getNoteMax())
                                 Notification.show("La note doit être inférieure à la note maximale", Notification.TYPE_WARNING_MESSAGE);
                             else
                                 Notification.show("La doit être supérieure ou égale à 0", Notification.TYPE_WARNING_MESSAGE);
@@ -1687,7 +1702,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 tab_echeance4.setVisible(true);
                 StageManager stage_DB = new StageManager();
                 Stage stage = stage_DB.find((int) elementSelected);
-                label_echeances_stage.setValue("Echéances du stage de " + stage.getOwner().toString() + " (" + stage.getProposition().getSubject() + ")");
+                label_echeances_stage.setValue("Echéances du stage de " + stage.getOwner().toString() + " (" + stage.getPropositionStage().getSujet() + ")");
                 button_retour_Stage.setVisible(true);
                 label_echeances_stage.setVisible(true);
                 load_tab_echeance4(stage);
@@ -1881,9 +1896,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             cb_PropositionStage_editer_entreprise.setReadOnly(false);
             PropositionStageManager propositionStage_DB = new PropositionStageManager();
             PropositionStage propositionStage = propositionStage_DB.find(Integer.parseInt(elementSelected.toString()));
-            tf_PropositionStage_editer_sujet.setValue(propositionStage.getSubject());
+            tf_PropositionStage_editer_sujet.setValue(propositionStage.getSujet());
             cb_PropositionStage_editer_entreprise.setReadOnly(false);
-            cb_PropositionStage_editer_entreprise.setValue(propositionStage.getPlace());
+            cb_PropositionStage_editer_entreprise.setValue(propositionStage.getLieuStage());
             cb_PropositionStage_editer_entreprise.setReadOnly(true);
             form_propositionStage_valider.setVisible(false);
             form_propositionStage_valider2.setVisible(false);
@@ -1920,7 +1935,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         button_validerPropositionStage.addClickListener(event -> {
             PropositionStageManager propositionStage_DB = new PropositionStageManager();
             PropositionStage propositionStage = propositionStage_DB.find(Integer.parseInt(elementSelected.toString()));
-            tf_PropositionStage_valider_sujet.setValue(propositionStage.getSubject());
+            tf_PropositionStage_valider_sujet.setValue(propositionStage.getSujet());
             form_propositionStage_editer.setVisible(false);
             form_propositionStage_valider.setVisible(true);
             form_propositionStage_valider2.setVisible(true);
@@ -2075,7 +2090,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         button_modifier_evaluationDefense.addClickListener(event -> {
             modification = true;
             EvaluationManager evaluation_DB = new EvaluationManager();
-            beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+            Evaluation evaluation = evaluation_DB.find((int) elementSelected);
             defense_evaluer_critere.clear();
             defense_evaluer_note.setValue(((Double) evaluation.getNote()).toString());
             defense_evaluer_commentaire.setValue(evaluation.getCommentaire());
@@ -2090,7 +2105,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 if (dialog.isConfirmed())
                 {
                     EvaluationManager evaluation_DB = new EvaluationManager();
-                    beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+                    Evaluation evaluation = evaluation_DB.find((int) elementSelected);
                     if (evaluation_DB.delete(evaluation))
                     {
                         // Mise à jour des points de la défense
@@ -2120,9 +2135,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                     if (note > 0 && commentaire != null)
                     {
                         EvaluationManager evaluation_DB = new EvaluationManager();
-                        beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
-                        CritereEvaluation critere = evaluation.getCritere();
-                        if (critere != null && note <= critere.getNote())
+                        Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+                        Critere critere = evaluation.getCritere();
+                        if (critere != null && note <= critere.getNoteMax())
                         {
                             evaluation.update(note, commentaire);
                             if (evaluation_DB.update(evaluation))
@@ -2147,11 +2162,11 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                     }
                 } else
                 {
-                    CritereEvaluation critere = (CritereEvaluation) defense_evaluer_critere.getValue();
-                    if (critere != null && note != null && note > 0 && note <= critere.getNote())
+                    Critere critere = (Critere) defense_evaluer_critere.getValue();
+                    if (critere != null && note != null && note > 0 && note <= critere.getNoteMax())
                     {
                         EvaluationManager evaluation_DB = new EvaluationManager();
-                        beans.Evaluation evaluation = new beans.Evaluation(0, date, currentUser, critere, defenseSelected, note, commentaire);
+                        Evaluation evaluation = new Evaluation(0, date, currentUser, critere, defenseSelected, note, commentaire);
                         if (evaluation_DB.create(evaluation))
                         {
                             // Mise à jour des points de la défense
@@ -2164,7 +2179,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                             button_defense_evaluer_valider.removeClickShortcut();
                         } else
                             Notification.show("Une erreur est survenue lors de l'ajout de l'évaluation", Notification.TYPE_ERROR_MESSAGE);
-                    } else if (note > critere.getNote())
+                    } else if (note > critere.getNoteMax())
                         Notification.show("La note ne peut pas dépasser la note maximale du critère", Notification.TYPE_WARNING_MESSAGE);
                     else
                         Notification.show("Veuillez compléter les champs obligatoires (*)", Notification.TYPE_WARNING_MESSAGE);
@@ -2201,7 +2216,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             Echeance echeance = echeance_DB.find(Integer.parseInt(elementSelected.toString()));
             tf_echeance_ajouter_description.setValue(echeance.getDescription());
             date_echeance_ajouter_date.setValue(echeance.getDateEcheance());
-            HashSet<Utilisateur> preselected = new HashSet<>(echeance.getUsers());
+            HashSet<Utilisateur> preselected = new HashSet<Utilisateur>(echeance.getUtilisateur());
             tc_echeance_ajouter_utilisateurs.setValue(preselected);
             tc_echeance_ajouter_utilisateurs.setImmediate(true);
             form_echeance_editer.setVisible(true);
@@ -2339,8 +2354,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             PropositionStageManager propositionStage_DB = new PropositionStageManager();
             PropositionStage propositionStage = propositionStage_DB.find(Integer.parseInt(elementSelected.toString()));
             cb_PropositionStage_etudiant_editer_entreprise.setReadOnly(false);
-            tf_PropositionStage_etudiant_editer_sujet.setValue(propositionStage.getSubject());
-            cb_PropositionStage_etudiant_editer_entreprise.setValue(propositionStage.getPlace());
+            tf_PropositionStage_etudiant_editer_sujet.setValue(propositionStage.getSujet());
+            cb_PropositionStage_etudiant_editer_entreprise.setValue(propositionStage.getLieuStage());
             cb_PropositionStage_etudiant_editer_entreprise.setReadOnly(true);
             form_propositionStage_etudiant_editer.setVisible(true);
             button_propositionStage_etudiant_editer_valider.setClickShortcut(KeyCode.ENTER);
@@ -2423,8 +2438,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             PropositionStageManager propositionStage_DB = new PropositionStageManager();
             PropositionStage propositionStage = propositionStage_DB.find((int) elementSelected);
             cb_PropositionStage_etudiant_editer_entreprise.setReadOnly(false);
-            tf_PropositionStage_etudiant_editer_sujet.setValue(propositionStage.getSubject());
-            cb_PropositionStage_etudiant_editer_entreprise.setValue(propositionStage.getPlace());
+            tf_PropositionStage_etudiant_editer_sujet.setValue(propositionStage.getSujet());
+            cb_PropositionStage_etudiant_editer_entreprise.setValue(propositionStage.getLieuStage());
             cb_PropositionStage_etudiant_editer_entreprise.setReadOnly(true);
             form_propositionStage_etudiant_editer.setVisible(true);
             button_propositionStage_etudiant_editer_valider.setClickShortcut(KeyCode.ENTER);
@@ -2453,7 +2468,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         // modifier evaluation
         button_modifierEvaluation_maitreDeStage.addClickListener(event -> {
             EvaluationManager evaluation_DB = new EvaluationManager();
-            beans.Evaluation evaluation = evaluation_DB.find(Integer.parseInt(elementSelected.toString()));
+            Evaluation evaluation = evaluation_DB.find(Integer.parseInt(elementSelected.toString()));
             stage_evaluer_maitreDeStage_critere.clear();
             stage_evaluer_maitreDeStage_critere.setVisible(false);
             stage_evaluer_maitreDeStage_note.setValue(((Double) evaluation.getNote()).toString());
@@ -2470,7 +2485,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 if (dialog.isConfirmed())
                 {
                     EvaluationManager evaluation_DB = new EvaluationManager();
-                    beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+                    Evaluation evaluation = evaluation_DB.find((int) elementSelected);
                     if (evaluation_DB.delete(evaluation))
                     {
                         // Mise à jour des points de la défense
@@ -2509,9 +2524,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             if (modification)
             {
                 EvaluationManager evaluation_DB = new EvaluationManager();
-                beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
-                CritereEvaluation critere = evaluation.getCritere();
-                if (note >= 0 && note <= critere.getNote())
+                Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+                Critere critere = evaluation.getCritere();
+                if (note >= 0 && note <= critere.getNoteMax())
                 {
                     evaluation.update(note, commentaire);
                     if (evaluation_DB.update(evaluation))
@@ -2527,22 +2542,22 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                         Notification.show("Une erreur est survenue lors de la modification de l'évaluation", Notification.TYPE_ERROR_MESSAGE);
                 } else
                 {
-                    if (note > critere.getNote())
+                    if (note > critere.getNoteMax())
                         Notification.show("La note doit être inférieure à la note maximale", Notification.TYPE_WARNING_MESSAGE);
                     else
                         Notification.show("La doit être supérieure ou égale à 0", Notification.TYPE_WARNING_MESSAGE);
                 }
             } else
             {
-                CritereEvaluation critere = (CritereEvaluation) stage_evaluer_maitreDeStage_critere.getValue();
+                Critere critere = (Critere) stage_evaluer_maitreDeStage_critere.getValue();
                 if (critere != null)
                 {
-                    if (note >= 0 && note <= critere.getNote())
+                    if (note >= 0 && note <= critere.getNoteMax())
                     {
                         EvaluationManager evaluation_DB = new EvaluationManager();
                         StageManager stage_DB = new StageManager();
                         Stage stage = stage_DB.find((int) elementSelected);
-                        beans.Evaluation evaluation = new beans.Evaluation(0, date, currentUser, critere, stage, note, commentaire);
+                        Evaluation evaluation = new Evaluation(0, date, currentUser, critere, stage, note, commentaire);
                         if (evaluation_DB.create(evaluation))
                         {
                             // Mise à jour des points de la défense
@@ -2557,7 +2572,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
 
                     } else
                     {
-                        if (note > critere.getNote())
+                        if (note > critere.getNoteMax())
                             Notification.show("La note doit être inférieure à la note maximale", Notification.TYPE_WARNING_MESSAGE);
                         else
                             Notification.show("La doit être supérieure ou égale à 0", Notification.TYPE_WARNING_MESSAGE);
@@ -2595,7 +2610,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         // modifier evaluation
         button_modifierEvaluation_presidentDeJury.addClickListener(event -> {
             EvaluationManager evaluation_DB = new EvaluationManager();
-            beans.Evaluation evaluation = evaluation_DB.find(Integer.parseInt(elementSelected.toString()));
+            Evaluation evaluation = evaluation_DB.find(Integer.parseInt(elementSelected.toString()));
             stage_evaluer_maitreDeStage_critere.clear();
             stage_evaluer_maitreDeStage_critere.setVisible(false);
             defense_evaluer_presidentDeJury_note.setValue(((Double) evaluation.getNote()).toString());
@@ -2612,7 +2627,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 if (dialog.isConfirmed())
                 {
                     EvaluationManager evaluation_DB = new EvaluationManager();
-                    beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+                    Evaluation evaluation = evaluation_DB.find((int) elementSelected);
                     if (evaluation_DB.delete(evaluation))
                     {
                         // Mise à jour des points de la défense
@@ -2652,9 +2667,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             if (modification)
             {
                 EvaluationManager evaluation_DB = new EvaluationManager();
-                beans.Evaluation evaluation = evaluation_DB.find((int) elementSelected);
-                CritereEvaluation critere = evaluation.getCritere();
-                if (note >= 0 && note <= critere.getNote())
+                Evaluation evaluation = evaluation_DB.find((int) elementSelected);
+                Critere critere = evaluation.getCritere();
+                if (note >= 0 && note <= critere.getNoteMax())
                 {
                     evaluation.update(note, commentaire);
                     if (evaluation_DB.update(evaluation))
@@ -2671,22 +2686,22 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                         Notification.show("Une erreur est survenue lors de la modification de l'évaluation", Notification.TYPE_ERROR_MESSAGE);
                 } else
                 {
-                    if (note > critere.getNote())
+                    if (note > critere.getNoteMax())
                         Notification.show("La note doit être inférieure à la note maximale", Notification.TYPE_WARNING_MESSAGE);
                     else
                         Notification.show("La doit être supérieure ou égale à 0", Notification.TYPE_WARNING_MESSAGE);
                 }
             } else
             {
-                CritereEvaluation critere = (CritereEvaluation) defense_evaluer_presidentDeJury_critere.getValue();
+                Critere critere = (Critere) defense_evaluer_presidentDeJury_critere.getValue();
                 if (critere != null)
                 {
-                    if (note >= 0 && note <= critere.getNote())
+                    if (note >= 0 && note <= critere.getNoteMax())
                     {
                         EvaluationManager evaluation_DB = new EvaluationManager();
                         DefenseManager defense_DB = new DefenseManager();
                         Defense defense = defense_DB.find((int) elementSelected);
-                        beans.Evaluation evaluation = new beans.Evaluation(0, date, currentUser, critere, defense, note, commentaire);
+                        Evaluation evaluation = new Evaluation(0, date, currentUser, critere, defense, note, commentaire);
                         if (evaluation_DB.create(evaluation))
                         {
                             // Mise à jour des points de la défense
@@ -2701,7 +2716,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                             Notification.show("Une erreur est survenue lors de l'ajout de l'évaluation", Notification.TYPE_ERROR_MESSAGE);
                     } else
                     {
-                        if (note > critere.getNote())
+                        if (note > critere.getNoteMax())
                             Notification.show("La note doit être inférieure à la note maximale", Notification.TYPE_WARNING_MESSAGE);
                         else
                             Notification.show("La doit être supérieure ou égale à 0", Notification.TYPE_WARNING_MESSAGE);
@@ -2855,7 +2870,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         LieuStageManager lieuStage_DB = new LieuStageManager();
         List<LieuStage> lieuStageList = lieuStage_DB.fetchAll();
         for (LieuStage lieuStage : lieuStageList)
-            tab_entreprises.addItem(new Object[]{lieuStage.getNom(), lieuStage.getAdresse(), lieuStage.getContact(), lieuStage.getTelephone()}, lieuStage.getId());
+            tab_entreprises.addItem(new Object[]{lieuStage.getEntreprise(), lieuStage.getAdresse(), lieuStage.getPersonneContact(), lieuStage.getTelephone()}, lieuStage.getId());
         tab_entreprises.addValueChangeListener(event -> {
             form_entreprise.setVisible(false);
             elementSelected = tab_entreprises.getValue();
@@ -2879,7 +2894,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         LieuStageManager lieuStage_DB = new LieuStageManager();
         List<LieuStage> lieuStageList = lieuStage_DB.fetchAll();
         for (LieuStage lieuStage : lieuStageList)
-            tab_entreprises3.addItem(new Object[]{lieuStage.getNom(), lieuStage.getAdresse(), lieuStage.getContact(), lieuStage.getTelephone()}, lieuStage.getId());
+            tab_entreprises3.addItem(new Object[]{lieuStage.getEntreprise(), lieuStage.getAdresse(), lieuStage.getPersonneContact(), lieuStage.getTelephone()}, lieuStage.getId());
 
         tf_entreprise_recherche3.setImmediate(true);
         tf_entreprise_recherche3.addTextChangeListener(event -> {
@@ -2893,7 +2908,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         tab_entreprises.removeAllItems();
         LieuStageManager lieuStage_DB = new LieuStageManager();
         List<LieuStage> lieuStageList = lieuStage_DB.fetchAll();
-        lieuStageList.stream().filter(lieuStage -> tf_entreprise_recherche.isEmpty() || (lieuStage.getNom().toLowerCase().contains(tf_entreprise_recherche.getValue().toLowerCase())) || (lieuStage.getAdresse().toLowerCase().contains(tf_entreprise_recherche.getValue().toLowerCase()))).forEach(lieuStage -> tab_entreprises.addItem(new Object[]{lieuStage.getNom(), lieuStage.getAdresse(), lieuStage.getContact(), lieuStage.getTelephone()}, lieuStage.getId()));
+        lieuStageList.stream().filter(lieuStage -> tf_entreprise_recherche.isEmpty() || (lieuStage.getEntreprise().toLowerCase().contains(tf_entreprise_recherche.getValue().toLowerCase())) || (lieuStage.getAdresse().toLowerCase().contains(tf_entreprise_recherche.getValue().toLowerCase()))).forEach(lieuStage -> tab_entreprises.addItem(new Object[]{lieuStage.getEntreprise(), lieuStage.getAdresse(), lieuStage.getPersonneContact(), lieuStage.getTelephone()}, lieuStage.getId()));
     }
 
     public void load_tab_entreprises_etudiant_filtre()
@@ -2901,16 +2916,16 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         tab_entreprises3.removeAllItems();
         LieuStageManager lieuStage_DB = new LieuStageManager();
         List<LieuStage> lieuStageList = lieuStage_DB.fetchAll();
-        lieuStageList.stream().filter(lieuStage -> tf_entreprise_recherche3.isEmpty() || (lieuStage.getNom().toLowerCase().contains(tf_entreprise_recherche3.getValue().toLowerCase())) || (lieuStage.getAdresse().toLowerCase().contains(tf_entreprise_recherche3.getValue().toLowerCase()))).forEach(lieuStage -> tab_entreprises3.addItem(new Object[]{lieuStage.getNom(), lieuStage.getAdresse(), lieuStage.getContact(), lieuStage.getTelephone()}, lieuStage.getId()));
+        lieuStageList.stream().filter(lieuStage -> tf_entreprise_recherche3.isEmpty() || (lieuStage.getEntreprise().toLowerCase().contains(tf_entreprise_recherche3.getValue().toLowerCase())) || (lieuStage.getAdresse().toLowerCase().contains(tf_entreprise_recherche3.getValue().toLowerCase()))).forEach(lieuStage -> tab_entreprises3.addItem(new Object[]{lieuStage.getEntreprise(), lieuStage.getAdresse(), lieuStage.getPersonneContact(), lieuStage.getTelephone()}, lieuStage.getId()));
     }
 
     public void load_tab_criteresEvaluation()
     {
         tab_criteresEvaluation.removeAllItems();
-        CritereEvaluationManager critereEvaluation_DB = new CritereEvaluationManager();
-        List<CritereEvaluation> critereEvaluationList = critereEvaluation_DB.fetchAll(null);
-        for (CritereEvaluation critereEvaluation : critereEvaluationList)
-            tab_criteresEvaluation.addItem(new Object[]{critereEvaluation.getNom(), critereEvaluation.getType(), critereEvaluation.getNote()}, critereEvaluation.getId());
+        CritereManager critereEvaluation_DB = new CritereManager();
+        List<Critere> critereEvaluationList = critereEvaluation_DB.fetchAll(null);
+        for (Critere critereEvaluation : critereEvaluationList)
+            tab_criteresEvaluation.addItem(new Object[]{critereEvaluation.getNom(), critereEvaluation.getType(), critereEvaluation.getNoteMax()}, critereEvaluation.getId());
         tab_criteresEvaluation.addValueChangeListener(event -> {
             form_critereEvaluation_editer.setVisible(false);
             elementSelected = tab_criteresEvaluation.getValue();
@@ -2931,9 +2946,9 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_tab_criteresEvaluation_filtre()
     {
         tab_criteresEvaluation.removeAllItems();
-        CritereEvaluationManager critereEvaluation_DB = new CritereEvaluationManager();
-        List<CritereEvaluation> critereEvaluationList = critereEvaluation_DB.fetchAll(null);
-        critereEvaluationList.stream().filter(critereEvaluation -> tf_evaluation_recherche.isEmpty() || (critereEvaluation.getNom().toLowerCase().contains(tf_evaluation_recherche.getValue().toLowerCase()))).forEach(critereEvaluation -> tab_criteresEvaluation.addItem(new Object[]{critereEvaluation.getNom(), critereEvaluation.getType(), critereEvaluation.getNote()}, critereEvaluation.getId()));
+        CritereManager critereEvaluation_DB = new CritereManager();
+        List<Critere> critereEvaluationList = critereEvaluation_DB.fetchAll(null);
+        critereEvaluationList.stream().filter(critereEvaluation -> tf_evaluation_recherche.isEmpty() || (critereEvaluation.getNom().toLowerCase().contains(tf_evaluation_recherche.getValue().toLowerCase()))).forEach(critereEvaluation -> tab_criteresEvaluation.addItem(new Object[]{critereEvaluation.getNom(), critereEvaluation.getType(), critereEvaluation.getNoteMax()}, critereEvaluation.getId()));
     }
 
     public void load_tab_technologies()
@@ -2974,7 +2989,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         TFEManager tfe_DB = new TFEManager();
         List<TFE> tfeList = tfe_DB.fetchAll();
         for (TFE tfe : tfeList)
-            tab_tfe.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), tfe.getPoints(), tfe.getAnneeDebut(), tfe.getAnneeFin(),}, tfe.getId());
+            tab_tfe.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), tfe.getPointsTotaux(), tfe.getAnneeAcadDebut(), tfe.getAnneeAcadFin(),}, tfe.getId());
         tab_tfe.addValueChangeListener(event -> {
             hideForms();
             elementSelected = tab_tfe.getValue();
@@ -3031,11 +3046,11 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         for (TFE tfe : tfeList)
         {
             List<Technologie> technologiesTFE = tfe.getTechnologies();
-            int anneeDebut = tfe.getAnneeDebut();
-            int anneeFin = tfe.getAnneeFin();
+            int anneeDebut = tfe.getAnneeAcadDebut();
+            int anneeFin = tfe.getAnneeAcadFin();
             String nomPrenom = (tfe.getOwner().toString()).toLowerCase();
             if (((technologie != null && technologiesTFE.contains(technologie)) || technologie == null) && ((cb_tfe_anneeAcademique.getValue() != null && ((anneeDebut >= anneeAcademiqueDebut) && (anneeFin == anneeAcademiqueDebut || anneeFin == anneeAcademiqueFin))) || cb_tfe_anneeAcademique.getValue() == null) && ((!nom.isEmpty() && nomPrenom.contains(nom)) || nom.isEmpty()))
-                tab_tfe.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), tfe.getPoints(), tfe.getAnneeDebut(), tfe.getAnneeFin(),}, tfe.getId());
+                tab_tfe.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), tfe.getPointsTotaux(), tfe.getAnneeAcadDebut(), tfe.getAnneeAcadFin(),}, tfe.getId());
         }
     }
 
@@ -3058,11 +3073,11 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         for (TFE tfe : tfeList)
         {
             List<Technologie> technologiesTFE = tfe.getTechnologies();
-            int anneeDebut = tfe.getAnneeDebut();
-            int anneeFin = tfe.getAnneeFin();
+            int anneeDebut = tfe.getAnneeAcadDebut();
+            int anneeFin = tfe.getAnneeAcadFin();
             String nomPrenom = (tfe.getOwner().toString()).toLowerCase();
             if (((technologie != null && technologiesTFE.contains(technologie)) || technologie == null) && ((cb_tfe_anneeAcademique2.getValue() != null && ((anneeDebut >= anneeAcademiqueDebut) && (anneeFin == anneeAcademiqueDebut || anneeFin == anneeAcademiqueFin))) || cb_tfe_anneeAcademique2.getValue() == null) && ((nom != null && nomPrenom.contains(nom))))
-                tab_tfe2.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), tfe.getAnneeDebut(), tfe.getAnneeFin(),}, tfe.getId());
+                tab_tfe2.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), tfe.getAnneeAcadDebut(), tfe.getAnneeAcadFin(),}, tfe.getId());
         }
     }
 
@@ -3072,7 +3087,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         StageManager stage_DB = new StageManager();
         ArrayList<Stage> stageList = stage_DB.fetchAll(null);
         for (Stage stage : stageList)
-            tab_stage.addItem(new Object[]{stage.getProposition().getSubject(), stage.getOwner().toString(), stage.getSuperviseur().toString(), DateFormat.getDateInstance().format(stage.getDateDebut()), DateFormat.getDateInstance().format(stage.getDateFin()), stage.getProposition().getPlace().getNom(), stage.getPoints()}, stage.getId());
+            tab_stage.addItem(new Object[]{stage.getPropositionStage().getSujet(), stage.getOwner().toString(), stage.getSuperviseur().toString(), DateFormat.getDateInstance().format(stage.getDateDebut()), DateFormat.getDateInstance().format(stage.getDateFin()), stage.getPropositionStage().getLieuStage().getEntreprise(), stage.getPointsTotaux()}, stage.getId());
         tab_stage.addValueChangeListener(event -> {
             hideForms();
             elementSelected = tab_stage.getValue();
@@ -3132,13 +3147,13 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         }
         for (Stage stage : stageList)
         {
-            ArrayList<Technologie> technologiesStage = stage.getTechnologies();
-            LieuStage lieuStageStage = stage.getProposition().getPlace();
-            String adresseStage = stage.getProposition().getPlace().getAdresse();
+            List<Technologie> technologiesStage = stage.getTechnologies();
+            LieuStage lieuStageStage = stage.getPropositionStage().getLieuStage();
+            String adresseStage = stage.getPropositionStage().getLieuStage().getAdresse();
             int anneeDebut = stage.getDateDebut().getYear() + 1900;
             int anneeFin = stage.getDateFin().getYear() + 1900;
             if (((technologie != null && technologiesStage.contains(technologie)) || technologie == null) && ((lieuStage != null && lieuStageStage.equals(lieuStage)) || lieuStage == null) && ((!adresseStage.isEmpty() && adresseStage.toLowerCase().contains(adresse.toLowerCase())) || adresseStage.isEmpty()) && ((cb_stage_anneeAcademique.getValue() != null && ((anneeDebut >= anneeAcademiqueDebut) && (anneeFin == anneeAcademiqueDebut || anneeFin == anneeAcademiqueFin))) || cb_stage_anneeAcademique.getValue() == null))
-                tab_stage.addItem(new Object[]{stage.getProposition().getSubject(), stage.getOwner().toString(), stage.getSuperviseur().toString(), DateFormat.getDateInstance().format(stage.getDateDebut()), DateFormat.getDateInstance().format(stage.getDateFin()), stage.getProposition().getPlace().getNom(), stage.getPoints()}, stage.getId());
+                tab_stage.addItem(new Object[]{stage.getPropositionStage().getSujet(), stage.getOwner().toString(), stage.getSuperviseur().toString(), DateFormat.getDateInstance().format(stage.getDateDebut()), DateFormat.getDateInstance().format(stage.getDateFin()), stage.getPropositionStage().getLieuStage().getEntreprise(), stage.getPointsTotaux()}, stage.getId());
         }
     }
 
@@ -3161,13 +3176,13 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         }
         for (Stage stage : stageList)
         {
-            ArrayList<Technologie> technologiesStage = stage.getTechnologies();
-            LieuStage lieuStageStage = stage.getProposition().getPlace();
-            String adresseStage = stage.getProposition().getPlace().getAdresse();
+            List<Technologie> technologiesStage = stage.getTechnologies();
+            LieuStage lieuStageStage = stage.getPropositionStage().getLieuStage();
+            String adresseStage = stage.getPropositionStage().getLieuStage().getAdresse();
             int anneeDebut = stage.getDateDebut().getYear() + 1900;
             int anneeFin = stage.getDateFin().getYear() + 1900;
             if (((technologie != null && technologiesStage.contains(technologie)) || technologie == null) && ((lieuStage != null && lieuStageStage.equals(lieuStage)) || lieuStage == null) && ((!adresseStage.isEmpty() && adresseStage.toLowerCase().contains(adresse.toLowerCase())) || adresseStage.isEmpty()) && ((cb_stage_anneeAcademique3.getValue() != null && ((anneeDebut >= anneeAcademiqueDebut) && (anneeFin == anneeAcademiqueDebut || anneeFin == anneeAcademiqueFin))) || cb_stage_anneeAcademique3.getValue() == null))
-                tab_stage2.addItem(new Object[]{stage.getProposition().getSubject(), stage.getOwner().toString(), stage.getSuperviseur().toString(), DateFormat.getDateInstance().format(stage.getDateDebut()), DateFormat.getDateInstance().format(stage.getDateFin()), stage.getProposition().getPlace().getNom()}, stage.getId());
+                tab_stage2.addItem(new Object[]{stage.getPropositionStage().getSujet(), stage.getOwner().toString(), stage.getSuperviseur().toString(), DateFormat.getDateInstance().format(stage.getDateDebut()), DateFormat.getDateInstance().format(stage.getDateFin()), stage.getPropositionStage().getLieuStage().getEntreprise()}, stage.getId());
         }
     }
 
@@ -3177,7 +3192,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         PropositionStageManager propositionStage_DB = new PropositionStageManager();
         ArrayList<PropositionStage> propositionStageList = propositionStage_DB.fetchAll(null, null);
         for (PropositionStage propositionStage : propositionStageList)
-            tab_propositionStage.addItem(new Object[]{propositionStage.getSubject(), propositionStage.getOwner().toString(), propositionStage.getPlace().getAdresse(), propositionStage.getPlace().getNom()}, propositionStage.getId());
+            tab_propositionStage.addItem(new Object[]{propositionStage.getSujet(), propositionStage.getOwner().toString(), propositionStage.getLieuStage().getAdresse(), propositionStage.getLieuStage().getEntreprise()}, propositionStage.getId());
         tab_propositionStage.addValueChangeListener(event -> {
             hideForms();
             elementSelected = tab_propositionStage.getValue();
@@ -3208,7 +3223,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         for (Defense defense : defenseList)
         {
             Stage stage = defense.getStage();
-            TFE tfe = defense.getTFE();
+            TFE tfe = defense.getTfe();
             String etudiant = "";
             String sujet = "";
             String type = "";
@@ -3219,11 +3234,11 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 type = "TFE";
             } else if (stage != null)
             {
-                sujet = stage.getProposition().getSubject();
+                sujet = stage.getPropositionStage().getSujet();
                 etudiant = stage.getOwner().toString();
                 type = "Stage";
             }
-            tab_defense.addItem(new Object[]{type, etudiant, sujet, defense.getLocal(), defense.getDate(), defense.getPresident().toString()}, defense.getId());
+            tab_defense.addItem(new Object[]{type, etudiant, sujet, defense.getLocal(), defense.getDate(), defense.getPresidentJury().toString()}, defense.getId());
         }
         tab_defense.addValueChangeListener(event -> {
             form_defense_editer.setVisible(false);
@@ -3246,8 +3261,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_evaluationTFE.removeAllItems();
         EvaluationManager evaluation_DB = new EvaluationManager();
-        List<beans.Evaluation> evaluationList = evaluation_DB.fetchAll(tfe);
-        for (beans.Evaluation evaluation : evaluationList)
+        List<Evaluation> evaluationList = evaluation_DB.fetchAll(tfe);
+        for (Evaluation evaluation : evaluationList)
         {
             String critere = evaluation.getCritere().getNom();
             Double note = evaluation.getNote();
@@ -3272,8 +3287,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_evaluationStage.removeAllItems();
         EvaluationManager evaluation_DB = new EvaluationManager();
-        List<beans.Evaluation> evaluationList = evaluation_DB.fetchAll(stage);
-        for (beans.Evaluation evaluation : evaluationList)
+        List<Evaluation> evaluationList = evaluation_DB.fetchAll(stage);
+        for (Evaluation evaluation : evaluationList)
         {
             String critere = evaluation.getCritere().getNom();
             Double note = evaluation.getNote();
@@ -3298,8 +3313,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_evaluationDefense.removeAllItems();
         EvaluationManager evaluation_DB = new EvaluationManager();
-        List<beans.Evaluation> evaluationList = evaluation_DB.fetchAll(defense);
-        for (beans.Evaluation evaluation : evaluationList)
+        List<Evaluation> evaluationList = evaluation_DB.fetchAll(defense);
+        for (Evaluation evaluation : evaluationList)
         {
             String critere = evaluation.getCritere().getNom();
             Double note = evaluation.getNote();
@@ -3326,7 +3341,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         TFEManager tfe_DB = new TFEManager();
         List<TFE> tfeList = tfe_DB.fetchAll();
         for (TFE tfe : tfeList)
-            tab_tfe2.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), tfe.getAnneeDebut(), tfe.getAnneeFin(),}, tfe.getId());
+            tab_tfe2.addItem(new Object[]{tfe.getTitre(), tfe.getOwner().toString(), tfe.getPromoteur().toString(), tfe.getAnneeAcadDebut(), tfe.getAnneeAcadFin(),}, tfe.getId());
         load_cb_TFE2();
     }
 
@@ -3336,7 +3351,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         StageManager stage_DB = new StageManager();
         ArrayList<Stage> stageList = stage_DB.fetchAll(null);
         for (Stage stage : stageList)
-            tab_stage2.addItem(new Object[]{stage.getProposition().getSubject(), stage.getOwner().toString(), stage.getSuperviseur().toString(), DateFormat.getDateInstance().format(stage.getDateDebut()), DateFormat.getDateInstance().format(stage.getDateFin()), stage.getProposition().getPlace().getNom()}, stage.getId());
+            tab_stage2.addItem(new Object[]{stage.getPropositionStage().getSujet(), stage.getOwner().toString(), stage.getSuperviseur().toString(), DateFormat.getDateInstance().format(stage.getDateDebut()), DateFormat.getDateInstance().format(stage.getDateFin()), stage.getPropositionStage().getLieuStage().getEntreprise()}, stage.getId());
         load_cb_stage2();
     }
 
@@ -3347,7 +3362,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         ArrayList<PropositionStage> propositionStageList = propositionStage_DB.fetchAll(currentUser, "professeur");
         for (PropositionStage propositionStage : propositionStageList)
         {
-            tab_propositionStage2.addItem(new Object[]{propositionStage.getSubject(), propositionStage.getOwner().toString(), propositionStage.getPlace().getAdresse(), propositionStage.getPlace().getNom()}, propositionStage.getId());
+            tab_propositionStage2.addItem(new Object[]{propositionStage.getSujet(), propositionStage.getOwner().toString(), propositionStage.getLieuStage().getAdresse(), propositionStage.getLieuStage().getEntreprise()}, propositionStage.getId());
         }
         tab_propositionStage2.addValueChangeListener(event -> {
             form_propositionStage_etudiant_editer.setVisible(false);
@@ -3384,7 +3399,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         for (Echeance echeance : echeanceList)
         {
             String type;
-            if (echeance.getTFE() != null) type = "TFE";
+            if (echeance.getTfe() != null) type = "TFE";
             else if (echeance.getStage() != null) type = "Stage";
             else type = "Utilisateur";
             tab_echeance.addItem(new Object[]{type, echeance.getOwner().toString(), echeance.getDateCreation(), echeance.getDateEcheance(), echeance.getDescription()}, echeance.getId());
@@ -3399,7 +3414,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         for (Echeance echeance : echeanceList)
         {
             String type;
-            if (echeance.getTFE() != null) type = "TFE";
+            if (echeance.getTfe() != null) type = "TFE";
             else if (echeance.getStage() != null) type = "Stage";
             else type = "Utilisateur";
             tab_echeance2.addItem(new Object[]{type, echeance.getOwner().toString(), echeance.getDateCreation(), echeance.getDateEcheance(), echeance.getDescription()}, echeance.getId());
@@ -3415,7 +3430,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             {
                 boutons = true;
                 Echeance ech = echeance_DB1.find(Integer.parseInt(elementSelected.toString()));
-                if (ech.getTFE() == null && ech.getStage() == null) button_modifierEcheance.setEnabled(true);
+                if (ech.getTfe() == null && ech.getStage() == null) button_modifierEcheance.setEnabled(true);
                 else button_modifierEcheance.setEnabled(false);
             }
             button_supprimerEcheance.setEnabled(boutons);
@@ -3465,7 +3480,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         for (Defense defense : defenseList)
         {
             Stage stage = defense.getStage();
-            TFE tfe = defense.getTFE();
+            TFE tfe = defense.getTfe();
             String etudiant = "";
             String sujet = "";
             String type = "";
@@ -3476,15 +3491,15 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 type = "TFE";
             } else if (stage != null)
             {
-                sujet = stage.getProposition().getSubject();
+                sujet = stage.getPropositionStage().getSujet();
                 etudiant = stage.getOwner().toString();
                 type = "Stage";
             }
             String promoteur = "";
             if (defense.getStage() != null) promoteur = defense.getStage().getSuperviseur().toString();
-            else if (defense.getTFE() != null) promoteur = defense.getTFE().getPromoteur().toString();
+            else if (defense.getTfe() != null) promoteur = defense.getTfe().getPromoteur().toString();
 
-            tab_defense2.addItem(new Object[]{type, etudiant, sujet, defense.getLocal(), defense.getDate(), promoteur, defense.getPresident().toString()}, defense.getId());
+            tab_defense2.addItem(new Object[]{type, etudiant, sujet, defense.getLocal(), defense.getDate(), promoteur, defense.getPresidentJury().toString()}, defense.getId());
         }
     }
 
@@ -3494,7 +3509,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         StageManager stage_DB = new StageManager();
         ArrayList<Stage> stageList = stage_DB.fetchAll(currentUser);
         for (Stage stage : stageList)
-            tab_stage3.addItem(new Object[]{stage.getProposition().getSubject(), stage.getOwner().toString(), stage.getSuperviseur().toString(), DateFormat.getDateInstance().format(stage.getDateDebut()), DateFormat.getDateInstance().format(stage.getDateFin()), stage.getProposition().getPlace().getNom(), stage.getPoints()}, stage.getId());
+            tab_stage3.addItem(new Object[]{stage.getPropositionStage().getSujet(), stage.getOwner().toString(), stage.getSuperviseur().toString(), DateFormat.getDateInstance().format(stage.getDateDebut()), DateFormat.getDateInstance().format(stage.getDateFin()), stage.getPropositionStage().getLieuStage().getEntreprise(), stage.getPointsTotaux()}, stage.getId());
         tab_stage3.addValueChangeListener(event -> {
             form_stage_maitreDeStage_evaluer.setVisible(false);
             elementSelected = tab_stage3.getValue();
@@ -3514,7 +3529,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         for (Defense defense : defenseList)
         {
             Stage stage = defense.getStage();
-            TFE tfe = defense.getTFE();
+            TFE tfe = defense.getTfe();
             String etudiant = "";
             String sujet = "";
             String type = "";
@@ -3525,11 +3540,11 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
                 type = "TFE";
             } else if (stage != null)
             {
-                sujet = stage.getProposition().getSubject();
+                sujet = stage.getPropositionStage().getSujet();
                 etudiant = stage.getOwner().getNom() + " " + stage.getOwner().toString();
                 type = "Stage";
             }
-            tab_defense3.addItem(new Object[]{type, etudiant, sujet, defense.getLocal(), defense.getDate(), defense.getPresident().toString()}, defense.getId());
+            tab_defense3.addItem(new Object[]{type, etudiant, sujet, defense.getLocal(), defense.getDate(), defense.getPresidentJury().toString()}, defense.getId());
         }
         tab_defense3.addValueChangeListener(event -> {
             form_defense_evaluer_presidentDeJury.setVisible(false);
@@ -3545,8 +3560,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_evaluations_maitreStage.removeAllItems();
         EvaluationManager evaluation_DB = new EvaluationManager();
-        List<beans.Evaluation> evaluationList = evaluation_DB.fetchAll(currentUser, stage);
-        for (beans.Evaluation evaluation : evaluationList)
+        List<Evaluation> evaluationList = evaluation_DB.fetchAll(currentUser, stage);
+        for (Evaluation evaluation : evaluationList)
         {
             String critere = evaluation.getCritere().getNom();
             Double note = evaluation.getNote();
@@ -3573,8 +3588,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     {
         tab_evaluations_presidentJury.removeAllItems();
         EvaluationManager evaluation_DB = new EvaluationManager();
-        List<beans.Evaluation> evaluationList = evaluation_DB.fetchAll(currentUser, defense);
-        for (beans.Evaluation evaluation : evaluationList)
+        List<Evaluation> evaluationList = evaluation_DB.fetchAll(currentUser, defense);
+        for (Evaluation evaluation : evaluationList)
         {
             String critere = evaluation.getCritere().getNom();
             Double note = evaluation.getNote();
@@ -3584,7 +3599,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
             String etudiant = "";
             Defense defenseEval = evaluation.getDefense();
             Stage stage = defenseEval.getStage();
-            TFE tfe = defenseEval.getTFE();
+            TFE tfe = defenseEval.getTfe();
             if (stage != null) etudiant = stage.getOwner().toString();
             else if (tfe != null) etudiant = tfe.getOwner().toString();
             tab_evaluations_presidentJury.addItem(new Object[]{etudiant, critere, note, commentaire, auteur, date}, evaluation.getId());
@@ -3612,8 +3627,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_cb_presidentJury()
     {
         defense_evaluer_presidentDeJury_critere.removeAllItems();
-        CritereEvaluationManager critereEvaluation_DB = new CritereEvaluationManager();
-        List<CritereEvaluation> critereEvaluationList;
+        CritereManager critereEvaluation_DB = new CritereManager();
+        List<Critere> critereEvaluationList;
         critereEvaluationList = critereEvaluation_DB.fetchAll("defense");
         critereEvaluationList.forEach(defense_evaluer_presidentDeJury_critere::addItem);
     }
@@ -3629,8 +3644,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_cb_defense()
     {
         defense_evaluer_critere.removeAllItems();
-        CritereEvaluationManager critereEvaluation_DB = new CritereEvaluationManager();
-        List<CritereEvaluation> critereEvaluationList;
+        CritereManager critereEvaluation_DB = new CritereManager();
+        List<Critere> critereEvaluationList;
         critereEvaluationList = critereEvaluation_DB.fetchAll("defense");
         critereEvaluationList.forEach(defense_evaluer_critere::addItem);
     }
@@ -3683,8 +3698,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         userEtuList.addAll(user_DB.fetchAll("etudiant_tfe_stage"));
         userEtuList.forEach(cb_tfe_ajouter_etudiant::addItem);
         tfe_evaluer_critere.removeAllItems();
-        CritereEvaluationManager critereEvaluation_DB = new CritereEvaluationManager();
-        List<CritereEvaluation> critereEvaluationList = critereEvaluation_DB.fetchAll("tfe");
+        CritereManager critereEvaluation_DB = new CritereManager();
+        List<Critere> critereEvaluationList = critereEvaluation_DB.fetchAll("tfe");
         critereEvaluationList.forEach(tfe_evaluer_critere::addItem);
         tfe_defense_presidentJury.removeAllItems();
         ArrayList<Utilisateur> userPresJuryList = user_DB.fetchAll("president_jury");
@@ -3721,8 +3736,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
 
         for (TFE tfe : listTfe)
         {
-            int annee_debut = tfe.getAnneeDebut();
-            int annee_fin = tfe.getAnneeFin();
+            int annee_debut = tfe.getAnneeAcadDebut();
+            int annee_fin = tfe.getAnneeAcadFin();
             int action = 0;
 
             if (annee_debut == annee_fin) action = -1;
@@ -3775,7 +3790,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         ArrayList<Technologie> technologiesUtilisees = new ArrayList<>();
         for (Stage stage : stageList)
         {
-            ArrayList<Technologie> technologiesStage = stage.getTechnologies();
+            List<Technologie> technologiesStage = stage.getTechnologies();
             technologiesUtilisees.remove(technologiesStage);
             technologiesUtilisees.addAll(technologiesStage);
         }
@@ -3790,7 +3805,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         ArrayList<LieuStage> lieuxStagesUtilises = new ArrayList<>();
         for (Stage stage : stageList)
         {
-            LieuStage lieuStageStage = stage.getProposition().getPlace();
+            LieuStage lieuStageStage = stage.getPropositionStage().getLieuStage();
             lieuxStagesUtilises.remove(lieuStageStage);
             lieuxStagesUtilises.add(lieuStageStage);
         }
@@ -3822,8 +3837,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         etudiantList.forEach(cb_stage_editer_etudiant::addItem);
 
         stage_evaluer_critere.removeAllItems();
-        CritereEvaluationManager critereEvaluation_DB = new CritereEvaluationManager();
-        List<CritereEvaluation> critereEvaluationList = critereEvaluation_DB.fetchAll("stage");
+        CritereManager critereEvaluation_DB = new CritereManager();
+        List<Critere> critereEvaluationList = critereEvaluation_DB.fetchAll("stage");
         critereEvaluationList.forEach(stage_evaluer_critere::addItem);
 
         stage_defense_presidentJury.removeAllItems();
@@ -3839,7 +3854,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         ArrayList<Technologie> technologiesUtilisees = new ArrayList<>();
         for (Stage stage : stageList)
         {
-            ArrayList<Technologie> technologiesStage = stage.getTechnologies();
+            List<Technologie> technologiesStage = stage.getTechnologies();
             technologiesUtilisees.remove(technologiesStage);
             technologiesUtilisees.addAll(technologiesStage);
         }
@@ -3849,7 +3864,7 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
         ArrayList<LieuStage> lieuxStagesUtilises = new ArrayList<>();
         for (Stage stage : stageList)
         {
-            LieuStage lieuStageStage = stage.getProposition().getPlace();
+            LieuStage lieuStageStage = stage.getPropositionStage().getLieuStage();
             lieuxStagesUtilises.remove(lieuStageStage);
             lieuxStagesUtilises.add(lieuStageStage);
         }
@@ -3896,8 +3911,8 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
     public void load_cb_maitreStage()
     {
         stage_evaluer_maitreDeStage_critere.removeAllItems();
-        CritereEvaluationManager critereEvaluation_DB = new CritereEvaluationManager();
-        List<CritereEvaluation> critereEvaluationList = critereEvaluation_DB.fetchAll("stage");
+        CritereManager critereEvaluation_DB = new CritereManager();
+        List<Critere> critereEvaluationList = critereEvaluation_DB.fetchAll("stage");
         critereEvaluationList.forEach(stage_evaluer_maitreDeStage_critere::addItem);
     }
 
@@ -4019,10 +4034,10 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
 
         EvaluationManager evaluation_DB = new EvaluationManager();
 
-        for (beans.Evaluation evaluation : evaluation_DB.fetchAll(tfe))
+        for (Evaluation evaluation : evaluation_DB.fetchAll(tfe))
         {
             res += evaluation.getNote();
-            total += evaluation.getCritere().getNote();
+            total += evaluation.getCritere().getNoteMax();
         }
 
         if (total != 0) res = (res / total) * 100;
@@ -4041,10 +4056,10 @@ public class Dashboard extends Dashboard_IconsAndTabs implements View
 
         EvaluationManager evaluation_DB = new EvaluationManager();
 
-        for (beans.Evaluation evaluation : evaluation_DB.fetchAll(stage))
+        for (Evaluation evaluation : evaluation_DB.fetchAll(stage))
         {
             res += evaluation.getNote();
-            total += evaluation.getCritere().getNote();
+            total += evaluation.getCritere().getNoteMax();
         }
 
         if (total != 0) res = (res / total) * 100;

@@ -1,61 +1,42 @@
 package beans;
 
-import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
-@Entity
-@Table(name = "ECHEANCE")
+
 public class Echeance
 {
-    @Id
-    @Column(name = "id_Ech")
     private int id;
-
-    //TODO ????
-    private Utilisateur owner;
-
-    @Column(name = "dateCreation")
     private Date dateCreation;
-
-    @Column(name = "dateEcheance")
     private Date dateEcheance;
-
-    @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(name="UTILISATEURXTFE", joinColumns=@JoinColumn(name="ID_UTI"), inverseJoinColumns=@JoinColumn(name="ID_ECH"))
-    private TFE tfe;
-    private Stage stage;
-
-    @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(name="UTILISATEURXECHEANCE", joinColumns=@JoinColumn(name="ID_UTI"), inverseJoinColumns=@JoinColumn(name="ID_ECH"))
-    private ArrayList<Utilisateur> users;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "annexe")
     private String annexe;
+    private List<Stage> stage;
+    private List<TFE> tfe;
+    private List<Utilisateur> utilisateur;
 
     /**
      * Constructeur (type utilisateurs)
      *
-     * @param    _id                ID (identifiant) de l'échéance
-     * @param    _owner            Utilisateur (professeur) qui a créé l'échéance
-     * @param    _dateCreation    Date de création de l'échéance
-     * @param    _dateEcheance    Date à laquelle l'échéance expire
-     * @param    _users            La liste des utilisateurs concernés par cette échéance
-     * @param    _description    Description (détails) manuscits de l'échéance
-     * @param    _annexe         Lien(nom) local vers un fichier (facultatif)
+     * @param _id           ID (identifiant) de l'échéance
+     * @param _owner        Utilisateur (professeur) qui a créé l'échéance
+     * @param _dateCreation Date de création de l'échéance
+     * @param _dateEcheance Date à laquelle l'échéance expire
+     * @param _users        La liste des utilisateurs concernés par cette échéance
+     * @param _description  Description (détails) manuscits de l'échéance
+     * @param _annexe       Lien(nom) local vers un fichier (facultatif)
      */
     public Echeance(int _id, Utilisateur _owner, Date _dateCreation, Date _dateEcheance, ArrayList<Utilisateur> _users, String _description, String _annexe)
     {
+        stage = new ArrayList<>();
+        tfe = new ArrayList<>();
+
         id = _id;
-        owner = _owner;
+        utilisateur.add(_owner);
         dateCreation = _dateCreation;
         dateEcheance = _dateEcheance;
-        tfe = null;
-        stage = null;
-        users = _users;
         description = _description;
         annexe = _annexe;
     }
@@ -63,23 +44,24 @@ public class Echeance
     /**
      * Constructeur (type TFE)
      *
-     * @param    _id                ID (identifiant) de l'échéance
-     * @param    _owner            Utilisateur (professeur) qui a créé l'échéance
-     * @param    _dateCreation    Date de création de l'échéance
-     * @param    _dateEcheance    Date à laquelle l'échéance expire
-     * @param    _tfe            Le TFE pour quel l'échéance est fixée
-     * @param    _description    Description (détails) manuscits de l'échéance
-     * @param    _annexe         Lien(nom) local vers un fichier (facultatif)
+     * @param _id           ID (identifiant) de l'échéance
+     * @param _owner        Utilisateur (professeur) qui a créé l'échéance
+     * @param _dateCreation Date de création de l'échéance
+     * @param _dateEcheance Date à laquelle l'échéance expire
+     * @param _tfe          Le TFE pour quel l'échéance est fixée
+     * @param _description  Description (détails) manuscits de l'échéance
+     * @param _annexe       Lien(nom) local vers un fichier (facultatif)
      */
     public Echeance(int _id, Utilisateur _owner, Date _dateCreation, Date _dateEcheance, TFE _tfe, String _description, String _annexe)
     {
+        stage = new ArrayList<>();
+        tfe = new ArrayList<>();
+
         id = _id;
-        owner = _owner;
+        utilisateur.add(_owner);
         dateCreation = _dateCreation;
         dateEcheance = _dateEcheance;
-        tfe = _tfe;
-        stage = null;
-        users = null;
+        tfe.add(_tfe);
         description = _description;
         annexe = _annexe;
     }
@@ -87,29 +69,26 @@ public class Echeance
     /**
      * Constructeur (type stage)
      *
-     * @param    _id                ID (identifiant) de l'échéance
-     * @param    _owner            Utilisateur (professeur) qui a créé l'échéance
-     * @param    _dateCreation    Date de création de l'échéance
-     * @param    _dateEcheance    Date à laquelle l'échéance expire
-     * @param    _stage            Le stage pour quel l'échéance est fixée
-     * @param    _description    Description (détails) manuscits de l'échéance
-     * @param    _annexe         Lien(nom) local vers un fichier (facultatif)
+     * @param _id           ID (identifiant) de l'échéance
+     * @param _owner        Utilisateur (professeur) qui a créé l'échéance
+     * @param _dateCreation Date de création de l'échéance
+     * @param _dateEcheance Date à laquelle l'échéance expire
+     * @param _stage        Le stage pour quel l'échéance est fixée
+     * @param _description  Description (détails) manuscits de l'échéance
+     * @param _annexe       Lien(nom) local vers un fichier (facultatif)
      */
     public Echeance(int _id, Utilisateur _owner, Date _dateCreation, Date _dateEcheance, Stage _stage, String _description, String _annexe)
     {
+        stage = new ArrayList<>();
+        tfe = new ArrayList<>();
+
         id = _id;
-        owner = _owner;
+        utilisateur.add(_owner);
         dateCreation = _dateCreation;
         dateEcheance = _dateEcheance;
-        tfe = null;
-        stage = _stage;
-        users = null;
+        stage.add(_stage);
         description = _description;
         annexe = _annexe;
-    }
-
-    public Echeance()
-    {
     }
 
     /**
@@ -135,89 +114,133 @@ public class Echeance
      */
     public void update(ArrayList<Utilisateur> _users)
     {
-        users = _users;
+        utilisateur = _users;
     }
 
-    /**
-     * @return l'identifiant de l'échéance
-     */
     public int getId()
     {
         return id;
     }
 
-    /**
-     * Pré	:	_id est initialisé<br>
-     * Post :	l'ID de l'échéance est modifié par _id
-     *
-     * @param    _id    L'identifiant de l'échéance
-     */
-    public void setId(int _id)
+    public void setId(int id)
     {
-        id = _id;
+        this.id = id;
     }
 
-    /**
-     * @return l'utilisateur (professeur) qui a créé l'échéance.
-     */
-    public Utilisateur getOwner()
-    {
-        return owner;
-    }
-
-    /**
-     * @return la date de création de l'échéance.
-     */
     public Date getDateCreation()
     {
         return dateCreation;
     }
 
-    /**
-     * @return la date limite de l'échéance.
-     */
+    public void setDateCreation(Date dateCreation)
+    {
+        this.dateCreation = dateCreation;
+    }
+
     public Date getDateEcheance()
     {
         return dateEcheance;
     }
 
-    /**
-     * @return la liste des utilisateurs concernés par cette échéance, s'il s'agit d'une échance utilisateur. Sinon, null
-     */
-    public ArrayList<Utilisateur> getUsers()
+    public void setDateEcheance(Date dateEcheance)
     {
-        return users;
+        this.dateEcheance = dateEcheance;
     }
 
-    /**
-     * @return le TFE concerné par cette échéance, s'il s'agit d'un TFE. Sinon, null
-     */
-    public TFE getTFE()
-    {
-        return tfe;
-    }
-
-    /**
-     * @return le stage concerné par cette échéance, s'il s'agit d'un stage. Sinon, null
-     */
-    public Stage getStage()
-    {
-        return stage;
-    }
-
-    /**
-     * @return la description (détails) de l'échéance.
-     */
     public String getDescription()
     {
         return description;
     }
 
-    /**
-     * @return l'adresse du fichier annexe à l'échéance.
-     */
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
     public String getAnnexe()
     {
         return annexe;
     }
+
+    public void setAnnexe(String annexe)
+    {
+        this.annexe = annexe;
+    }
+
+    public List<Stage> getStage()
+    {
+        return stage;
+    }
+
+    public void setStage(List<Stage> stage)
+    {
+        this.stage = stage;
+    }
+
+    public List<TFE> getTfe()
+    {
+        return tfe;
+    }
+
+    public void setTfe(List<TFE> tfe)
+    {
+        this.tfe = tfe;
+    }
+
+    public List<Utilisateur> getUtilisateur()
+    {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(List<Utilisateur> utilisateur)
+    {
+        this.utilisateur = utilisateur;
+    }
+
+
+    public Utilisateur getOwner()
+    {
+        for(Utilisateur u : utilisateur)
+            if(!u.getRole().getNom().equals("etudiant_tfe") &&  !u.getRole().getNom().equals("etudiant_tfe_stage"))
+                return u;
+
+        return null;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (!(o instanceof Echeance)) return false;
+
+        Echeance echeance = (Echeance) o;
+
+        if (id != echeance.id) return false;
+        if (dateCreation != null ? !dateCreation.equals(echeance.dateCreation) : echeance.dateCreation != null)
+            return false;
+        if (dateEcheance != null ? !dateEcheance.equals(echeance.dateEcheance) : echeance.dateEcheance != null)
+            return false;
+        if (description != null ? !description.equals(echeance.description) : echeance.description != null)
+            return false;
+        if (annexe != null ? !annexe.equals(echeance.annexe) : echeance.annexe != null) return false;
+        if (stage != null ? !stage.equals(echeance.stage) : echeance.stage != null) return false;
+        if (tfe != null ? !tfe.equals(echeance.tfe) : echeance.tfe != null) return false;
+        return !(utilisateur != null ? !utilisateur.equals(echeance.utilisateur) : echeance.utilisateur != null);
+
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result = id;
+        result = 31 * result + (dateCreation != null ? dateCreation.hashCode() : 0);
+        result = 31 * result + (dateEcheance != null ? dateEcheance.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (annexe != null ? annexe.hashCode() : 0);
+        result = 31 * result + (stage != null ? stage.hashCode() : 0);
+        result = 31 * result + (tfe != null ? tfe.hashCode() : 0);
+        result = 31 * result + (utilisateur != null ? utilisateur.hashCode() : 0);
+        return result;
+    }
+
 }

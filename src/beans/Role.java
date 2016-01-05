@@ -1,78 +1,80 @@
 package beans;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
-@Entity
-@Table(name = "ROLETABLE")
 public class Role implements Serializable
 {
     private static final long serialVersionUID = -1900169871483409885L;
 
-    @Id
-    @Column(name = "id_rol")
     private int id;
-
-    @Column(name = "nom")
     private String nom;
-
-    @ManyToMany(cascade= CascadeType.ALL)
-    @JoinTable(name="UTILISATEURXROLETABLE", joinColumns=@JoinColumn(name="ID_ROL"), inverseJoinColumns=@JoinColumn(name="ID_PER"))
-    private ArrayList<Permission> permissions;
+    private List<Permission> permission;
+    private List<Utilisateur> utilisateur;
 
     /**
      * Constructeur
      *
-     * @param    _id            ID (identifiant) du rôle
-     * @param    _nom        Nom du rôle
+     * @param _id  ID (identifiant) du rôle
+     * @param _nom Nom du rôle
      */
     public Role(int _id, String _nom)
     {
         id = _id;
         nom = _nom;
-        permissions = new ArrayList<>();
+        permission = new ArrayList<>();
+        utilisateur = new ArrayList<>();
     }
 
     /**
      * Constructeur (type recherche, sans identifiant)
      *
-     * @param    _nom        Nom du rôle
+     * @param _nom Nom du rôle
      */
     public Role(String _nom)
     {
         nom = _nom;
     }
 
-    public Role()
-    {
-    }
-
-    /**
-     * @return l'identifiant du rôle
-     */
     public int getId()
     {
         return id;
     }
 
-    /**
-     * Pré	:	_id est initialisé<br>
-     * Post :	l'identifiant est modifié par _id
-     *
-     * @param    _id    L'identifiant du rôle
-     */
-    public void setId(int _id)
+    public void setId(int id)
     {
-        id = _id;
+        this.id = id;
     }
 
-    /**
-     * @return le nom du rôle
-     */
     public String getNom()
     {
         return nom;
+    }
+
+    public void setNom(String nom)
+    {
+        this.nom = nom;
+    }
+
+    public List<Permission> getPermission()
+    {
+        return permission;
+    }
+
+    public void setPermission(List<Permission> permission)
+    {
+        this.permission = permission;
+    }
+
+    public List<Utilisateur> getUtilisateur()
+    {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(List<Utilisateur> utilisateur)
+    {
+        this.utilisateur = utilisateur;
     }
 
     /**
@@ -81,7 +83,7 @@ public class Role implements Serializable
      */
     public boolean isAllowed(String name)
     {
-        return permissions.contains(name);
+        return permission.contains(name);
     }
 
     /**
@@ -89,6 +91,31 @@ public class Role implements Serializable
      */
     public void addPermission(Permission name)
     {
-        permissions.add(name);
+        permission.add(name);
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (!(o instanceof Role)) return false;
+
+        Role role = (Role) o;
+
+        if (id != role.id) return false;
+        if (nom != null ? !nom.equals(role.nom) : role.nom != null) return false;
+        if (permission != null ? !permission.equals(role.permission) : role.permission != null) return false;
+        return !(utilisateur != null ? !utilisateur.equals(role.utilisateur) : role.utilisateur != null);
+
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result = id;
+        result = 31 * result + (nom != null ? nom.hashCode() : 0);
+        result = 31 * result + (permission != null ? permission.hashCode() : 0);
+        result = 31 * result + (utilisateur != null ? utilisateur.hashCode() : 0);
+        return result;
     }
 }
