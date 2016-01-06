@@ -89,7 +89,7 @@ public class MonCompte extends MonCompte_design implements View
                     user.setDoublant(user.isDoublant());
 
                     if (mdpNouveau.length() > 0) user.setPassword(mdpNouveau);
-                    if (user_DB.update(user))
+                    if (user_DB.insertOrUpdate(user))
                     {
                         mdp_actuel.setValue("");
                         mdp_nouveau.setValue("");

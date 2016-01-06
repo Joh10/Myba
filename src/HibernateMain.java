@@ -8,6 +8,6 @@ public class HibernateMain
     {
         UtilisateurManager x = new UtilisateurManager();
         Utilisateur course = new Utilisateur(true, new Role("professeur"), "mixmaniaqedfqeze@gmail.com", "1234", 10173, "x", "y", "0496039911", 1, false);
-        System.err.println(x.insert(course));
+        System.err.println(x.insertOrUpdate(course));
     }
 }

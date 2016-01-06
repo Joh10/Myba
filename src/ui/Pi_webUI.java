@@ -2,11 +2,7 @@ package ui;
 
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.*;
-import ui.Connexion;
-import ui.Dashboard;
-import ui.MonCompte;
-import ui.PublicDefenses;
+import com.vaadin.ui.UI;
 
 /**
  * Created by Mixmania on 05-01-16 at 13:34.

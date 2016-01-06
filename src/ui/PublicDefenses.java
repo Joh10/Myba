@@ -14,7 +14,6 @@ import com.vaadin.server.WrappedSession;
 import com.vaadin.ui.Button.ClickListener;
 import managers.DefenseManager;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
